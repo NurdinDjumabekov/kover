@@ -1,0 +1,62 @@
+.parentSlider {
+  &__inner {
+    // width: 90%;
+    padding: 5px 0px;
+    // background: red;
+    // > div {
+    //   background: green;
+    //   width: 500px;
+    //   > div {
+    //     background: blue;
+    //   }
+    // }
+    // @media screen and (max-width: 390px) {
+    //   width: 340px;
+    // }
+  }
+  &__every {
+    width: 330px;
+    border-radius: 12px;
+    background: #ffc12e;
+    // padding: 20px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 0 20px 0 0;
+    @media screen and (max-width: 390px) {
+      gap: 0;
+    }
+    div:nth-child(1) {
+      width: 140px;
+      //   padding: 20px 0px;
+      //   background: red;
+      display: flex;
+      flex-direction: column;
+      //   justify-content: space-between;
+      //   align-items: flex-end;
+      gap: 50px;
+      h3 {
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+      a {
+        display: block;
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+    div:nth-child(2) {
+      width: 160px;
+      height: 160px;
+    }
+  }
+}
