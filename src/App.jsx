@@ -10,6 +10,8 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 import OrdersPage from './pages/OrdersPage/OrdersPage';
 import Account from './pages/Account/Account';
+import DetailedPage from './pages/DetailedPage/DetailedPage';
+import ProductPage from './pages/ProductPage/ProductPage';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/detailed/:id" element={<DetailedPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Route>
       </Routes>
     </>

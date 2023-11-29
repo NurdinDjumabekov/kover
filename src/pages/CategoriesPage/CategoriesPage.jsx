@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './CategoriesPage.module.scss';
 import img from '../../assets/images/noneData/categ.png';
+import { NavLink } from 'react-router-dom';
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([
@@ -45,10 +46,14 @@ const CategoriesPage = () => {
       <div className="container">
         <div className={styles.caregoryBlock__inner}>
           {categories?.map((i) => (
-            <div key={i.id} className={styles.everyCategory}>
+            <NavLink
+              to={`/detailed/${i.id}`}
+              key={i.id}
+              className={styles.everyCategory}
+            >
               <h4>{i.title}</h4>
               <img src={i.img} alt="" />
-            </div>
+            </NavLink>
           ))}
         </div>
       </div>

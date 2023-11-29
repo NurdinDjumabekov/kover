@@ -9,7 +9,7 @@ const SearchPage = () => {
         <div className={styles.sarchBlock__inner}>
           <form>
             <input
-              type="text"
+              type="search"
               id="search"
               placeholder="Поиск"
               onChange={(e) => setSearch(e.target.value)}
