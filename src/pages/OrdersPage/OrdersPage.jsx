@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './OrdersPage.module.scss';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import img from '../../assets/images/noneData/Image.png';
-import EveryOrdersPage from '../../components/OrdersPage/EveryOrdersPage';
 import backBtn from '../../assets/icons/backBtn.svg';
+import EveryOrdersPage from '../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage';
 
 const OrdersPage = () => {
   const navigate = useNavigate();

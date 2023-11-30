@@ -1,0 +1,75 @@
+/* ////////стили модалки//////////// */
+.historyModal {
+  > p {
+    color: var(--Orange, #ffc12e);
+    font-family: Gilroy;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0 0 0;
+    > span {
+      color: var(--Black, #222);
+      font-family: Gilroy;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      p {
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+      i {
+        color: var(--Gray-Text, #828282);
+        font-family: Gilroy;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+    }
+  }
+  ul {
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0px;
+      gap: 12px;
+      box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+
+      .food {
+        min-width: 80px;
+        height: 60px;
+        > img {
+          border-radius: 8px;
+        }
+      }
+      .mainContent {
+        width: 100%;
+      }
+      > p {
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+    }
+  }
+}

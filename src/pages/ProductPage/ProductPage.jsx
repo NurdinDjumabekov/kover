@@ -35,7 +35,7 @@ const ProductPage = () => {
         <button className={styles.back} onClick={() => navigate(-1)}>
           <img src={imgPrev} alt="<" />
           <p>Каталог</p>
-          <p>Рестораны</p>
+          <i>Рестораны</i>
           <span>Фаиза</span>
         </button>
       </div>

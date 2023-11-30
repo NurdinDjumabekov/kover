@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import MainInfo from './pages/MainInfo/MainInfo';
 import Login from './pages/Login/Login';
@@ -25,9 +25,9 @@ const App = () => {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/account" element={<Account />} />
           <Route path="/detailed/:id" element={<DetailedPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/account" element={<Account />} />
         </Route>
       </Routes>
     </>

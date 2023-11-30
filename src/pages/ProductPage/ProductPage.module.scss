@@ -15,6 +15,26 @@
       line-height: normal;
       margin: 0 0 0 5px;
     }
+    i {
+      padding: 0 0 0 15px;
+      position: relative;
+      color: var(--Black, #222);
+      font-family: Gilroy;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+    i::before {
+      content: '/';
+      color: black;
+      font-size: 18px;
+      transform: translateY(-50%);
+      top: 50%;
+      display: inline-block;
+      position: absolute;
+      left: 3px;
+    }
     span {
       padding: 0 0 0 15px;
       position: relative;

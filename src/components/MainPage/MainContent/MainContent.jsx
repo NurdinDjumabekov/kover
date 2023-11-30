@@ -48,7 +48,11 @@ const MainContent = () => {
       <div className="container">
         <div className={styles.mainContent__inner}>
           {arrData?.map((i) => (
-            <NavLink to={'/main'} key={i.id} className={styles.everyCategory}>
+            <NavLink
+              to={`/detailed/${i.id}`}
+              key={i.id}
+              className={styles.everyCategory}
+            >
               <img src={i.img} alt="" />
               <h4>{i.title}</h4>
             </NavLink>
