@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './DetailedPage.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import imgPrev from '../../assets/icons/backBtn.svg';
 import TypesDetailed from '../../components/DetailedPage/TypesDetailed/TypesDetailed';
 import DataCategories from '../../components/DetailedPage/DataCategories/DataCategories';
 
 const DetailedPage = () => {
-  const { id } = useParams();
   const navigate = useNavigate();
   return (
     <div className={styles.detailedBlock}>

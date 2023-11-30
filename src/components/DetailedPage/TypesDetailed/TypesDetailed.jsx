@@ -59,18 +59,18 @@ const TypesDetailed = () => {
 
   return (
     <ul className={styles.detailed}>
-      <Slider {...settings}>
+      <li className={styles.slider}>
         {arrTypes.map((type) => (
-          <li key={type.id}>
+          <div key={type.id} className={styles.slider__inner}>
             <button
               onClick={() => setActiveType(type.id)}
               className={type.id === activeType ? styles.active : ''}
             >
               {type.textType}
             </button>
-          </li>
+          </div>
         ))}
-      </Slider>
+      </li>
       <li className={styles.popular}>
         <button>
           <p>Популярные</p>

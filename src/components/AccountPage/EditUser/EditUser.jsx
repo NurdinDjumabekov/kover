@@ -1,6 +1,6 @@
 import React from 'react';
 import Modals from '../../Modals/Modals';
-import './styles.scss';
+import './EditUser.scss';
 
 const EditUser = (props) => {
   return (
