@@ -80,9 +80,7 @@ const EveryOrder = (props) => {
                 <p>{i.title}</p>
                 <span>{i.price}</span>
               </div>
-              <div className="price">
-                <p>{i.price}</p>
-              </div>
+              <p>{i.price}</p>
             </li>
           ))}
         </ul>

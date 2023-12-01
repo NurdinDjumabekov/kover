@@ -57,6 +57,14 @@ const MainContent = () => {
               <h4>{i.title}</h4>
             </NavLink>
           ))}
+          <NavLink to={`/delivery`} className={styles.everyCategory}>
+            <img src={everyFood} alt="" />
+            <h4>Курьерская доставка</h4>
+          </NavLink>
+          <NavLink to={`/listOrder`} className={styles.everyCategory}>
+            <img src={everyFood} alt="" />
+            <h4>Заказ по списку</h4>
+          </NavLink>
         </div>
       </div>
     </div>

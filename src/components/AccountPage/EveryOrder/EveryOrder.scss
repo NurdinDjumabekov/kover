@@ -60,7 +60,25 @@
       }
       .mainContent {
         width: 100%;
+        p {
+          color: var(--Black, #222);
+          font-family: Gilroy;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+        span {
+          display: block;
+          color: var(--Black, #222);
+          font-family: Gilroy;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        }
       }
+
       > p {
         color: var(--Black, #222);
         font-family: Gilroy;

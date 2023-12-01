@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './WelcomePage.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 const WelcomePage = () => {
   const navigate = useNavigate();
+  const [checkout, setCheckout] = useState(false);
 
   return (
     <div className={styles.welcome}>
@@ -22,10 +23,21 @@ const WelcomePage = () => {
               работы курьера, также существует доплата за пределы города.
             </b>
             <div className={styles.checkbox}>
-              <input id="good" type="checkbox" />
+              <input
+                id="good"
+                type="checkbox"
+                checked={checkout}
+                onClick={() => setCheckout(!checkout)}
+              />
               <label htmlFor="good">Согласен (на)</label>
             </div>
-            <button onClick={() => navigate('/main')}>Указать адрес</button>
+            <button
+              onClick={() => navigate('/main')}
+              disabled={!checkout}
+              style={checkout ? {} : { opacity: 0.5 }}
+            >
+              Указать адрес
+            </button>
           </div>
         </div>
       </div>

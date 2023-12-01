@@ -10,7 +10,7 @@
       font-weight: 600;
       line-height: normal;
       p {
-        color: var(--Gray-Text, #828282);
+        color: #828282;
         font-family: Gilroy;
         font-size: 12px;
         font-style: normal;
@@ -19,11 +19,9 @@
         margin: 0 0 8px 0;
       }
       span {
-        color: var(--Orange, #ffc12e);
-        leading-trim: both;
-        text-edge: cap;
+        color: #ffc12e;
         font-family: Gilroy;
-        font-size: 15px;
+        font-size: 18px;
         font-style: normal;
         font-weight: 600;
         line-height: normal;

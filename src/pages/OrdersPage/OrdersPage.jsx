@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './OrdersPage.module.scss';
 import { useNavigate } from 'react-router-dom';
 import img from '../../assets/images/noneData/Image.png';
 import backBtn from '../../assets/icons/backBtn.svg';
 import EveryOrdersPage from '../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage';
+import TotalOrder from '../../components/OrdersPage/TotalOrder/TotalOrder';
 
 const OrdersPage = () => {
+  const [totalOrder, setTotalOrder] = useState(false);
   const navigate = useNavigate();
 
   const arrBucket = [
@@ -40,6 +42,12 @@ const OrdersPage = () => {
           {arrBucket?.map((item) => (
             <EveryOrdersPage key={item.id} item={item} />
           ))}
+          <div className={styles.addOrder}>
+            <button className="standartBtn" onClick={() => setTotalOrder(true)}>
+              Оформить заказ
+            </button>
+          </div>
+          <TotalOrder state={totalOrder} changeState={setTotalOrder} />
         </div>
       </div>
     </div>

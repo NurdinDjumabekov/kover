@@ -1,10 +1,11 @@
 import React from 'react';
 import logo from '../../assets/images/Logo.png';
 import styles from './Login.module.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.login}>
       <div className="container">
@@ -25,11 +26,16 @@ const Login = () => {
               // onChange={changeInput}
               required
             />
-            <button type="submit">Отправить код</button>
+            <button
+              className="standartBtn"
+              type="submit"
+              onClick={() => navigate('/welcome')}
+            >
+              Отправить код
+            </button>
             <label>Мы вышлем код подтверждения в SMS на ваш мобильный.</label>
           </form>
         </div>
-        <NavLink to={'/welcome'} className={styles.login__next}></NavLink>
       </div>
     </div>
   );
