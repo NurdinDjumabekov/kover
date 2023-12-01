@@ -43,6 +43,10 @@
     }
   }
   ul {
+    overflow-y: scroll;
+    max-height: 540px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     li {
       display: flex;
       align-items: center;
@@ -88,5 +92,8 @@
         line-height: normal;
       }
     }
+  }
+  ul::-webkit-scrollbar {
+    display: none;
   }
 }

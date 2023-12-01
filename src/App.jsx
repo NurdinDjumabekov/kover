@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import MainInfo from './pages/MainInfo/MainInfo';
@@ -13,8 +13,15 @@ import Account from './pages/Account/Account';
 import DetailedPage from './pages/DetailedPage/DetailedPage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import DeliveryPage from './pages/DeliveryPage/DeliveryPage';
+import { getGood } from './store/reducers/RequestFoodSlide';
+import { useDispatch } from 'react-redux';
+import OrderListPage from './pages/OrderListPage/OrderListPage';
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // dispatch(getGood());
+  }, []);
   return (
     <>
       <Routes>
@@ -30,6 +37,7 @@ const App = () => {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/account" element={<Account />} />
           <Route path="/delivery" element={<DeliveryPage />} />
+          <Route path="/listorder" element={<OrderListPage />} />
         </Route>
       </Routes>
     </>

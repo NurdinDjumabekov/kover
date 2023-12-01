@@ -12,9 +12,12 @@ import check from '../../assets/icons/check.svg';
 import imgType from '../../assets/images/noneData/typeImg.png';
 import SliderMain from '../../components/SliderMain/SliderMain';
 import RecomFoods from '../../components/DetailedPage/RecomFoods/RecomFoods';
+import { useDispatch } from 'react-redux';
+import { changePathThree } from '../../store/reducers/pathSiteSlice';
 
 const ProductPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const objData = {
     id: 1,
@@ -28,6 +31,10 @@ const ProductPage = () => {
     delivery: '200 сом',
     price: '~1000 сом',
   };
+
+  React.useEffect(() => {
+    return () => dispatch(changePathThree({ link: '', title: '' }));
+  }, []);
 
   return (
     <div className={styles.producblock}>

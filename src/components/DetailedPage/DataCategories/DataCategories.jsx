@@ -7,6 +7,8 @@ import clock from '../../../assets/icons/clock.svg';
 import kitchen from '../../../assets/icons/kitchen.svg';
 import transport from '../../../assets/icons/transport.svg';
 import check from '../../../assets/icons/check.svg';
+import { useDispatch } from 'react-redux';
+import { changePathThree } from '../../../store/reducers/pathSiteSlice';
 
 const DataCategories = () => {
   const arrData = [
@@ -60,6 +62,8 @@ const DataCategories = () => {
     },
   ];
 
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.category}>
       {arrData?.map((food) => (
@@ -67,6 +71,9 @@ const DataCategories = () => {
           key={food.id}
           to={`/product/${food.id}`}
           className={styles.everyData}
+          onClick={() =>
+            dispatch(changePathThree({ link: '', title: food.title }))
+          }
         >
           <img src={food.img} alt="food" />
           <div className={styles.everyData__inner}>

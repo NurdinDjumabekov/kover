@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from './CategoriesPage.module.scss';
 import img from '../../assets/images/noneData/categ.png';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { changePathTwo } from '../../store/reducers/pathSiteSlice';
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([
@@ -41,6 +43,9 @@ const CategoriesPage = () => {
       img: img,
     },
   ]);
+
+  const dispacht = useDispatch();
+
   return (
     <div className={styles.caregoryBlock}>
       <div className="container">
@@ -50,11 +55,37 @@ const CategoriesPage = () => {
               to={`/detailed/${i.id}`}
               key={i.id}
               className={styles.everyCategory}
+              onClick={() =>
+                dispacht(changePathTwo({ link: '', title: i.title }))
+              }
             >
               <h4>{i.title}</h4>
               <img src={i.img} alt="" />
             </NavLink>
           ))}
+          {/* <NavLink
+            to={`/delivery`}
+            className={styles.everyCategory}
+            onClick={() =>
+              dispacht(
+                changePathTwo({ link: '', title: 'Курьерская доставка' })
+              )
+            }
+          >
+            <h4>Курьерская доставка</h4>
+            <img src={img} alt="" />
+          </NavLink>
+
+          <NavLink
+            to={`/listorder`}
+            className={styles.everyCategory}
+            onClick={() =>
+              dispacht(changePathTwo({ link: '', title: 'Заказ по списку' }))
+            }
+          >
+            <h4>Заказ по списку</h4>
+            <img src={img} alt="" />
+          </NavLink> */}
         </div>
       </div>
     </div>

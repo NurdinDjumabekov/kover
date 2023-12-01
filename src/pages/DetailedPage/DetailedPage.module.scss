@@ -1,39 +1,5 @@
 .detailedBlock {
   padding: 20px 0px 100px;
   &__inner {
-    .back {
-      display: flex;
-      align-items: center;
-      background: transparent;
-      p {
-        color: var(--Black, #222);
-        font-family: Gilroy;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-        margin: 0 0 0 5px;
-      }
-      span {
-        padding: 0 0 0 15px;
-        position: relative;
-        color: var(--Orange, #ffc12e);
-        font-family: Gilroy;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-      span::before {
-        content: '/';
-        color: black;
-        font-size: 20px;
-        transform: translateY(-50%);
-        top: 50%;
-        display: inline-block;
-        position: absolute;
-        left: 3px;
-      }
-    }
   }
 }
