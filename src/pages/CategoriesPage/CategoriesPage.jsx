@@ -63,7 +63,7 @@ const CategoriesPage = () => {
               <img src={i.img} alt="" />
             </NavLink>
           ))}
-          {/* <NavLink
+          <NavLink
             to={`/delivery`}
             className={styles.everyCategory}
             onClick={() =>
@@ -85,7 +85,7 @@ const CategoriesPage = () => {
           >
             <h4>Заказ по списку</h4>
             <img src={img} alt="" />
-          </NavLink> */}
+          </NavLink>
         </div>
       </div>
     </div>

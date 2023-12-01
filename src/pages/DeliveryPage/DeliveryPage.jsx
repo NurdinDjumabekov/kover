@@ -25,18 +25,21 @@ const DeliveryPage = () => {
             быстро и надежно, будет стоять у Вашей двери с доставкой.
           </p>
           <h6>Доставка от 200 сом</h6>
-          <form className={styles.nnn}>
+          <form>
             <label>Отправитель</label>
             <input type="text" required placeholder="Телефон" name="" />
             <input type="text" required placeholder="ФИО" name="" />
+
             <label>Откуда забрать</label>
             <input type="text" required placeholder="Адрес" name="" />
             <input type="text" required placeholder="Квартира и этаж" name="" />
             <input type="text" required placeholder="Время" name="" />
+
             <label>Куда доставить</label>
             <input type="text" required placeholder="Адрес" name="" />
             <input type="text" required placeholder="Квартира и этаж" name="" />
             <input type="text" required placeholder="Время" name="" />
+
             <label>Описание груза</label>
             <input
               type="text"
@@ -45,25 +48,52 @@ const DeliveryPage = () => {
               name=""
             />
 
+            <div className={styles.gruz}>
+              <input
+                type="checkbox"
+                id="moreBigGood"
+                placeholder="Габаритный груз свыше 20 кг или больше 1х1х1м"
+              />
+              <label id="moreBigGood">
+                Габаритный груз свыше 20 кг или больше 1х1х1м
+              </label>
+            </div>
+
+            <label>Оплата</label>
+            {/* <div>
+              <label id="checkboxCard">
+                <input type="checkbox" name="myCheckbox" id="checkboxCard" />
+                Картой
+              </label>
+              <label id="checkboxNoCard">
+                <input type="checkbox" name="myCheckbox" id="checkboxNoCard" />
+                Наличкой
+              </label>
+            </div> */}
+
             <input
-              type="checkbox"
-              id="moreBigGood"
-              placeholder="Габаритный груз свыше 20 кг или больше 1х1х1м"
+              type="text"
+              required
+              placeholder="Нужна сдача с..."
+              name=""
             />
-            <label id="moreBigGood">
-              Габаритный груз свыше 20 кг или больше 1х1х1м
-            </label>
+            <label>Комментарий к заказу</label>
+            <input
+              type="text"
+              required
+              placeholder="Комментарий к заказу"
+              name=""
+            />
 
-            <label id="checkboxCard">
-              <input type="checkbox" name="myCheckbox" id="checkboxCard" />
-              Картой
-            </label>
-            <label id="checkboxNoCard">
-              <input type="checkbox" name="myCheckbox" id="checkboxNoCard" />
-              Картой
-            </label>
+            <div className="line"></div>
 
-            <button type="submit">Отправить</button>
+            <button type="submit" className="standartBtn">
+              Оформить заказ
+            </button>
+            <p>
+              После оформления заказа наши менеджеры свяжутся с вами для
+              уточнения деталей!
+            </p>
           </form>
         </div>
       </div>
