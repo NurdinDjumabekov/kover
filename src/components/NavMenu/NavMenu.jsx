@@ -6,8 +6,11 @@ import search from '../../assets/icons/search.svg';
 import categories from '../../assets/icons/categories.svg';
 import order from '../../assets/icons/order.svg';
 import account from '../../assets/icons/account.svg';
+import { changePaginationCount } from '../../store/reducers/dataAllSlice';
+import { useDispatch } from 'react-redux';
 
 const NavMenu = () => {
+  const dispatch = useDispatch();
   const [pages, setPages] = React.useState([
     {
       id: 1,
@@ -63,11 +66,16 @@ const NavMenu = () => {
     setPages(newPage);
   }, [location.pathname]);
 
+  const trasition = () => {
+    localStorage.setItem('paginationMain', 1);
+    dispatch(changePaginationCount(1));
+  };
+
   return (
     <ul className={styles.menu}>
       {pages?.map((i) => (
         <li key={i.id}>
-          <NavLink to={i.link}>
+          <NavLink to={i.link} onClick={trasition}>
             <img src={i.img} alt={'page'} />
           </NavLink>
         </li>

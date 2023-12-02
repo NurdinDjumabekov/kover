@@ -25,21 +25,32 @@
       line-height: normal;
       margin: 0 0 30px 0;
     }
+    ul {
+      bottom: -50px !important;
+      li {
+        button::before {
+          color: white;
+          opacity: 1 !important;
+          font-size: 16px !important;
+        }
+      }
+    }
   }
   &__foods {
     border-radius: 50%;
     border: 2px solid white;
-    width: 260px;
-    height: 260px;
+    width: 260px !important;
+    height: 260px !important;
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    // background: red;
     img {
       border-radius: 50%;
-      width: 95%;
-      height: 95%;
+      width: 100%;
+      height: 100%;
     }
   }
   .line {
@@ -51,6 +62,8 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 5px;
+    display: flex;
+    justify-content: start;
     > div {
       width: 50%;
       height: 5px;

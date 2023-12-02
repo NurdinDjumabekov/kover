@@ -1,44 +1,104 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { standartAxios } from '../../helpers/standartAxios';
+import axios from 'axios';
 
-export const getGood = createAsyncThunk(
-  'getGood',
+// беру все данные
+export const getAllDataGood = createAsyncThunk(
+  'getAllDataGood',
   async function (api, { dispatch, rejectWithValue }) {
     try {
-      const response = await fetch(
-        'http://kover-site.333.kg/product/'
+      const response = await axios.get(
+        'http://kover-site.333.kg/get_establishments/'
       );
-      console.log(response);
-
-      //   if (response.status === 200) {
-      //     const records = await response.json();
-      //     return records;
-      //   } else {
-      //     throw Error(`Error: ${response.status}`);
-      //   }
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.establishment;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
     } catch (error) {
       return rejectWithValue(error.message);
-    } finally { 
+    } finally {
+    }
+  }
+);
+
+// виды учреждений(нац кухня ....)
+export const getEstablishmentCategory = createAsyncThunk(
+  'getEstablishmentCategory',
+  async function (api, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(api);
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.category?.recordset;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    } finally {
+    }
+  }
+);
+// для примера
+export const getExample = createAsyncThunk(
+  'getExample',
+  async function (api, { dispatch, rejectWithValue }) {
+    try {
+      // const response = await axios.get(
+      //   'http://kover-site.333.kg/get_estab_category'
+      // );
+      // console.log(response);
+      // if (response.status >= 200 || response.status < 300) {
+      //   return response?.data?.establishment;
+      // } else {
+      //   throw Error(`Error: ${response.status}`);
+      // }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    } finally {
     }
   }
 );
 
 const initialState = {
-  pathOne: {
-    link: '',
-    title: '',
-  },
+  allDataFood: [],
+  establishmentCategory: [],
+  loading: true,
+  error: null,
 };
 
-const RequestFoodSlide = createSlice({
-  name: 'RequestFoodSlide',
+const requestFoodSlide = createSlice({
+  name: 'requestFoodSlide',
   initialState,
-  reducers: {
-    changePathOne: (state, action) => {
-      state.pathOne = action.payload;
-    },
+  extraReducers: (builder) => {
+    ///// getAllDataGood
+    builder.addCase(getAllDataGood.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allDataFood = action.payload;
+    });
+    builder.addCase(getAllDataGood.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getAllDataGood.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    ///// getEstablishmentCategory
+    builder.addCase(getEstablishmentCategory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.establishmentCategory = [
+        { category_name: 'Все', codeid: 0 },
+        ...action.payload,
+      ];
+    });
+    builder.addCase(getEstablishmentCategory.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getEstablishmentCategory.pending, (state, action) => {
+      state.loading = true;
+    });
   },
 });
-export const { changePathOne } = RequestFoodSlide.actions;
 
-export default RequestFoodSlide.reducer;
+export default requestFoodSlide.reducer;

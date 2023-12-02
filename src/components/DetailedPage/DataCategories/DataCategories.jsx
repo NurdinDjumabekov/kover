@@ -10,95 +10,44 @@ import check from '../../../assets/icons/check.svg';
 import { useDispatch } from 'react-redux';
 import { changePathThree } from '../../../store/reducers/pathSiteSlice';
 
-const DataCategories = () => {
-  const arrData = [
-    {
-      id: 1,
-      view: 'Популярно',
-      title: 'Фаиза',
-      img: foods,
-      rating: 4.7,
-      quantity: '(200+)',
-      time: '11:00 - 23:30',
-      type: 'Национальная кухня',
-      delivery: '200 сом',
-      price: '~1000 сом',
-    },
-    {
-      id: 2,
-      view: 'Популярно',
-      title: 'Фаиза',
-      img: foods,
-      rating: 4.7,
-      quantity: '(200+)',
-      time: '11:00 - 23:30',
-      type: 'Национальная кухня',
-      delivery: '200 сом',
-      price: '~1000 сом',
-    },
-    {
-      id: 4,
-      view: 'Популярно',
-      title: 'Фаиза',
-      img: foods,
-      rating: 4.7,
-      quantity: '(200+)',
-      time: '11:00 - 23:30',
-      type: 'Национальная кухня',
-      delivery: '200 сом',
-      price: '~1000 сом',
-    },
-    {
-      id: 5,
-      view: 'Популярно',
-      title: 'Фаиза',
-      img: foods,
-      rating: 4.7,
-      quantity: '(200+)',
-      time: '11:00 - 23:30',
-      type: 'Национальная кухня',
-      delivery: '200 сом',
-      price: '~1000 сом',
-    },
-  ];
-
+const DataCategories = ({ allDataFood }) => {
   const dispatch = useDispatch();
 
   return (
     <div className={styles.category}>
-      {arrData?.map((food) => (
+      {allDataFood?.map((food) => (
         <NavLink
-          key={food.id}
+          key={food.codeid}
           to={`/product/${food.id}`}
           className={styles.everyData}
           onClick={() =>
             dispatch(changePathThree({ link: '', title: food.title }))
           }
         >
-          <img src={food.img} alt="food" />
+          <img src={food.photo} alt="food" />
           <div className={styles.everyData__inner}>
-            <h4>{food.title}</h4>
+            <h4>{food.establishment_name}</h4>
             <div>
               <img src={star} alt="*" />
-              <span>{food.rating}</span>
+              <span>{food.status}</span>
               <p>{food.quantity}</p>
             </div>
             <div className={styles.rating}>
               <img src={clock} alt="time" />
-              <p>{food.time}</p>
+              <p>{`${food?.time?.[0]?.from_time_formatted} - ${food?.time?.[0]?.to_time_formatted}`}</p>
             </div>
             <div>
               <img src={kitchen} alt="kitchen" />
-              <p>{food.type}</p>
+              <p>{food.category_name}</p>
             </div>
             <div className={styles.checkList}>
               <div>
                 <img src={transport} alt="transport" />
-                <p>{food.delivery}</p>
+                <p>{food.price_dostavka} сом</p>
               </div>
               <div>
-                <img src={check} alt="checcheckkcheck" />
-                <p>{food.price}</p>
+                <img src={check} alt="check" />
+                <p>{food.percent_stavka} сом</p>
               </div>
             </div>
           </div>

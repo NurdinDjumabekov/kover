@@ -13,15 +13,21 @@ import Account from './pages/Account/Account';
 import DetailedPage from './pages/DetailedPage/DetailedPage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import DeliveryPage from './pages/DeliveryPage/DeliveryPage';
-import { getGood } from './store/reducers/RequestFoodSlide';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import OrderListPage from './pages/OrderListPage/OrderListPage';
+import { getAllDataGood, getExample } from './store/reducers/requestFoodSlide';
+import Preloader from './components/Preloader/Preloader';
 
 const App = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    // dispatch(getGood());
+    dispatch(getAllDataGood());
+    dispatch(getExample());
   }, []);
+
+  const { loading } = useSelector((state) => state.requestFoodSlide);
+
   return (
     <>
       <Routes>
@@ -40,6 +46,7 @@ const App = () => {
           <Route path="/listorder" element={<OrderListPage />} />
         </Route>
       </Routes>
+      {loading && <Preloader />}
     </>
   );
 };
