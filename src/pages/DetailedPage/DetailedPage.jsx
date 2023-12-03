@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
-import styles from './DetailedPage.module.scss';
-import TypesDetailed from '../../components/DetailedPage/TypesDetailed/TypesDetailed';
-import DataCategories from '../../components/DetailedPage/DataCategories/DataCategories';
-import PathToFiles from '../../components/PathToFiles/PathToFiles';
-import { useDispatch, useSelector } from 'react-redux';
-import { changePathOne } from '../../store/reducers/pathSiteSlice';
-import Paginations from '../../components/MainPage/Pagination/Pagination';
-import { getEstablishmentCategory } from '../../store/reducers/requestFoodSlide';
+import React, { useEffect } from "react";
+import styles from "./DetailedPage.module.scss";
+import TypesDetailed from "../../components/DetailedPage/TypesDetailed/TypesDetailed";
+import DataCategories from "../../components/DetailedPage/DataCategories/DataCategories";
+import PathToFiles from "../../components/PathToFiles/PathToFiles";
+import { useDispatch, useSelector } from "react-redux";
+import { changePathOne } from "../../store/reducers/pathSiteSlice";
+import Paginations from "../../components/MainPage/Pagination/Pagination";
+import {
+  getCategory,
+  getEstablishmentCategory,
+} from "../../store/reducers/requestFoodSlice";
 
 const DetailedPage = () => {
   const dispatch = useDispatch();
@@ -21,9 +24,14 @@ const DetailedPage = () => {
   let sortData = allDataFood?.slice(startIndex, endIndex);
 
   useEffect(() => {
-    dispatch(changePathOne({ link: '/categories', title: 'Каталог' }));
+    dispatch(changePathOne({ link: "/categories", title: "Каталог" }));
     dispatch(
-      getEstablishmentCategory('http://kover-site.333.kg/get_estab_category')
+      getEstablishmentCategory("http://kover-site.333.kg/get_estab_category")
+    );
+    dispatch(
+      getCategory(
+        "http://kover-site.333.kg/get_estab_category?category_type=main"
+      )
     );
   }, []);
 
@@ -31,7 +39,7 @@ const DetailedPage = () => {
     window.scrollTo(0, 0);
   }, [paginationCount]);
 
-  console.log(allDataFood, 'allDataFood');
+  console.log(allDataFood, "allDataFood");
   return (
     <div className={styles.detailedBlock}>
       <div className="container">

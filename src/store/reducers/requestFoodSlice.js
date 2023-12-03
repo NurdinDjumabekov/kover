@@ -1,13 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // беру все данные
 export const getAllDataGood = createAsyncThunk(
-  'getAllDataGood',
+  "getAllDataGood",
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.get(
-        'http://kover-site.333.kg/get_establishments/'
+        "http://kover-site.333.kg/get_establishments/"
       );
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.establishment;
@@ -23,7 +23,7 @@ export const getAllDataGood = createAsyncThunk(
 
 // виды учреждений(нац кухня ....)
 export const getEstablishmentCategory = createAsyncThunk(
-  'getEstablishmentCategory',
+  "getEstablishmentCategory",
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -38,9 +38,28 @@ export const getEstablishmentCategory = createAsyncThunk(
     }
   }
 );
+
+// все заглавные категории(ресторан, магазин ....)
+export const getCategory = createAsyncThunk(
+  "getCategory",
+  async function (api, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(api);
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.category;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    } finally {
+    }
+  }
+);
+
 // для примера
 export const getExample = createAsyncThunk(
-  'getExample',
+  "getExample",
   async function (api, { dispatch, rejectWithValue }) {
     try {
       // const response = await axios.get(
@@ -63,11 +82,12 @@ const initialState = {
   allDataFood: [],
   establishmentCategory: [],
   loading: true,
+  allCategory: [],
   error: null,
 };
 
-const requestFoodSlide = createSlice({
-  name: 'requestFoodSlide',
+const requestFoodSlice = createSlice({
+  name: "requestFoodSlise",
   initialState,
   extraReducers: (builder) => {
     ///// getAllDataGood
@@ -87,7 +107,7 @@ const requestFoodSlide = createSlice({
     builder.addCase(getEstablishmentCategory.fulfilled, (state, action) => {
       state.loading = false;
       state.establishmentCategory = [
-        { category_name: 'Все', codeid: 0 },
+        { category_name: "Все", codeid: 0 },
         ...action.payload,
       ];
     });
@@ -98,7 +118,19 @@ const requestFoodSlide = createSlice({
     builder.addCase(getEstablishmentCategory.pending, (state, action) => {
       state.loading = true;
     });
+    ///// getCategory
+    builder.addCase(getCategory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allCategory = action.payload;
+    });
+    builder.addCase(getCategory.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getCategory.pending, (state, action) => {
+      state.loading = true;
+    });
   },
 });
 
-export default requestFoodSlide.reducer;
+export default requestFoodSlice.reducer;
