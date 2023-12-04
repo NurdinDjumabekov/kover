@@ -14,6 +14,7 @@ import { changePathThree } from '../../../store/reducers/pathSiteSlice';
 const DataCategories = ({ allDataFood }) => {
   const dispatch = useDispatch();
 
+  console.log(allDataFood, 'allDataFood');
   return (
     <div className={styles.category}>
       {allDataFood?.length === 0 ? (
@@ -21,18 +22,24 @@ const DataCategories = ({ allDataFood }) => {
       ) : (
         allDataFood?.map((food) => (
           <NavLink
-            key={food.codeid}
-            to={`/product/${food.codeid}`}
+            key={food.code_category}
+            to={`/product/${food.code_category}`}
             className={styles.everyData}
             onClick={() =>
-              dispatch(changePathThree({ link: '', title: food.title }))
+              dispatch(
+                changePathThree({ link: '', title: food.establishment_name })
+              )
             }
           >
-            {food?.photo === 'null' ? (
-              <img src={foods} alt="food" />
-            ) : (
-              <img src={food.photo} alt="food" />
-            )}
+            <div className={styles.imgs}>
+              {food?.photo === 'null' ? (
+                <img src={foods} alt="food" />
+              ) : (
+                <img src={food.photo} alt="food" />
+              )}
+              <img src={food?.logo} className={styles.logo} alt="" />
+              <p className={styles.types}>Популярно</p>
+            </div>
             <div className={styles.everyData__inner}>
               <h4>{food.establishment_name}</h4>
               <div>

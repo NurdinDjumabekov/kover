@@ -15,14 +15,14 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import DeliveryPage from './pages/DeliveryPage/DeliveryPage';
 import { useDispatch, useSelector } from 'react-redux';
 import OrderListPage from './pages/OrderListPage/OrderListPage';
-import { getAllDataGood, getExample } from './store/reducers/requestFoodSlice';
+import { getAllDataFood, getExample } from './store/reducers/requestFoodSlice';
 import Preloader from './components/Preloader/Preloader';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllDataGood('http://kover-site.333.kg/get_establishments/'));
+    dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
     dispatch(getExample());
   }, []);
 

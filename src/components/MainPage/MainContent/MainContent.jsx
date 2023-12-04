@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 const MainContent = () => {
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
 
+  console.log(allCategory, 'allCategory');
+
   return (
     <div className={styles.mainContent}>
       <div className="container">

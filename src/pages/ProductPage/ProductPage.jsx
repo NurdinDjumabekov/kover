@@ -1,6 +1,6 @@
 import React from 'react';
 import imgPrev from '../../assets/icons/backBtn.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './ProductPage.module.scss';
 import foods from '../../assets/images/noneData/foodsss.png';
 ///////////////////////////
@@ -12,12 +12,15 @@ import check from '../../assets/icons/check.svg';
 import imgType from '../../assets/images/noneData/typeImg.png';
 import SliderMain from '../../components/SliderMain/SliderMain';
 import RecomFoods from '../../components/DetailedPage/RecomFoods/RecomFoods';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changePathThree } from '../../store/reducers/pathSiteSlice';
+import { getEveryData } from '../../store/reducers/requestFoodSlice';
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const { everyData } = useSelector((state) => state.requestFoodSlice);
 
   const objData = {
     id: 1,
@@ -33,8 +36,11 @@ const ProductPage = () => {
   };
 
   React.useEffect(() => {
+    dispatch(getEveryData(`http://kover-site.333.kg/products/${id}`));
     return () => dispatch(changePathThree({ link: '', title: '' }));
   }, []);
+
+  console.log(everyData, 'everyData');
 
   return (
     <div className={styles.producblock}>
@@ -48,37 +54,37 @@ const ProductPage = () => {
       </div>
       <div className={styles.producblock__inner}>
         <div className={styles.mainContent}>
-          <img src={objData.img} alt="food" />
+          <img src={everyData.photo} alt="food" />
           <div className={styles.mainText}>
             <div className="container">
               <div className={styles.mainContent__up}>
-                <h4>{objData.title}</h4>
+                <h4>{everyData.establishment_name}</h4>
                 <img src={imgType} alt="временно" />
               </div>
               <div className={styles.mainContent__down}>
                 <div className={styles.mainContent__downThree}>
                   <div>
                     <img src={star} alt="*" />
-                    <p>{objData.rating}</p>
-                    <span>{objData.quantity}</span>
+                    <p>{everyData.product_percent}</p>
+                    {/* <span>{everyData.quantity}</span> */}
                   </div>
                   <div className={styles.rating}>
                     <img src={clock} alt="time" />
-                    <p>{objData.time}</p>
+                    <p>{`${everyData?.time?.[0]?.from_time_formatted} - ${everyData?.time?.[0]?.to_time_formatted}`}</p>
                   </div>
                   <div>
                     <img src={transport} alt="transport" />
-                    <p>{objData.delivery}</p>
+                    {/* <p>{everyData.delivery}</p> */}
                   </div>
                 </div>
                 <div className={styles.mainContent__downTwo}>
                   <div>
                     <img src={check} alt="check" />
-                    <p>{objData.price}</p>
+                    <p>~{everyData.product_price} сом</p>
                   </div>
                   <div>
                     <img src={kitchen} alt="kitchen" />
-                    <p>{objData.type}</p>
+                    <p>{everyData.category_name}</p>
                   </div>
                 </div>
               </div>

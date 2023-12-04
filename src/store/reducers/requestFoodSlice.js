@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // беру все данные
-export const getAllDataGood = createAsyncThunk(
-  'getAllDataGood',
+export const getAllDataFood = createAsyncThunk(
+  'getAllDataFood',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -55,6 +55,7 @@ export const getEstablishmentData = createAsyncThunk(
   }
 );
 
+// типы (магаз, рестораны, аптеки ...)
 export const getCategory = createAsyncThunk(
   'getCategory',
   async function (api, { dispatch, rejectWithValue }) {
@@ -62,6 +63,24 @@ export const getCategory = createAsyncThunk(
       const response = await axios(api);
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.category;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    } finally {
+    }
+  }
+);
+
+// типы (магаз, рестораны, аптеки ...)
+export const getEveryData = createAsyncThunk(
+  'getEveryData',
+  async function (api, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(api);
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.product;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -96,8 +115,9 @@ export const getExample = createAsyncThunk(
 const initialState = {
   allDataFood: [],
   establishmentCategory: [],
-  loading: true,
   allCategory: [],
+  everyData: {},
+  loading: true,
   error: null,
 };
 
@@ -105,20 +125,20 @@ const requestFoodSlice = createSlice({
   name: 'requestFoodSlice',
   initialState,
   extraReducers: (builder) => {
-    ///// getAllDataGood
-    builder.addCase(getAllDataGood.fulfilled, (state, action) => {
+    ///// getAllDataFood
+    builder.addCase(getAllDataFood.fulfilled, (state, action) => {
       state.loading = false;
       state.allDataFood = action.payload;
     });
-    builder.addCase(getAllDataGood.rejected, (state, action) => {
+    builder.addCase(getAllDataFood.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
     });
-    builder.addCase(getAllDataGood.pending, (state, action) => {
+    builder.addCase(getAllDataFood.pending, (state, action) => {
       state.loading = true;
     });
 
-    ///// getEstablishmentCategory
+    ///// getEstablishmentData
     builder.addCase(getEstablishmentCategory.fulfilled, (state, action) => {
       state.loading = false;
       state.establishmentCategory = [
@@ -145,7 +165,7 @@ const requestFoodSlice = createSlice({
     builder.addCase(getCategory.pending, (state, action) => {
       state.loading = true;
     });
-    ////////
+    ////////getEstablishmentData
     builder.addCase(getEstablishmentData.fulfilled, (state, action) => {
       state.loading = false;
       state.allDataFood = action.payload;
@@ -155,6 +175,18 @@ const requestFoodSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getEstablishmentData.pending, (state, action) => {
+      state.loading = true;
+    });
+    ///////////getEveryData
+    builder.addCase(getEveryData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.everyData = action.payload;
+    });
+    builder.addCase(getEveryData.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getEveryData.pending, (state, action) => {
       state.loading = true;
     });
   },

@@ -31,7 +31,8 @@ const DetailedPage = () => {
     window.scrollTo(0, 0);
   }, [paginationCount]);
 
-  // console.log(allDataFood, 'allDataFood');
+  console.log(allDataFood, 'allDataFood');
+  
   return (
     <div className={styles.detailedBlock}>
       <div className="container">

@@ -7,6 +7,7 @@
     width: 200px;
     padding: 5px 0px;
     cursor: pointer;
+
     p {
       color: var(--Black, #222);
       text-align: right;
@@ -16,6 +17,7 @@
       font-weight: 600;
       line-height: 15px;
     }
+
     img {
       width: 14px;
       height: 14px;
@@ -24,6 +26,7 @@
       transition: 0.5s;
     }
   }
+
   &__activeBlock {
     position: absolute;
     left: 0;
@@ -32,6 +35,7 @@
     background-color: #fff;
     padding: 10px 5px;
     border-radius: 8px;
+
     p {
       color: var(--Gray-Text, #828282);
       font-family: Gilroy;

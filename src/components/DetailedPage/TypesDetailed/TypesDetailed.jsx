@@ -3,7 +3,7 @@ import styles from './TypesDetailed.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
 import {
-  getAllDataGood,
+  getAllDataFood,
   getEstablishmentData,
 } from '../../../store/reducers/requestFoodSlice';
 import Selects from '../Selects/Selects';
@@ -21,7 +21,7 @@ const TypesDetailed = () => {
     localStorage.setItem('paginationMain', 1);
     dispatch(changePaginationCount(1));
     if (id === 0) {
-      dispatch(getAllDataGood('http://kover-site.333.kg/get_establishments/'));
+      dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
     } else {
       dispatch(
         getEstablishmentData(
@@ -33,7 +33,8 @@ const TypesDetailed = () => {
 
   const [select, setSelect] = React.useState([
     { id: 1, name: 'Популярные' },
-    { id: 2, name: 'Менее популярные' },
+    { id: 2, name: 'Топ' },
+    { id: 3, name: 'Акция' },
   ]);
 
   return (
