@@ -1,68 +1,33 @@
 import React from 'react';
-import everyFood from '../../../assets/images/noneData/everyFood.png';
+import ordering from '../../../assets/images/Main/ordering.png';
+import delivery from '../../../assets/images/Main/delivery.png';
 import styles from './MainContent.module.scss';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MainContent = () => {
-  const arrData = [
-    {
-      id: 1,
-      title: 'Магазины',
-      img: everyFood,
-      path: '/main',
-    },
-    {
-      id: 2,
-      title: 'Магазины',
-      img: everyFood,
-      path: '/main',
-    },
-    {
-      id: 3,
-      title: 'Цветы',
-      img: everyFood,
-      path: '/main',
-    },
-    {
-      id: 4,
-      title: 'Магазины',
-      img: everyFood,
-      path: '/main',
-    },
-    {
-      id: 5,
-      title: 'Магазины',
-      img: everyFood,
-      path: '/main',
-    },
-    {
-      id: 6,
-      title: 'Цветы',
-      img: everyFood,
-      path: '/main',
-    },
-  ];
+  const { allCategory } = useSelector((state) => state.requestFoodSlice);
 
   return (
     <div className={styles.mainContent}>
       <div className="container">
         <div className={styles.mainContent__inner}>
-          {arrData?.map((i) => (
+          {allCategory?.map((i) => (
             <NavLink
-              to={`/detailed/${i.id}`}
-              key={i.id}
+              to={`/detailed/${i.codeid}`}
+              key={i.codeid}
               className={styles.everyCategory}
             >
-              <img src={i.img} alt="" />
-              <h4>{i.title}</h4>
+              <img src={i.foto} alt="" />
+              <h4>{i.category_name}</h4>
             </NavLink>
           ))}
           <NavLink to={`/delivery`} className={styles.everyCategory}>
-            <img src={everyFood} alt="" />
+            <img src={delivery} alt="" />
             <h4>Курьерская доставка</h4>
           </NavLink>
           <NavLink to={`/listorder`} className={styles.everyCategory}>
-            <img src={everyFood} alt="" />
+            <img src={ordering} alt="" />
             <h4>Заказ по списку</h4>
           </NavLink>
         </div>

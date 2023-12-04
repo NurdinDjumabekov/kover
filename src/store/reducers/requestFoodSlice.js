@@ -1,14 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 // беру все данные
 export const getAllDataGood = createAsyncThunk(
-  "getAllDataGood",
+  'getAllDataGood',
   async function (api, { dispatch, rejectWithValue }) {
     try {
-      const response = await axios.get(
-        "http://kover-site.333.kg/get_establishments/"
-      );
+      const response = await axios(api);
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.establishment;
       } else {
@@ -23,12 +21,12 @@ export const getAllDataGood = createAsyncThunk(
 
 // виды учреждений(нац кухня ....)
 export const getEstablishmentCategory = createAsyncThunk(
-  "getEstablishmentCategory",
+  'getEstablishmentCategory',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
       if (response.status >= 200 || response.status < 300) {
-        return response?.data?.category?.recordset;
+        return response?.data?.category;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -39,9 +37,26 @@ export const getEstablishmentCategory = createAsyncThunk(
   }
 );
 
-// все заглавные категории(ресторан, магазин ....)
+// беру сортированные данные по учреждениям
+export const getEstablishmentData = createAsyncThunk(
+  'getEstablishmentData',
+  async function (api, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(api);
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.establishment;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    } finally {
+    }
+  }
+);
+
 export const getCategory = createAsyncThunk(
-  "getCategory",
+  'getCategory',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -59,7 +74,7 @@ export const getCategory = createAsyncThunk(
 
 // для примера
 export const getExample = createAsyncThunk(
-  "getExample",
+  'getExample',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       // const response = await axios.get(
@@ -87,7 +102,7 @@ const initialState = {
 };
 
 const requestFoodSlice = createSlice({
-  name: "requestFoodSlise",
+  name: 'requestFoodSlice',
   initialState,
   extraReducers: (builder) => {
     ///// getAllDataGood
@@ -107,7 +122,7 @@ const requestFoodSlice = createSlice({
     builder.addCase(getEstablishmentCategory.fulfilled, (state, action) => {
       state.loading = false;
       state.establishmentCategory = [
-        { category_name: "Все", codeid: 0 },
+        { category_name: 'Все', codeid: 0 },
         ...action.payload,
       ];
     });
@@ -128,6 +143,18 @@ const requestFoodSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getCategory.pending, (state, action) => {
+      state.loading = true;
+    });
+    ////////
+    builder.addCase(getEstablishmentData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allDataFood = action.payload;
+    });
+    builder.addCase(getEstablishmentData.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getEstablishmentData.pending, (state, action) => {
       state.loading = true;
     });
   },

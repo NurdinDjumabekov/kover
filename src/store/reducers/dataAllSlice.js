@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  paginationCount: localStorage.getItem('paginationMain')
-    ? Number(localStorage.getItem('paginationMain'))
-    : 1,
+  // paginationCount: localStorage.getItem('paginationMain')
+  //   ? Number(localStorage.getItem('paginationMain'))
+  //   : 1,
+  paginationCount: 1,
 };
 
 const dataAllSlice = createSlice({

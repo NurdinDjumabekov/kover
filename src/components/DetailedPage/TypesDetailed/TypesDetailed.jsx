@@ -1,22 +1,40 @@
 import React from 'react';
 import styles from './TypesDetailed.module.scss';
-import imgArrow from '../../../assets/icons/backBtn.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
+import {
+  getAllDataGood,
+  getEstablishmentData,
+} from '../../../store/reducers/requestFoodSlice';
+import Selects from '../Selects/Selects';
 
 const TypesDetailed = () => {
   const dispatch = useDispatch();
   const { establishmentCategory } = useSelector(
-    (state) => state.requestFoodSlide
+    (state) => state.requestFoodSlice
   );
   const [activeType, setActiveType] = React.useState(0);
 
   // console.log(establishmentCategory, 'establishmentCategory');
 
-  const handle = () => {
+  const handle = (id) => {
     localStorage.setItem('paginationMain', 1);
     dispatch(changePaginationCount(1));
+    if (id === 0) {
+      dispatch(getAllDataGood('http://kover-site.333.kg/get_establishments/'));
+    } else {
+      dispatch(
+        getEstablishmentData(
+          `http://kover-site.333.kg/get_establishments?category_code=${id}`
+        )
+      );
+    }
   };
+
+  const [select, setSelect] = React.useState([
+    { id: 1, name: 'Популярные' },
+    { id: 2, name: 'Менее популярные' },
+  ]);
 
   return (
     <ul className={styles.detailed}>
@@ -25,7 +43,7 @@ const TypesDetailed = () => {
           <div
             key={type.codeid}
             className={styles.slider__inner}
-            onClick={handle}
+            onClick={() => handle(type.codeid)}
           >
             <button
               onClick={() => setActiveType(type.codeid)}
@@ -37,10 +55,7 @@ const TypesDetailed = () => {
         ))}
       </li>
       <li className={styles.popular}>
-        <button>
-          <p>Популярные</p>
-          <img src={imgArrow} alt=">" />
-        </button>
+        <Selects select={select} setSelect={setSelect} />
       </li>
     </ul>
   );
