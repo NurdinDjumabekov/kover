@@ -30,24 +30,22 @@ const App = () => {
 
   return (
     <>
-      <div className="parent">
-        <Routes>
-          <Route path="/" element={<MainInfo />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/detailed/:id" element={<DetailedPage />} />
-            <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/delivery" element={<DeliveryPage />} />
-            <Route path="/listorder" element={<OrderListPage />} />
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<MainInfo />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/main" element={<MainPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/detailed/:id" element={<DetailedPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/delivery" element={<DeliveryPage />} />
+          <Route path="/listorder" element={<OrderListPage />} />
+        </Route>
+      </Routes>
       {loading && <Preloader />}
     </>
   );
