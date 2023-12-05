@@ -18,6 +18,10 @@ const Account = () => {
   const [editNum, setEditNum] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={styles.accountBlock}>
       <div className="container">

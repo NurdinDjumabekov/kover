@@ -1,0 +1,35 @@
+.types {
+  .slider {
+    display: flex;
+    overflow-x: scroll;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    padding: 16px 0px 30px;
+    // background: red;
+    height: 100px;
+
+    &__inner {
+      button {
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        background-color: transparent;
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin: 0 15px 0 0;
+      }
+      .active {
+        background: #ffc12e !important;
+        padding: 10px 12px;
+      }
+    }
+  }
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+}

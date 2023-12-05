@@ -6,7 +6,7 @@ import {
   getAllDataFood,
   getEstablishmentData,
 } from '../../../store/reducers/requestFoodSlice';
-import Selects from '../Selects/Selects';
+import SelectsPopular from '../Selects/SelectsPopular';
 
 const TypesDetailed = () => {
   const dispatch = useDispatch();
@@ -31,12 +31,6 @@ const TypesDetailed = () => {
     }
   };
 
-  const [select, setSelect] = React.useState([
-    { id: 1, name: 'Популярные' },
-    { id: 2, name: 'Топ' },
-    { id: 3, name: 'Акция' },
-  ]);
-
   return (
     <ul className={styles.detailed}>
       <li className={styles.slider}>
@@ -56,7 +50,7 @@ const TypesDetailed = () => {
         ))}
       </li>
       <li className={styles.popular}>
-        <Selects select={select} setSelect={setSelect} />
+        <SelectsPopular />
       </li>
     </ul>
   );

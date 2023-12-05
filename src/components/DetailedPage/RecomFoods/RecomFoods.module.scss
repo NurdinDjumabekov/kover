@@ -28,7 +28,7 @@
       margin: 16px 0;
     }
 
-    ul {
+    > ul {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -64,6 +64,9 @@
           font-weight: 600;
           line-height: normal;
           padding: 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          height: 49px;
         }
 
         div {

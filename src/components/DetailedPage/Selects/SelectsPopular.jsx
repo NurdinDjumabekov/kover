@@ -1,13 +1,29 @@
 import React from 'react';
-import styles from './Selects.module.scss';
+import styles from './SelectsPopular.module.scss';
 import img from '../../../assets/icons/backBtn.svg';
-const Selects = ({ select, setSelect }) => {
-  const [activeText, setActiveText] = React.useState(select?.[0]?.name);
+import { useDispatch, useSelector } from 'react-redux';
+import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
+import { changePopular } from '../../../store/reducers/statesSlice';
+
+const SelectsPopular = () => {
   const [active, setActive] = React.useState(false);
   const accordionRef = React.useRef(null);
+  const dispatch = useDispatch();
+
+  const selectArr = [
+    { id: 1, name: 'Популярные' },
+    { id: 2, name: 'Топ' },
+    { id: 3, name: 'Акция' },
+  ];
+
+  const savedActiveText = localStorage.getItem('activeText');
+
+  const [activeText, setActiveText] = React.useState(
+    savedActiveText || selectArr?.[0]?.name
+  );
 
   React.useEffect(() => {
-    const handleClickOutsideAccordion = (e) => {
+    const handleChange = (e) => {
       if (
         active &&
         accordionRef.current &&
@@ -17,10 +33,10 @@ const Selects = ({ select, setSelect }) => {
       }
     };
 
-    document.addEventListener('click', handleClickOutsideAccordion);
+    document.addEventListener('click', handleChange);
 
     return () => {
-      document.removeEventListener('click', handleClickOutsideAccordion);
+      document.removeEventListener('click', handleChange);
     };
   }, [active]);
 
@@ -39,11 +55,14 @@ const Selects = ({ select, setSelect }) => {
       </div>
       {active && (
         <div className={styles.selectBlock__activeBlock}>
-          {select?.map((sel) => (
+          {selectArr?.map((sel) => (
             <p
               onClick={() => {
                 setActiveText(sel.name);
                 setActive(false);
+                dispatch(changePaginationCount(1));
+                dispatch(changePopular(sel.name));
+                localStorage.setItem('activeText', sel.name);
               }}
               key={sel.id}
             >
@@ -56,4 +75,4 @@ const Selects = ({ select, setSelect }) => {
   );
 };
 
-export default Selects;
+export default SelectsPopular;

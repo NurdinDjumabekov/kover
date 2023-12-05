@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './CategoriesPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import Preloader from '../../components/Preloader/Preloader';
 import img from '../../assets/images/noneData/categ.png';
 import ordering from '../../assets/images/Main/ordering.png';
 import delivery from '../../assets/images/Main/delivery.png';
+import { changePathCatalog } from '../../store/reducers/statesSlice';
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
@@ -19,9 +20,15 @@ const CategoriesPage = () => {
         'http://kover-site.333.kg/get_estab_category?category_type=main'
       )
     );
+    window.scrollTo(0, 0);
   }, []);
 
-  console.log(allCategory, 'allCategory');
+  const clickEstablishment = (name) => {
+    dispatch(changePathCatalog(name));
+    localStorage.setItem('pathCatalog', name);
+  };
+
+  // console.log(allCategory, 'allCategory');
   return (
     <div className={styles.caregoryBlock}>
       <div className="container">
@@ -31,12 +38,10 @@ const CategoriesPage = () => {
           ) : (
             allCategory?.map((i) => (
               <NavLink
-                to={`/detailed/${i.codeid}`}
+                to={`/detailed/${i.codeid}/${i.category_name}`}
                 key={i.codeid}
                 className={styles.everyCategory}
-                onClick={() =>
-                  dispatch(changePathTwo({ link: '', title: i.title }))
-                }
+                onClick={() => clickEstablishment(i?.category_name)}
               >
                 <h4>{i.category_name}</h4>
                 <img src={i.foto} alt="категория" />

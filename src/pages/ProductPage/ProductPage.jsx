@@ -1,56 +1,44 @@
 import React from 'react';
-import imgPrev from '../../assets/icons/backBtn.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './ProductPage.module.scss';
+/////////////img//////////////
 import foods from '../../assets/images/noneData/foodsss.png';
-///////////////////////////
 import star from '../../assets/icons/star.svg';
 import clock from '../../assets/icons/clock.svg';
 import kitchen from '../../assets/icons/kitchen.svg';
 import transport from '../../assets/icons/transport.svg';
 import check from '../../assets/icons/check.svg';
 import imgType from '../../assets/images/noneData/typeImg.png';
+
 import SliderMain from '../../components/SliderMain/SliderMain';
 import RecomFoods from '../../components/DetailedPage/RecomFoods/RecomFoods';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePathThree } from '../../store/reducers/pathSiteSlice';
-import { getEveryData } from '../../store/reducers/requestFoodSlice';
+import PathToFiles from '../../components/PathToFiles/PathToFiles';
+import {
+  getEveryData,
+  getEveryInnerData,
+  getEveryInnerTypes,
+} from '../../store/reducers/requestFoodSlice';
 
 const ProductPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id, name } = useParams();
   const { everyData } = useSelector((state) => state.requestFoodSlice);
-
-  const objData = {
-    id: 1,
-    view: 'Популярно',
-    title: 'Фаиза',
-    img: foods,
-    rating: 4.7,
-    quantity: '(200+)',
-    time: '11:00 - 23:30',
-    type: 'Национальная кухня',
-    delivery: '200 сом',
-    price: '~1000 сом',
-  };
+  const { pathCatalog } = useSelector((state) => state.statesSlice);
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getEveryData(`http://kover-site.333.kg/products/${id}`));
-    return () => dispatch(changePathThree({ link: '', title: '' }));
+    dispatch(getEveryInnerTypes(`http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`));
+    // dispatch(getEveryInnerData(`http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`));
   }, []);
 
   console.log(everyData, 'everyData');
 
   return (
     <div className={styles.producblock}>
-      <div className="container">
-        <button className={styles.back} onClick={() => navigate(-1)}>
-          <img src={imgPrev} alt="<" />
-          <p>Каталог</p>
-          <i>Рестораны</i>
-          <span>Фаиза</span>
-        </button>
+      <div className={styles.producblock__path}>
+        <PathToFiles estab={pathCatalog} name={name} />
       </div>
       <div className={styles.producblock__inner}>
         <div className={styles.mainContent}>
@@ -59,7 +47,7 @@ const ProductPage = () => {
             <div className="container">
               <div className={styles.mainContent__up}>
                 <h4>{everyData.establishment_name}</h4>
-                <img src={imgType} alt="временно" />
+                <img src={everyData?.logo} alt="logo" />
               </div>
               <div className={styles.mainContent__down}>
                 <div className={styles.mainContent__downThree}>
@@ -74,7 +62,7 @@ const ProductPage = () => {
                   </div>
                   <div>
                     <img src={transport} alt="transport" />
-                    {/* <p>{everyData.delivery}</p> */}
+                    <p>{everyData.price_dostavka}</p>
                   </div>
                 </div>
                 <div className={styles.mainContent__downTwo}>

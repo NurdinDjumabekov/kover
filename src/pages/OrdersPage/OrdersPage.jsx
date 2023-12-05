@@ -26,6 +26,9 @@ const OrdersPage = () => {
       place: 'Ресторан Фаиза',
     },
   ];
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className={styles.orderBlock}>

@@ -5,6 +5,7 @@ import styles from './SliderMain.module.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useSelector } from 'react-redux';
 
 export const NoneBtn = () => {
   return <div style={{ display: 'none' }} />;
@@ -19,35 +20,40 @@ const SliderMain = () => {
     nextArrow: <NoneBtn />,
     prevArrow: <NoneBtn />,
   };
-  const arrData = [
-    {
-      title: 'Доставка всего за 99 сом',
-      img: foods,
-      path: '/',
-    },
-    {
-      title: 'Доставка всего за 999 сом',
-      img: foods,
-      path: '/',
-    },
-  ];
+  const { discounts } = useSelector((state) => state.requestFoodSlice);
+
+  // console.log(discounts, 'discounts');
 
   return (
     <div className={styles.parentSlider}>
       <div className="container">
         <div className={styles.parentSlider__inner}>
           <Slider {...settings}>
-            {arrData?.map((slid, ind) => (
-              <div key={ind} className={styles.parentSlider__every}>
-                <div>
-                  <h3>{slid.title}</h3>
-                  <NavLink to={slid.path}>Подробнее...</NavLink>
-                </div>
-                <div>
-                  <img src={slid.img} alt="foods" />
-                </div>
-              </div>
-            ))}
+            {discounts?.map((slid) => {
+              return slid?.baner === '' ? (
+                <a key={slid.codeid} className={styles.parentSlider__every}>
+                  <div>
+                    <h3>{slid?.description}</h3>
+                    <p>Подробнее...</p>
+                  </div>
+                  <div>
+                    {slid?.photo ? (
+                      <p>Здесь могла быть ваша реклама</p>
+                    ) : (
+                      <img src={slid.photo} alt="foods" />
+                    )}
+                  </div>
+                </a>
+              ) : (
+                <a key={slid.codeid} className={styles.parentSlider__altEvery}>
+                  {slid?.baner ? (
+                    <img src={slid?.baner} alt="banner" />
+                  ) : (
+                    <p>Здесь могла быть ваша реклама</p>
+                  )}
+                </a>
+              );
+            })}
           </Slider>
         </div>
       </div>

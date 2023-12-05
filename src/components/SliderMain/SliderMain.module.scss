@@ -3,7 +3,6 @@
     padding: 10px 0px;
   }
   &__every {
-    // width: 330px;
     border-radius: 12px;
     background: #ffc12e;
     display: flex !important;
@@ -17,12 +16,9 @@
     }
     div:nth-child(1) {
       width: 140px;
-      //   padding: 20px 0px;
-      //   background: red;
+      padding: 20px 0px;
       display: flex;
       flex-direction: column;
-      //   justify-content: space-between;
-      //   align-items: flex-end;
       gap: 50px;
       h3 {
         color: var(--Black, #222);
@@ -32,7 +28,7 @@
         font-weight: 600;
         line-height: normal;
       }
-      a {
+      p {
         display: block;
         color: var(--Black, #222);
         font-family: Gilroy;
@@ -45,6 +41,35 @@
     div:nth-child(2) {
       width: 160px;
       height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      p {
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-align: center;
+      }
+    }
+  }
+  &__altEvery {
+    width: 330px;
+    height: 185px;
+    background: #ffc12e;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    p {
+      color: var(--Black, #222);
+      font-family: Gilroy;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
     }
   }
 }

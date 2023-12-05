@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './OrderListPage.module.scss';
 
 const OrderListPage = () => {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={styles.orderList}>
       <div className="container">

@@ -3,6 +3,9 @@ import styles from './SearchPage.module.scss';
 
 const SearchPage = () => {
   const [search, setSearch] = useState('');
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={styles.sarchBlock}>
       <div className="container">

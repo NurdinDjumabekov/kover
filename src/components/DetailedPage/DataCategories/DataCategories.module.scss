@@ -59,6 +59,9 @@
         font-weight: 600;
         line-height: normal;
         margin: 8px 0 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       > div {
         display: flex;
@@ -85,6 +88,9 @@
           font-style: normal;
           font-weight: 500;
           line-height: normal;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
       .checkList {
@@ -93,6 +99,10 @@
           display: flex;
           align-items: center;
           gap: 5px;
+          width: 50%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }

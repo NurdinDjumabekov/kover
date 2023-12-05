@@ -14,6 +14,8 @@ const MainPage = () => {
         'http://kover-site.333.kg/get_estab_category?category_type=main'
       )
     );
+
+    window.scrollTo(0, 0);
   }, []);
 
   return (

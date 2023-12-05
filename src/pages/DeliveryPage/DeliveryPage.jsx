@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './DeliveryPage.module.scss';
 
 const DeliveryPage = () => {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={styles.deliveryMain}>
       <div className="container">

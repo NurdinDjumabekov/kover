@@ -15,7 +15,11 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import DeliveryPage from './pages/DeliveryPage/DeliveryPage';
 import { useDispatch, useSelector } from 'react-redux';
 import OrderListPage from './pages/OrderListPage/OrderListPage';
-import { getAllDataFood, getExample } from './store/reducers/requestFoodSlice';
+import {
+  getAllDataFood,
+  getDiscounts,
+  getExample,
+} from './store/reducers/requestFoodSlice';
 import Preloader from './components/Preloader/Preloader';
 
 const App = () => {
@@ -23,6 +27,9 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
+    dispatch(
+      getDiscounts('http://kover-site.333.kg/get_discount?code_category=1')
+    );
     dispatch(getExample());
   }, []);
 
@@ -39,8 +46,8 @@ const App = () => {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/detailed/:id" element={<DetailedPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/detailed/:id/:estab" element={<DetailedPage />} />
+          <Route path="/product/:id/:name" element={<ProductPage />} />
           <Route path="/account" element={<Account />} />
           <Route path="/delivery" element={<DeliveryPage />} />
           <Route path="/listorder" element={<OrderListPage />} />

@@ -16,7 +16,7 @@ const MainContent = () => {
         <div className={styles.mainContent__inner}>
           {allCategory?.map((i) => (
             <NavLink
-              to={`/detailed/${i.codeid}`}
+              to={`/detailed/${i.codeid}/${i.category_name}`}
               key={i.codeid}
               className={styles.everyCategory}
             >

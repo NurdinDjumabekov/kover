@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './RecomFoods.module.scss';
 import foods from '../../../assets/images/noneData/foodsss.png';
 import OrderMenu from '../OrderMenu/OrderMenu';
+import { useSelector } from 'react-redux';
+import TypesInnerData from '../TypesInnerData/TypesInnerData';
 
 const RecomFoods = () => {
   const arrData = [
@@ -31,18 +33,23 @@ const RecomFoods = () => {
     },
   ];
 
+  const { everyInnerData } = useSelector((state) => state.requestFoodSlice);
+  console.log(everyInnerData, 'everyInnerData');
+
   return (
     <div className={styles.recomBLock}>
       <div className="container">
         <div className={styles.recomBLock__inner}>
           <h5>Меню</h5>
           <input type="search" placeholder="Поиск блюд" />
-          <h5>Салаты</h5>
+          <div>
+            <TypesInnerData />
+          </div>
           <ul>
-            {arrData?.map((food) => (
-              <li key={food.id}>
-                <img src={food.img} alt="временно" />
-                <h6>{food.title}</h6>
+            {everyInnerData?.map((food) => (
+              <li key={food.codeid}>
+                <img src={foods} alt="временно" />
+                <h6>{food.category_name}</h6>
                 <div>
                   <p>{food.price}</p>
                   <span>{food.massa}</span>

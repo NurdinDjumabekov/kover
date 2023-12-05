@@ -8,13 +8,15 @@ import kitchen from '../../../assets/icons/kitchen.svg';
 import transport from '../../../assets/icons/transport.svg';
 import check from '../../../assets/icons/check.svg';
 
-import { useDispatch } from 'react-redux';
-import { changePathThree } from '../../../store/reducers/pathSiteSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DataCategories = ({ allDataFood }) => {
   const dispatch = useDispatch();
+  const { popular } = useSelector((state) => state.statesSlice);
 
-  console.log(allDataFood, 'allDataFood');
+  // console.log(allDataFood, 'allDataFood');
+  // console.log(popular, 'popular');
+
   return (
     <div className={styles.category}>
       {allDataFood?.length === 0 ? (
@@ -23,13 +25,8 @@ const DataCategories = ({ allDataFood }) => {
         allDataFood?.map((food) => (
           <NavLink
             key={food.code_category}
-            to={`/product/${food.code_category}`}
+            to={`/product/${food.code_category}/${food?.establishment_name}`}
             className={styles.everyData}
-            onClick={() =>
-              dispatch(
-                changePathThree({ link: '', title: food.establishment_name })
-              )
-            }
           >
             <div className={styles.imgs}>
               {food?.photo === 'null' ? (
@@ -38,7 +35,7 @@ const DataCategories = ({ allDataFood }) => {
                 <img src={food.photo} alt="food" />
               )}
               <img src={food?.logo} className={styles.logo} alt="" />
-              <p className={styles.types}>Популярно</p>
+              <p className={styles.types}>{popular}</p>
             </div>
             <div className={styles.everyData__inner}>
               <h4>{food.establishment_name}</h4>

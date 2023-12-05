@@ -6,38 +6,53 @@ import PathToFiles from '../../components/PathToFiles/PathToFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePathOne } from '../../store/reducers/pathSiteSlice';
 import Paginations from '../../components/MainPage/Pagination/Pagination';
-import { getEstablishmentCategory } from '../../store/reducers/requestFoodSlice';
+import {
+  changeAllDataFood,
+  getEstablishmentCategory,
+} from '../../store/reducers/requestFoodSlice';
+import { useParams } from 'react-router-dom';
 
 const DetailedPage = () => {
   const dispatch = useDispatch();
+  const { estab } = useParams();
 
   const { allDataFood } = useSelector((state) => state.requestFoodSlice);
-
   const { paginationCount } = useSelector((state) => state.dataAllSlice);
+  const { popular } = useSelector((state) => state.statesSlice);
 
   let startIndex = (paginationCount - 1) * 16;
   let endIndex = paginationCount * 16;
 
   let sortData = allDataFood?.slice(startIndex, endIndex);
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(changePathOne({ link: '/categories', title: 'Каталог' }));
     dispatch(
-      getEstablishmentCategory('http://kover-site.333.kg/get_estab_category')
+      getEstablishmentCategory(
+        'http://kover-site.333.kg/get_estab_category?category_type=filter'
+      )
     );
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [paginationCount]);
 
+  React.useEffect(() => {
+    // dispatch(changeAllDataFood(popular));
+    // allDataFood?
+    // if (allDataFood) {
+    //   const sortedArrData = allDataFood.slice().sort((a, b) => b.id - a.id);
+    // }
+  }, [popular]);
+
   console.log(allDataFood, 'allDataFood');
-  
+
   return (
     <div className={styles.detailedBlock}>
       <div className="container">
         <div className={styles.detailedBlock__inner}>
-          <PathToFiles />
+          <PathToFiles estab={estab} />
           <TypesDetailed />
           <DataCategories allDataFood={sortData} />
           {allDataFood?.length !== 0 && <Paginations />}
