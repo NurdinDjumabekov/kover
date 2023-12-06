@@ -8,6 +8,8 @@ import imgArrow from '../../../assets/icons/backBtn.svg';
 import BaskesOrders from '../BaskesOrders/BaskesOrders';
 import img from '../../../assets/images/noneData/Image.png';
 
+import { useSelector } from 'react-redux';
+
 const OrderMenu = () => {
   const [look, setLook] = React.useState(false);
   const accordionRef = React.useRef(null);
@@ -16,36 +18,36 @@ const OrderMenu = () => {
     setLook(!look);
   };
 
-  const arrBucket = [
-    {
-      id: 1,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 2,
-      title: 'Фаиза Фаиза Фаиза Фаиза  Фаиза',
-      img: img,
-      price: '150 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 3,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 4,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-  ];
+  // const arrBucket = [
+  //   {
+  //     id: 1,
+  //     title: 'Салат из свежих овощей',
+  //     img: img,
+  //     price: '90 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Фаиза Фаиза Фаиза Фаиза  Фаиза',
+  //     img: img,
+  //     price: '150 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Салат из свежих овощей',
+  //     img: img,
+  //     price: '90 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'Салат из свежих овощей',
+  //     img: img,
+  //     price: '90 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  // ];
 
   React.useEffect(() => {
     const handleClickOutsideAccordion = (e) => {
@@ -60,6 +62,11 @@ const OrderMenu = () => {
       document.removeEventListener('click', handleClickOutsideAccordion);
     };
   }, [look]);
+
+  const { positionFoods, sumOrdersFoods, allFoodsOrders } = useSelector(
+    (state) => state.statesSlice
+  );
+
   return (
     <div className={styles.accordinBlock}>
       <Accordion
@@ -83,17 +90,21 @@ const OrderMenu = () => {
                 <p>Корзина</p>
               </button>
               <div>
-                <p>8 позиций</p>
-                <span>2000 сом</span>
+                <p>{positionFoods} позиций</p>
+                <span>{sumOrdersFoods} сом</span>
               </div>
             </div>
           </div>
         </AccordionSummary>
         <AccordionDetails>
           <div className={styles.basketBlock}>
-            {arrBucket?.map((item) => (
-              <BaskesOrders key={item.id} item={item} />
-            ))}
+            {allFoodsOrders?.length === 0 ? (
+              <p className={styles.noneFoods}>Ваша корзина пустая!</p>
+            ) : (
+              allFoodsOrders?.map((item, ind) => (
+                <BaskesOrders key={ind} item={item} />
+              ))
+            )}
           </div>
         </AccordionDetails>
       </Accordion>

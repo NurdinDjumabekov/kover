@@ -1,40 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './RecomFoods.module.scss';
 import foods from '../../../assets/images/noneData/foodsss.png';
 import OrderMenu from '../OrderMenu/OrderMenu';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TypesInnerData from '../TypesInnerData/TypesInnerData';
+import { addFoodsOrders } from '../../../store/reducers/statesSlice';
 
 const RecomFoods = () => {
-  const arrData = [
-    {
-      id: 1,
-      img: foods,
-      title: 'Салат из свежих овощей',
-      price: '90см',
-      massa: '260г',
-      type: 'Популярно',
-    },
-    {
-      id: 2,
-      img: foods,
-      title: 'Салат из свежих овощей',
-      price: '90см',
-      massa: '260г',
-      type: 'Популярно',
-    },
-    {
-      id: 3,
-      img: foods,
-      title: 'Салат из свежих овощей',
-      price: '90см',
-      massa: '260г',
-      type: 'Популярно',
-    },
-  ];
+  const dispatch = useDispatch();
+  const { innerData } = useSelector((state) => state.postRequestSlice);
+  const { allFoodsOrders } = useSelector((state) => state.statesSlice);
 
-  const { everyInnerData } = useSelector((state) => state.requestFoodSlice);
-  console.log(everyInnerData, 'everyInnerData');
+  console.log(innerData, 'innerData');
+
+  const addBucket = (data) => {
+    // console.log(data);
+    dispatch(addFoodsOrders([...allFoodsOrders, data]));
+  };
+  // console.log(allFoodsOrders);
+  // useEffect(() => {
+  //   console.log(allFoodsOrders);
+  //   console.log(allFoodsOrders, 'allFoodsOrders');
+
+  // }, [allFoodsOrders]);
+    console.log(allFoodsOrders, 'allFoodsOrders');
+
 
   return (
     <div className={styles.recomBLock}>
@@ -46,15 +36,16 @@ const RecomFoods = () => {
             <TypesInnerData />
           </div>
           <ul>
-            {everyInnerData?.map((food) => (
+            {innerData?.map((food) => (
               <li key={food.codeid}>
-                <img src={foods} alt="временно" />
-                <h6>{food.category_name}</h6>
+                {food?.status && <p className={styles.types}>{food?.status}</p>}
+                <img src={food?.photo} alt="временно" />
+                <h6>{food.product_name}</h6>
                 <div>
-                  <p>{food.price}</p>
-                  <span>{food.massa}</span>
+                  <p>{food.product_price} сом</p>
+                  {/* <span>{food.massa}</span> */}
                 </div>
-                <button>Добавить</button>
+                <button onClick={() => addBucket(food)}>Добавить</button>
               </li>
             ))}
           </ul>

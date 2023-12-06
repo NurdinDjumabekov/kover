@@ -17,6 +17,8 @@ const SliderMain = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
     nextArrow: <NoneBtn />,
     prevArrow: <NoneBtn />,
   };
@@ -38,9 +40,9 @@ const SliderMain = () => {
                   </div>
                   <div>
                     {slid?.photo ? (
-                      <p>Здесь могла быть ваша реклама</p>
-                    ) : (
                       <img src={slid.photo} alt="foods" />
+                    ) : (
+                      <p>Здесь могла быть ваша реклама</p>
                     )}
                   </div>
                 </a>

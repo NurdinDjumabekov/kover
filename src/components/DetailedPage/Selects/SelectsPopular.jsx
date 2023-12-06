@@ -4,23 +4,21 @@ import img from '../../../assets/icons/backBtn.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
 import { changePopular } from '../../../store/reducers/statesSlice';
+import { sortDataPopular } from '../../../store/reducers/requestFoodSlice';
 
 const SelectsPopular = () => {
   const [active, setActive] = React.useState(false);
   const accordionRef = React.useRef(null);
   const dispatch = useDispatch();
+  const { popular } = useSelector((state) => state.statesSlice);
 
   const selectArr = [
-    { id: 1, name: 'Популярные' },
-    { id: 2, name: 'Топ' },
-    { id: 3, name: 'Акция' },
+    { id: 1, name: 'Все' },
+    { id: 2, name: 'Популярно' },
+    { id: 3, name: 'Топ' },
+    { id: 4, name: 'Акция' },
+    { id: 5, name: 'Новинка' },
   ];
-
-  const savedActiveText = localStorage.getItem('activeText');
-
-  const [activeText, setActiveText] = React.useState(
-    savedActiveText || selectArr?.[0]?.name
-  );
 
   React.useEffect(() => {
     const handleChange = (e) => {
@@ -40,13 +38,21 @@ const SelectsPopular = () => {
     };
   }, [active]);
 
+  const clickSelect = (name) => {
+    setActive(false);
+    dispatch(changePaginationCount(1));
+    dispatch(sortDataPopular(name));
+    dispatch(changePopular(name));
+    localStorage.setItem('activeText', name);
+  };
+
   return (
     <div className={styles.selectBlock} id="uniqueSelectID" ref={accordionRef}>
       <div
         className={styles.selectBlock__inner}
         onClick={() => setActive((prevState) => !prevState)}
       >
-        <p>{activeText}</p>
+        <p>{popular}</p>
         <img
           src={img}
           alt="<"
@@ -56,16 +62,7 @@ const SelectsPopular = () => {
       {active && (
         <div className={styles.selectBlock__activeBlock}>
           {selectArr?.map((sel) => (
-            <p
-              onClick={() => {
-                setActiveText(sel.name);
-                setActive(false);
-                dispatch(changePaginationCount(1));
-                dispatch(changePopular(sel.name));
-                localStorage.setItem('activeText', sel.name);
-              }}
-              key={sel.id}
-            >
+            <p onClick={() => clickSelect(sel?.name)} key={sel.id}>
               {sel.name}
             </p>
           ))}

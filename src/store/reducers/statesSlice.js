@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  popular: 'Популярные',
-  pathCatalog: localStorage.getItem('pathCatalog')
-    ? localStorage.getItem('pathCatalog')
-    : '',
+  // popular: localStorage.getItem('activeText') || 'Все',
+  popular: 'Все',
+  pathCatalog: localStorage.getItem('pathCatalog') || '',
+  positionFoods: 0,
+  sumOrdersFoods: 0,
+  allFoodsOrders: [],
 };
 
 const statesSlice = createSlice({
@@ -17,8 +19,23 @@ const statesSlice = createSlice({
     changePathCatalog: (state, action) => {
       state.pathCatalog = action.payload;
     },
+    changePositionFoods: (state, action) => {
+      state.positionFoods = action.payload;
+    },
+    changeSumOrdersFoods: (state, action) => {
+      state.sumOrdersFoods = action.payload;
+    },
+    addFoodsOrders: (state, action) => {
+      state.allFoodsOrders = action.payload;
+    },
   },
 });
-export const { changePopular, changePathCatalog } = statesSlice.actions;
+export const {
+  changePopular,
+  changePathCatalog,
+  changePositionFoods,
+  changeSumOrdersFoods,
+  addFoodsOrders,
+} = statesSlice.actions;
 
 export default statesSlice.reducer;

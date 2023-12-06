@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './ProductPage.module.scss';
 /////////////img//////////////
 import foods from '../../assets/images/noneData/foodsss.png';
@@ -8,7 +8,6 @@ import clock from '../../assets/icons/clock.svg';
 import kitchen from '../../assets/icons/kitchen.svg';
 import transport from '../../assets/icons/transport.svg';
 import check from '../../assets/icons/check.svg';
-import imgType from '../../assets/images/noneData/typeImg.png';
 
 import SliderMain from '../../components/SliderMain/SliderMain';
 import RecomFoods from '../../components/DetailedPage/RecomFoods/RecomFoods';
@@ -16,24 +15,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import PathToFiles from '../../components/PathToFiles/PathToFiles';
 import {
   getEveryData,
-  getEveryInnerData,
   getEveryInnerTypes,
 } from '../../store/reducers/requestFoodSlice';
+import { getEveryInnerData } from '../../store/reducers/postRequestSlice';
+import axios from 'axios';
 
 const ProductPage = () => {
   const dispatch = useDispatch();
   const { id, name } = useParams();
   const { everyData } = useSelector((state) => state.requestFoodSlice);
   const { pathCatalog } = useSelector((state) => state.statesSlice);
+  // console.log(everyData, 'everyData');
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getEveryData(`http://kover-site.333.kg/products/${id}`));
-    dispatch(getEveryInnerTypes(`http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`));
-    // dispatch(getEveryInnerData(`http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`));
+    dispatch(
+      getEveryInnerTypes(
+        `http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`
+      )
+    );
   }, []);
 
-  console.log(everyData, 'everyData');
+  const respone = async () => {
+    try {
+      dispatch(
+        getEveryInnerData({
+          category: everyData?.code_category,
+          establishment: everyData?.code_establishment,
+        })
+      );
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    respone();
+  }, [everyData]);
+
+  // console.log(everyData, 'everyData');
 
   return (
     <div className={styles.producblock}>

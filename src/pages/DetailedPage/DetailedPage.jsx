@@ -4,12 +4,8 @@ import TypesDetailed from '../../components/DetailedPage/TypesDetailed/TypesDeta
 import DataCategories from '../../components/DetailedPage/DataCategories/DataCategories';
 import PathToFiles from '../../components/PathToFiles/PathToFiles';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePathOne } from '../../store/reducers/pathSiteSlice';
 import Paginations from '../../components/MainPage/Pagination/Pagination';
-import {
-  changeAllDataFood,
-  getEstablishmentCategory,
-} from '../../store/reducers/requestFoodSlice';
+import { getEstablishmentCategory } from '../../store/reducers/requestFoodSlice';
 import { useParams } from 'react-router-dom';
 
 const DetailedPage = () => {
@@ -26,11 +22,8 @@ const DetailedPage = () => {
   let sortData = allDataFood?.slice(startIndex, endIndex);
 
   React.useEffect(() => {
-    dispatch(changePathOne({ link: '/categories', title: 'Каталог' }));
     dispatch(
-      getEstablishmentCategory(
-        'http://kover-site.333.kg/get_estab_category?category_type=filter'
-      )
+      getEstablishmentCategory('http://kover-site.333.kg/get_estab_category')
     );
   }, []);
 
@@ -38,15 +31,7 @@ const DetailedPage = () => {
     window.scrollTo(0, 0);
   }, [paginationCount]);
 
-  React.useEffect(() => {
-    // dispatch(changeAllDataFood(popular));
-    // allDataFood?
-    // if (allDataFood) {
-    //   const sortedArrData = allDataFood.slice().sort((a, b) => b.id - a.id);
-    // }
-  }, [popular]);
-
-  console.log(allDataFood, 'allDataFood');
+  // console.log(allDataFood, 'allDataFood');
 
   return (
     <div className={styles.detailedBlock}>

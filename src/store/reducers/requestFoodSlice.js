@@ -96,29 +96,10 @@ export const getEveryData = createAsyncThunk(
   }
 );
 
-// учреждение(магазины, рестораны ...), внутренние данные каждого учреждения
+// учреждение(магазины, рестораны ...), внутренние типы каждого учреждения
 // http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}
 export const getEveryInnerTypes = createAsyncThunk(
   'getEveryInnerTypes',
-  async function (api, { dispatch, rejectWithValue }) {
-    try {
-      const response = await axios(api);
-      if (response.status >= 200 || response.status < 300) {
-        return response?.data?.product_category;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    } finally {
-    }
-  }
-);
-
-// учреждение(магазины, рестораны ...), внутренние данные каждого учреждения
-// http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}
-export const getEveryInnerData = createAsyncThunk(
-  'getEveryInnerData',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -179,7 +160,6 @@ const initialState = {
   establishmentCategory: [],
   allCategory: [],
   everyData: {},
-  everyInnerData: [],
   everyInnerTypes: [],
   discounts: [],
   loading: true,
@@ -283,12 +263,26 @@ const requestFoodSlice = createSlice({
     });
   },
   reducers: {
-    changeAllDataFood: (state, action) => {
-      state.allDataFood = action.payload;
+    sortDataPopular: (state, action) => {
+      if (action.payload === 'Все') {
+        return;
+      } else {
+        const sortedData = state.allDataFood.slice().sort((a, b) => {
+          if (a.status === action.payload && b.status !== action.payload) {
+            return -1; // Перемещаем 'популярные' в начало
+          } else if (
+            a.status !== action.payload &&
+            b.status === action.payload
+          ) {
+            return 1; // Перемещаем 'популярные' в начало
+          }
+        });
+        state.allDataFood = sortedData;
+      }
     },
   },
 });
 
-export const { changeAllDataFood } = requestFoodSlice.actions;
+export const { sortDataPopular } = requestFoodSlice.actions;
 
 export default requestFoodSlice.reducer;

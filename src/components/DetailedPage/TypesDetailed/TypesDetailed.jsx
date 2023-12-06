@@ -7,6 +7,7 @@ import {
   getEstablishmentData,
 } from '../../../store/reducers/requestFoodSlice';
 import SelectsPopular from '../Selects/SelectsPopular';
+import { changePopular } from '../../../store/reducers/statesSlice';
 
 const TypesDetailed = () => {
   const dispatch = useDispatch();
@@ -14,10 +15,11 @@ const TypesDetailed = () => {
     (state) => state.requestFoodSlice
   );
   const [activeType, setActiveType] = React.useState(0);
+  const { popular } = useSelector((state) => state.statesSlice);
 
   // console.log(establishmentCategory, 'establishmentCategory');
 
-  const handle = (id) => {
+  const handleClick = (id) => {
     localStorage.setItem('paginationMain', 1);
     dispatch(changePaginationCount(1));
     if (id === 0) {
@@ -29,6 +31,8 @@ const TypesDetailed = () => {
         )
       );
     }
+    // dispatch(changePopular(popular));
+    dispatch(changePopular('Все'));
   };
 
   return (
@@ -38,7 +42,7 @@ const TypesDetailed = () => {
           <div
             key={type.codeid}
             className={styles.slider__inner}
-            onClick={() => handle(type.codeid)}
+            onClick={() => handleClick(type.codeid)}
           >
             <button
               onClick={() => setActiveType(type.codeid)}
