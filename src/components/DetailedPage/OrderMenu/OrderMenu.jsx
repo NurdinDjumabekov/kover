@@ -9,10 +9,12 @@ import BaskesOrders from '../BaskesOrders/BaskesOrders';
 import img from '../../../assets/images/noneData/Image.png';
 
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const OrderMenu = () => {
   const [look, setLook] = React.useState(false);
   const accordionRef = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleAccordionToggle = () => {
     setLook(!look);
@@ -67,6 +69,14 @@ const OrderMenu = () => {
     (state) => state.statesSlice
   );
 
+  const ordering = () => {
+    if (allFoodsOrders.length === 0) {
+      return;
+    } else {
+      look && navigate('/orders');
+    }
+  };
+
   return (
     <div className={styles.accordinBlock}>
       <Accordion
@@ -76,7 +86,7 @@ const OrderMenu = () => {
       >
         <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
           <div className={styles.accordinBlock__inner}>
-            <button>Оформить заказ</button>
+            <button onClick={ordering}>Оформить заказ</button>
             <div
               className={styles.accordinBlock__inner__btns}
               onClick={() => setLook(false)}

@@ -135,6 +135,47 @@ export const getDiscounts = createAsyncThunk(
   }
 );
 
+// http://kover-site.333.kg/products?search=пирожок?code_establishment=5?code_category=5
+// внутренний поиск по продуктам
+export const searchInnerFood = createAsyncThunk(
+  'searchInnerFood',
+  async function (data, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(
+        `http://kover-site.333.kg/products?search=${data?.text}?code_establishment=${data?.estab}?code_category=${data?.categ}`
+      );
+      console.log(response, 'response');
+
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.product;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// беру каждый продукт определенного учреждения
+// http://kover-site.333.kg/products
+export const getEveryInnerData = createAsyncThunk(
+  'getEveryInnerData',
+  async function (api, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(api);
+      console.log(response, 'response');
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.product?.[0]?.estab;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 // для примера
 export const getExample = createAsyncThunk(
   'getExample',
@@ -163,7 +204,9 @@ const initialState = {
   everyData: {},
   everyInnerTypes: [],
   discounts: [],
+  innerData: [],
   loading: true,
+  miniLoader: true,
   error: null,
 };
 
@@ -261,6 +304,30 @@ const requestFoodSlice = createSlice({
     });
     builder.addCase(getDiscounts.pending, (state, action) => {
       state.loading = true;
+    });
+    ///// getEveryInnerData
+    builder.addCase(getEveryInnerData.fulfilled, (state, action) => {
+      state.miniLoader = false;
+      state.innerData = action.payload;
+    });
+    builder.addCase(getEveryInnerData.rejected, (state, action) => {
+      state.error = action.payload;
+      state.miniLoader = false;
+    });
+    builder.addCase(getEveryInnerData.pending, (state, action) => {
+      state.miniLoader = true;
+    });
+    // searchInnerFood
+    builder.addCase(searchInnerFood.fulfilled, (state, action) => {
+      state.miniLoader = false;
+      state.innerData = action.payload;
+    });
+    builder.addCase(searchInnerFood.rejected, (state, action) => {
+      state.error = action.payload;
+      state.miniLoader = false;
+    });
+    builder.addCase(searchInnerFood.pending, (state, action) => {
+      state.miniLoader = true;
     });
   },
   reducers: {

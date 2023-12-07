@@ -6,13 +6,18 @@ import OrderMenu from '../OrderMenu/OrderMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import TypesInnerData from '../TypesInnerData/TypesInnerData';
 import { addFoodsOrders } from '../../../store/reducers/statesSlice';
-import { searchInnerFood } from '../../../store/reducers/postRequestSlice';
+import {
+  getEveryInnerData,
+  searchInnerFood,
+} from '../../../store/reducers/requestFoodSlice';
+import MiniPreloader from '../../MiniPreloader/MiniPreloader';
 
-const RecomFoods = () => {
+const RecomFoods = ({ estab, categ }) => {
   const dispatch = useDispatch();
-  const { innerData } = useSelector((state) => state.postRequestSlice);
+  const { miniLoader, innerData } = useSelector(
+    (state) => state.requestFoodSlice
+  );
   const { allFoodsOrders } = useSelector((state) => state.statesSlice);
-
   const arrBucket = [
     {
       codeid: 1,
@@ -32,15 +37,24 @@ const RecomFoods = () => {
     },
   ];
   const addBucket = (data) => {
-    localStorage.setItem('allFoodsOrders', [...allFoodsOrders, data]);
     dispatch(addFoodsOrders([...allFoodsOrders, data]));
   };
 
-  console.log(innerData, 'innerData');
-  console.log(allFoodsOrders, 'allFoodsOrders');
+  // console.log(innerData, 'innerData');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   const searchInput = debounce((text) => {
-    dispatch(searchInnerFood(text));
+    if (text === '') {
+      dispatch(
+        getEveryInnerData(
+          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${categ}`
+        )
+      );
+    } else {
+      dispatch(
+        searchInnerFood({ text: text?.toLocaleLowerCase(), estab, categ })
+      );
+    }
   }, 800);
 
   return (
@@ -57,6 +71,7 @@ const RecomFoods = () => {
             <TypesInnerData />
           </div>
           <ul>
+            {miniLoader && <MiniPreloader />}
             {arrBucket?.map((food) => (
               <li key={food.codeid}>
                 {food?.status && <p className={styles.types}>{food?.status}</p>}

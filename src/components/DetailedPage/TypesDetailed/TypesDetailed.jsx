@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
 import { NoneBtn } from '../../SliderMain/SliderMain';
 import arrow from '../../../assets/icons/backBtn.svg';
-
 /// func
 import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
 import {
@@ -12,18 +11,20 @@ import {
   getEstablishmentData,
 } from '../../../store/reducers/requestFoodSlice';
 import SelectsPopular from '../Selects/SelectsPopular';
-import { changePopular } from '../../../store/reducers/statesSlice';
+import {
+  changeActiveType,
+  changePopular,
+} from '../../../store/reducers/statesSlice';
 
 const TypesDetailed = () => {
   const dispatch = useDispatch();
-  const [activeType, setActiveType] = React.useState(0);
+  const sliderRef = React.createRef();
+  const { activeTypeEstab } = useSelector((state) => state.statesSlice);
   const { establishmentCategory } = useSelector(
     (state) => state.requestFoodSlice
   );
 
-  const sliderRef = React.createRef();
-
-  const handleNext = () => {
+  const handleNext = (e) => {
     sliderRef.current.slickNext();
   };
 
@@ -43,6 +44,16 @@ const TypesDetailed = () => {
     dispatch(changePopular('Все'));
   };
 
+  React.useEffect(() => {
+    if (activeTypeEstab !== 0) {
+      dispatch(
+        getEstablishmentData(
+          `http://kover-site.333.kg/get_establishments?category_code=${activeTypeEstab}`
+        )
+      );
+    }
+  }, []);
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -51,6 +62,8 @@ const TypesDetailed = () => {
     nextArrow: <NoneBtn />,
     prevArrow: <NoneBtn />,
     variableWidth: true,
+    focusOnSelect: true,
+    // initialSlide: indexSlide,
   };
 
   return (
@@ -64,8 +77,8 @@ const TypesDetailed = () => {
               onClick={() => handleClick(type.codeid)}
             >
               <button
-                onClick={() => setActiveType(type.codeid)}
-                className={type.codeid === activeType ? styles.active : ''}
+                onClick={() => dispatch(changeActiveType(type.codeid))}
+                className={type.codeid === activeTypeEstab ? styles.active : ''}
               >
                 {type.category_name}
               </button>

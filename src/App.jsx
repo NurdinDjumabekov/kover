@@ -24,9 +24,13 @@ import Preloader from './components/Preloader/Preloader';
 
 const App = () => {
   const dispatch = useDispatch();
+  const { activeTypeEstab } = useSelector((state) => state.statesSlice);
 
   useEffect(() => {
-    dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
+    if (activeTypeEstab === 0) {
+      dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
+    }
+
     dispatch(
       getDiscounts('http://kover-site.333.kg/get_discount?code_category=1')
     );

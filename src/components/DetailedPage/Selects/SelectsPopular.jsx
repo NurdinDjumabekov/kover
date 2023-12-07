@@ -43,8 +43,13 @@ const SelectsPopular = () => {
     dispatch(changePaginationCount(1));
     dispatch(sortDataPopular(name));
     dispatch(changePopular(name));
-    localStorage.setItem('activeText', name);
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      dispatch(sortDataPopular(popular));
+    }, 2000);
+  }, [popular]);
 
   return (
     <div className={styles.selectBlock} id="uniqueSelectID" ref={accordionRef}>

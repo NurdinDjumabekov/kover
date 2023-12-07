@@ -6,70 +6,68 @@ import backBtn from '../../assets/icons/backBtn.svg';
 import EveryOrdersPage from '../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage';
 import TotalOrder from '../../components/OrdersPage/TotalOrder/TotalOrder';
 import { useSelector } from 'react-redux';
+import Preloader from '../../components/Preloader/Preloader';
 
 const OrdersPage = () => {
   const [totalOrder, setTotalOrder] = useState(false);
   const navigate = useNavigate();
-
+  const { errorOrderFood, loadingOrder, goodSendOrder } = useSelector(
+    (state) => state.postRequestSlice
+  );
   const { allFoodsOrders, positionFoods, sumOrdersFoods } = useSelector(
     (state) => state.statesSlice
   );
-  // console.log(allFoodsOrders);
-
-  const arrBucket = [
-    {
-      id: 1,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 2,
-      title: 'Фаиза Фаиза Фаиза Фаиза  Фаиза',
-      img: img,
-      price: '150 сом',
-      place: 'Ресторан Фаиза',
-    },
-  ];
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // console.log(allFoodsOrders);
   return (
-    <div className={styles.orderBlock}>
-      <div className="container">
-        <div className={styles.orderBlock__inner}>
-          <button onClick={() => navigate(-1)} className={styles.prevBacket}>
-            <img src={backBtn} alt="<" />
-            <p>Ваша корзина</p>
-          </button>
-          <div className={styles.pay}>
-            <p>{positionFoods} позиций</p>
-            <span>{sumOrdersFoods} сом</span>
-          </div>
-          {allFoodsOrders.length === 0 ? (
-            <p className={styles.noneFoods}>Ваша корзина пустая!</p>
-          ) : (
-            arrBucket?.map((item) => (
-              <EveryOrdersPage key={item.id} item={item} />
-            ))
-          )}
-
-          <div className={styles.addOrder}>
-            <button
-              className="standartBtn"
-              disabled={allFoodsOrders.length === 0}
-              onClick={() => setTotalOrder(true)}
-            >
-              Оформить заказ
+    <>
+      <div className={styles.orderBlock}>
+        <div className="container">
+          <div className={styles.orderBlock__inner}>
+            <button onClick={() => navigate(-1)} className={styles.prevBacket}>
+              <img src={backBtn} alt="<" />
+              <p>Ваша корзина</p>
             </button>
+            <div className={styles.pay}>
+              <p>{positionFoods} позиций</p>
+              <span>{sumOrdersFoods} сом</span>
+            </div>
+            {allFoodsOrders.length === 0 ? (
+              <p className={styles.noneFoods}>Ваша корзина пустая!</p>
+            ) : (
+              allFoodsOrders?.map((item, ind) => (
+                <EveryOrdersPage key={ind} item={item} />
+              ))
+            )}
+            <div className={styles.addOrder}>
+              <button
+                className="standartBtn"
+                disabled={allFoodsOrders.length === 0}
+                onClick={() => setTotalOrder(true)}
+              >
+                Оформить заказ
+              </button>
+            </div>
+            <TotalOrder state={totalOrder} changeState={setTotalOrder} />
           </div>
-          <TotalOrder state={totalOrder} changeState={setTotalOrder} />
         </div>
       </div>
-    </div>
+      {errorOrderFood && (
+        <div className={styles.errorSendOrder}>
+          <p>Что-то пошло не так, повторите попытку еще раз ...</p>
+        </div>
+      )}
+      {loadingOrder && <Preloader />}
+      {goodSendOrder && (
+        <div className={styles.goodSendOrder}>
+          <p>Ваша заказ принят, спасибо что выбрали нас!</p>
+        </div>
+      )}
+    </>
   );
 };
 

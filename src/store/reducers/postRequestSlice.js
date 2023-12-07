@@ -1,16 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// беру каждый продукт определенного учреждения
-// http://kover-site.333.kg/products
-export const getEveryInnerData = createAsyncThunk(
-  'getEveryInnerData',
-  async function (data, { dispatch, rejectWithValue }) {
+// Заказ еды
+// http://...
+export const postSendOrder = createAsyncThunk(
+  'postSendOrder',
+  async function (api, { dispatch, rejectWithValue }) {
     try {
-      const response = await axios.post('http://kover-site.333.kg/products', {
-        code_establishment: data?.establishment,
-        code_category: data?.category,
-      });
+      const response = await axios(api);
       console.log(response, 'response');
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.product?.[0]?.estab;
@@ -23,18 +20,21 @@ export const getEveryInnerData = createAsyncThunk(
   }
 );
 
-export const searchInnerFood = createAsyncThunk(
-  'searchInnerFood',
-  async function (search, { dispatch, rejectWithValue }) {
+// Отправка еды
+// http://...
+export const sendOrderFoods = createAsyncThunk(
+  'sendOrderFoods',
+  async function (info, { dispatch, rejectWithValue }) {
     try {
-      console.log(search);
-      // const response = await axios.post('http://kover-site.333.kg/products', {
-      //   code_establishment: data?.establishment,
-      //   code_category: data?.category,
-      // });
-      // console.log(response, 'response');
+      const response = await axios({
+        method: 'POST',
+        url: '',
+        data: {
+          info,
+        },
+      });
+
       if (response.status >= 200 || response.status < 300) {
-        return response?.data?.product?.[0]?.estab;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -45,47 +45,74 @@ export const searchInnerFood = createAsyncThunk(
 );
 
 const initialState = {
-  innerData: [],
+  orderUser: {
+    phone: '',
+    fio: '',
+    zakaz_from_address: '',
+    zakaz_to_address: '',
+    zakaz_to_address_dop: '',
+    zakaz_comment: '',
+    sdacha: '',
+    dostavka: '', /// что?
+    summ: '',
+    check_dostavka: '',
+    type_oplata: '', /// что?
+    type_zakaz: '', /// что?
+    estab: '',
+    product: '',
+  },
+  priceOrder: 0,
+  dishesPrice: 0,
+  delivery: 0, // брать у бэка
+  errorOrderFood: false,
+  loadingOrder: false,
+  goodSendOrder: false,
 };
 
 const postRequestSlice = createSlice({
   name: 'postRequestSlice',
   initialState,
   extraReducers: (builder) => {
-    ///// getEveryInnerData
-    builder.addCase(getEveryInnerData.fulfilled, (state, action) => {
+    //// postSendOrder
+    builder.addCase(postSendOrder.fulfilled, (state, action) => {
       state.loading = false;
-      state.innerData = action.payload;
+      // state.allDataFood = action.payload;
     });
-    builder.addCase(getEveryInnerData.rejected, (state, action) => {
+    builder.addCase(postSendOrder.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
     });
-    builder.addCase(getEveryInnerData.pending, (state, action) => {
+    builder.addCase(postSendOrder.pending, (state, action) => {
       state.loading = true;
     });
+    //// sendOrderFoods
+    builder.addCase(sendOrderFoods.fulfilled, (state, action) => {
+      // state.allDataFood = action.payload;
+      state.loadingOrder = false;
+      state.goodSendOrder = true;
+      setTimeout(() => {
+        state.goodSendOrder = false;
+      }, 3000);
+    });
+    builder.addCase(sendOrderFoods.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loadingOrder = false;
+      state.errorOrderFood = true;
+      setTimeout(() => {
+        state.errorOrderFood = false;
+      }, 3000);
+    });
+    builder.addCase(sendOrderFoods.pending, (state, action) => {
+      state.loadingOrder = true;
+    });
   },
-  //   reducers: {
-  //     sortDataPopular: (state, action) => {
-  //       if (action.payload === 'Все') {
-  //         return;
-  //       } else {
-  //         const sortedData = state.allDataFood.slice().sort((a, b) => {
-  //           if (a.status === action.payload && b.status !== action.payload) {
-  //             return -1; // Перемещаем 'популярные' в начало
-  //           } else if (
-  //             a.status !== action.payload &&
-  //             b.status === action.payload
-  //           ) {
-  //             return 1; // Перемещаем 'популярные' в начало
-  //           }
-  //         });
-  //         state.allDataFood = sortedData;
-  //       }
-  //     },
-  //   },
+  reducers: {
+    changeOrderUser: (state, action) => {
+      state.orderUser = action.payload;
+    },
+  },
 });
 
-// export const { sortDataPopular } = postRequestSlice.actions;
+export const { changeOrderUser } = postRequestSlice.actions;
 
 export default postRequestSlice.reducer;

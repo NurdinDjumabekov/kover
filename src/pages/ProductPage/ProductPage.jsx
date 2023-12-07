@@ -15,9 +15,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import PathToFiles from '../../components/PathToFiles/PathToFiles';
 import {
   getEveryData,
+  getEveryInnerData,
   getEveryInnerTypes,
 } from '../../store/reducers/requestFoodSlice';
-import { getEveryInnerData } from '../../store/reducers/postRequestSlice';
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -33,10 +33,9 @@ const ProductPage = () => {
     );
     dispatch(getEveryData(`http://kover-site.333.kg/get_establishments/${id}`));
     dispatch(
-      getEveryInnerData({
-        category: categ,
-        establishment: estab,
-      })
+      getEveryInnerData(
+        `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${categ}`
+      )
     );
   }, []);
 
@@ -106,9 +105,8 @@ const ProductPage = () => {
           </b>
         </div>
       </div>
-
       <SliderMain />
-      <RecomFoods />
+      <RecomFoods estab={estab} categ={categ} />
     </div>
   );
 };
