@@ -4,9 +4,9 @@ const initialState = {
   // popular: localStorage.getItem('activeText') || 'Все',
   popular: 'Все',
   pathCatalog: localStorage.getItem('pathCatalog') || '',
-  positionFoods: 0,
-  sumOrdersFoods: 0,
-  allFoodsOrders: [],
+  positionFoods: localStorage.getItem('positionFoods') || 0,
+  sumOrdersFoods: localStorage.getItem('sumOrdersFoods') || 0,
+  allFoodsOrders: localStorage.getItem('allFoodsOrders') || [],
 };
 
 const statesSlice = createSlice({
@@ -20,9 +20,11 @@ const statesSlice = createSlice({
       state.pathCatalog = action.payload;
     },
     changePositionFoods: (state, action) => {
+      localStorage.setItem('positionFoods', action.payload);
       state.positionFoods = action.payload;
     },
     changeSumOrdersFoods: (state, action) => {
+      localStorage.setItem('sumOrdersFoods', action.payload);
       state.sumOrdersFoods = action.payload;
     },
     addFoodsOrders: (state, action) => {

@@ -5,10 +5,16 @@ import img from '../../assets/images/noneData/Image.png';
 import backBtn from '../../assets/icons/backBtn.svg';
 import EveryOrdersPage from '../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage';
 import TotalOrder from '../../components/OrdersPage/TotalOrder/TotalOrder';
+import { useSelector } from 'react-redux';
 
 const OrdersPage = () => {
   const [totalOrder, setTotalOrder] = useState(false);
   const navigate = useNavigate();
+
+  const { allFoodsOrders, positionFoods, sumOrdersFoods } = useSelector(
+    (state) => state.statesSlice
+  );
+  // console.log(allFoodsOrders);
 
   const arrBucket = [
     {
@@ -26,6 +32,7 @@ const OrdersPage = () => {
       place: 'Ресторан Фаиза',
     },
   ];
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -39,14 +46,23 @@ const OrdersPage = () => {
             <p>Ваша корзина</p>
           </button>
           <div className={styles.pay}>
-            <p>8 позиций</p>
-            <span>2000 сом</span>
+            <p>{positionFoods} позиций</p>
+            <span>{sumOrdersFoods} сом</span>
           </div>
-          {arrBucket?.map((item) => (
-            <EveryOrdersPage key={item.id} item={item} />
-          ))}
+          {allFoodsOrders.length === 0 ? (
+            <p className={styles.noneFoods}>Ваша корзина пустая!</p>
+          ) : (
+            arrBucket?.map((item) => (
+              <EveryOrdersPage key={item.id} item={item} />
+            ))
+          )}
+
           <div className={styles.addOrder}>
-            <button className="standartBtn" onClick={() => setTotalOrder(true)}>
+            <button
+              className="standartBtn"
+              disabled={allFoodsOrders.length === 0}
+              onClick={() => setTotalOrder(true)}
+            >
               Оформить заказ
             </button>
           </div>

@@ -99,7 +99,7 @@ const OrderMenu = () => {
         <AccordionDetails>
           <div className={styles.basketBlock}>
             {allFoodsOrders?.length === 0 ? (
-              <p className={styles.noneFoods}>Ваша корзина пустая!</p>
+              <p className="noneFoods">Ваша корзина пустая!</p>
             ) : (
               allFoodsOrders?.map((item, ind) => (
                 <BaskesOrders key={ind} item={item} />

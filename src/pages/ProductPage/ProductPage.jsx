@@ -18,39 +18,27 @@ import {
   getEveryInnerTypes,
 } from '../../store/reducers/requestFoodSlice';
 import { getEveryInnerData } from '../../store/reducers/postRequestSlice';
-import axios from 'axios';
 
 const ProductPage = () => {
   const dispatch = useDispatch();
-  const { id, name } = useParams();
+  const { id, name, estab, categ } = useParams();
   const { everyData } = useSelector((state) => state.requestFoodSlice);
   const { pathCatalog } = useSelector((state) => state.statesSlice);
-  // console.log(everyData, 'everyData');
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-    dispatch(getEveryData(`http://kover-site.333.kg/products/${id}`));
     dispatch(
       getEveryInnerTypes(
         `http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`
       )
     );
+    dispatch(getEveryData(`http://kover-site.333.kg/get_establishments/${id}`));
+    dispatch(
+      getEveryInnerData({
+        category: categ,
+        establishment: estab,
+      })
+    );
   }, []);
-
-  const respone = async () => {
-    try {
-      dispatch(
-        getEveryInnerData({
-          category: everyData?.code_category,
-          establishment: everyData?.code_establishment,
-        })
-      );
-    } catch (error) {}
-  };
-
-  React.useEffect(() => {
-    respone();
-  }, [everyData]);
 
   // console.log(everyData, 'everyData');
 
@@ -59,9 +47,16 @@ const ProductPage = () => {
       <div className={styles.producblock__path}>
         <PathToFiles estab={pathCatalog} name={name} />
       </div>
+
       <div className={styles.producblock__inner}>
         <div className={styles.mainContent}>
-          <img src={everyData.photo} alt="food" />
+          <div className={styles.mainImg}>
+            {everyData.photo !== 'null' ? (
+              <img src={everyData.photo} alt="food" />
+            ) : (
+              <img src={foods} alt="food" />
+            )}
+          </div>
           <div className={styles.mainText}>
             <div className="container">
               <div className={styles.mainContent__up}>
@@ -72,7 +67,7 @@ const ProductPage = () => {
                 <div className={styles.mainContent__downThree}>
                   <div>
                     <img src={star} alt="*" />
-                    <p>{everyData.product_percent}</p>
+                    <p>{everyData.product_percent}4.1</p>
                     {/* <span>{everyData.quantity}</span> */}
                   </div>
                   <div className={styles.rating}>
@@ -87,7 +82,7 @@ const ProductPage = () => {
                 <div className={styles.mainContent__downTwo}>
                   <div>
                     <img src={check} alt="check" />
-                    <p>~{everyData.product_price} сом</p>
+                    <p>~{everyData.percent_stavka} сом</p>
                   </div>
                   <div>
                     <img src={kitchen} alt="kitchen" />
@@ -111,6 +106,7 @@ const ProductPage = () => {
           </b>
         </div>
       </div>
+
       <SliderMain />
       <RecomFoods />
     </div>

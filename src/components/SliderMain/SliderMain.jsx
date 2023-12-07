@@ -32,8 +32,12 @@ const SliderMain = () => {
         <div className={styles.parentSlider__inner}>
           <Slider {...settings}>
             {discounts?.map((slid) => {
-              return slid?.baner === '' ? (
-                <a key={slid.codeid} className={styles.parentSlider__every}>
+              return slid?.baner === 'null' ? (
+                <a
+                  key={slid.codeid}
+                  className={styles.parentSlider__every}
+                  href={slid.link}
+                >
                   <div>
                     <h3>{slid?.description}</h3>
                     <p>Подробнее...</p>

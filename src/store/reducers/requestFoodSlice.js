@@ -78,14 +78,15 @@ export const getEstablishmentData = createAsyncThunk(
 );
 
 // каждое учреждение
-// http://kover-site.333.kg/products/${id}
+// http://kover-site.333.kg/get_establishments/${id}
 export const getEveryData = createAsyncThunk(
   'getEveryData',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
+      // console.log(response?.data?.establishment);
       if (response.status >= 200 || response.status < 300) {
-        return response?.data?.product;
+        return response?.data?.establishment;
       } else {
         throw Error(`Error: ${response.status}`);
       }

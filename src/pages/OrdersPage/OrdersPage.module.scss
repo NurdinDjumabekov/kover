@@ -20,6 +20,18 @@
         height: 20px;
       }
     }
+
+    .noneFoods {
+      height: 65vh;
+      padding: 150px 0 0 0;
+      text-align: center;
+      color: var(--Black, #222);
+      font-family: Gilroy;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
     .pay {
       border-bottom: 1px solid var(--Gray-Line-2, #e4e4e4);
       display: flex;

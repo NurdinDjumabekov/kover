@@ -3,10 +3,18 @@ import ordering from '../../../assets/images/Main/ordering.png';
 import delivery from '../../../assets/images/Main/delivery.png';
 import styles from './MainContent.module.scss';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Preloader from '../../Preloader/Preloader';
+import { changePathCatalog } from '../../../store/reducers/statesSlice';
 
 const MainContent = () => {
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
+  const dispatch = useDispatch();
+
+  const clickEstablishment = (name) => {
+    dispatch(changePathCatalog(name));
+    localStorage.setItem('pathCatalog', name);
+  };
 
   console.log(allCategory, 'allCategory');
 
@@ -14,16 +22,21 @@ const MainContent = () => {
     <div className={styles.mainContent}>
       <div className="container">
         <div className={styles.mainContent__inner}>
-          {allCategory?.map((i) => (
-            <NavLink
-              to={`/detailed/${i.codeid}/${i.category_name}`}
-              key={i.codeid}
-              className={styles.everyCategory}
-            >
-              <img src={i.foto} alt="" />
-              <h4>{i.category_name}</h4>
-            </NavLink>
-          ))}
+          {allCategory?.length === 0 ? (
+            <Preloader />
+          ) : (
+            allCategory?.map((i) => (
+              <NavLink
+                to={`/detailed/${i.codeid}/${i.category_name}`}
+                key={i.codeid}
+                className={styles.everyCategory}
+                onClick={() => clickEstablishment(i?.category_name)}
+              >
+                <img src={i.foto} alt="категория" />
+                <h4>{i.category_name}</h4>
+              </NavLink>
+            ))
+          )}
           <NavLink to={`/delivery`} className={styles.everyCategory}>
             <img src={delivery} alt="" />
             <h4>Курьерская доставка</h4>

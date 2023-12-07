@@ -1,18 +1,14 @@
 .detailed {
   border-radius: 12px;
   background: #f4f4f4;
-  padding: 8px 12px;
   margin: 24px 0px 16px;
   .slider {
-    display: flex;
-    overflow-x: scroll;
-    white-space: nowrap;
-    padding: 0 0 10px 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    // height: 150px;
-
+    position: relative;
+    // background: red;
+    padding: 0 35px 0px 0;
     &__inner {
+      // background: green;
+
       button {
         color: var(--Black, #222);
         font-family: Gilroy;
@@ -27,14 +23,22 @@
       }
       .active {
         background: #ffc12e !important;
-        padding: 10px 12px;
+        padding: 8px 12px;
       }
     }
-  }
-  .slider::-webkit-scrollbar {
-    display: none;
+    .nextBtn {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      transform: rotate(180deg);
+      right: 5px;
+      top: 50%;
+      background-color: transparent;
+      transform: translateY(-50%) rotate(180deg);
+    }
   }
   .popular {
+    padding: 10px 0 0 5px;
     li {
       width: 200px;
     }
@@ -48,7 +52,6 @@
       font-style: normal;
       font-weight: 500;
       line-height: normal;
-      background: red;
     }
   }
 }

@@ -1,26 +1,38 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// хз что это
-// http://kover-site.333.kg/products c body ()
+// беру каждый продукт определенного учреждения
+// http://kover-site.333.kg/products
 export const getEveryInnerData = createAsyncThunk(
   'getEveryInnerData',
   async function (data, { dispatch, rejectWithValue }) {
     try {
-      //   const aa = {
-      //     code_establishment: data?.category,
-      //     code_category: data?.establishment,
-      //   };
-      //   const aa = {
-      //     code_establishment: 5,
-      //     code_category: 19,
-      //   };
       const response = await axios.post('http://kover-site.333.kg/products', {
-        code_establishment: 5,
-        code_category: 19,
+        code_establishment: data?.establishment,
+        code_category: data?.category,
       });
-      //   console.log(response?.data?.product?.[0]?.estab, 'response');
-      //   console.log(response?.data?.product, 'nurdin');
+      console.log(response, 'response');
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.product?.[0]?.estab;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const searchInnerFood = createAsyncThunk(
+  'searchInnerFood',
+  async function (search, { dispatch, rejectWithValue }) {
+    try {
+      console.log(search);
+      // const response = await axios.post('http://kover-site.333.kg/products', {
+      //   code_establishment: data?.establishment,
+      //   code_category: data?.category,
+      // });
+      // console.log(response, 'response');
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.product?.[0]?.estab;
       } else {

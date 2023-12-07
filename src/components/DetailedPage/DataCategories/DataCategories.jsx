@@ -13,7 +13,7 @@ import check from '../../../assets/icons/check.svg';
 const DataCategories = ({ allDataFood }) => {
   // const dispatch = useDispatch();
 
-  // console.log(allDataFood, 'allDataFood');
+  console.log(allDataFood, 'allDataFood');
 
   return (
     <>
@@ -23,8 +23,8 @@ const DataCategories = ({ allDataFood }) => {
         ) : (
           allDataFood?.map((food) => (
             <NavLink
-              key={food.code_category}
-              to={`/product/${food.code_category}/${food?.establishment_name}`}
+              key={food.codeid}
+              to={`/product/${food.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
               className={styles.everyData}
             >
               <div className={styles.imgs}>
