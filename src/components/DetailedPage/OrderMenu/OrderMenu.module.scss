@@ -88,11 +88,10 @@
   }
   .basketBlock {
     transform: rotate(180deg);
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
     height: 300px;
     overflow-y: scroll;
-
-    
+    > p {
+      box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+    }
   }
 }
-

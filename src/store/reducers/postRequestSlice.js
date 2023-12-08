@@ -20,20 +20,21 @@ export const postSendOrder = createAsyncThunk(
   }
 );
 
-// Отправка еды
-// http://...
+// Отправка заказа
+// http://kover-site.333.kg/create_zakaz/
 export const sendOrderFoods = createAsyncThunk(
   'sendOrderFoods',
   async function (info, { dispatch, rejectWithValue }) {
     try {
-      const response = await axios({
-        method: 'POST',
-        url: '',
-        data: {
-          info,
-        },
-      });
-
+      const response = await axios.post(
+        'http://kover-site.333.kg/create_zakaz/',
+        {...info,},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       if (response.status >= 200 || response.status < 300) {
       } else {
         throw Error(`Error: ${response.status}`);
@@ -46,24 +47,18 @@ export const sendOrderFoods = createAsyncThunk(
 
 const initialState = {
   orderUser: {
-    phone: '',
-    fio: '',
-    zakaz_from_address: '',
-    zakaz_to_address: '',
-    zakaz_to_address_dop: '',
-    zakaz_comment: '',
-    sdacha: '',
-    dostavka: '', /// что?
-    summ: '',
-    check_dostavka: '',
-    type_oplata: '', /// что?
-    type_zakaz: '', /// что?
-    estab: '',
-    product: '',
+    phone: '+996700754454',
+    fio: 'nurdin',
+    address: 'nurdin',
+    kvartira: 'nurdin',
+    hourDeliver: 'nurdin',
+    dop: 'nurdin',
+    type_oplata: 1,
+    sdacha: 'nurdin',
+    comment_zakaz: 'nurdin',
+    summ: 'nurdin',
+    product_list: [],
   },
-  priceOrder: 0,
-  dishesPrice: 0,
-  delivery: 0, // брать у бэка
   errorOrderFood: false,
   loadingOrder: false,
   goodSendOrder: false,
@@ -110,9 +105,12 @@ const postRequestSlice = createSlice({
     changeOrderUser: (state, action) => {
       state.orderUser = action.payload;
     },
+    changeTypeOrder: (state, action) => {
+      state.orderUser = { ...state.orderUser, type_oplata: action.payload };
+    },
   },
 });
 
-export const { changeOrderUser } = postRequestSlice.actions;
+export const { changeOrderUser, changeTypeOrder } = postRequestSlice.actions;
 
 export default postRequestSlice.reducer;

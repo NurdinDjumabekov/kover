@@ -5,6 +5,8 @@ const initialState = {
   pathCatalog: '',
   positionFoods: 0,
   sumOrdersFoods: 0,
+  sumDishes: 0,
+  delivery: 0, // брать у бэка
   allFoodsOrders: [],
   activeTypeEstab: 0,
   indexSlide: 0, // нужен для того , чтобы центрировать активный слайдер на детальной странице
@@ -21,13 +23,70 @@ const statesSlice = createSlice({
       state.pathCatalog = action.payload;
     },
     changePositionFoods: (state, action) => {
-      state.positionFoods = action.payload;
+      state.positionFoods = state?.allFoodsOrders?.length;
     },
     changeSumOrdersFoods: (state, action) => {
-      state.sumOrdersFoods = action.payload;
+      const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
+        const itemSum = +obj.count * +obj.product_price;
+        return sum + itemSum;
+      }, 0);
+      state.sumOrdersFoods = allSum || 0;
+    },
+    changeSumDishes: (state, action) => {
+      const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
+        const itemSum = +obj.count * +obj.posuda_price;
+        return sum + itemSum;
+      }, 0);
+      state.sumDishes = allSum || 0;
     },
     addFoodsOrders: (state, action) => {
-      state.allFoodsOrders = action.payload;
+      const existingOrderIndex = state.allFoodsOrders.findIndex(
+        (obj) => obj.codeid === action.payload.codeid
+      );
+      if (existingOrderIndex !== -1) {
+        // Если заказ с таким codeid уже существует, увеличиваем count
+        state.allFoodsOrders = state.allFoodsOrders.map((obj, index) => {
+          if (index === existingOrderIndex) {
+            return { ...obj, count: obj.count + 1, filial: 1 };
+          }
+          return obj;
+        });
+      } else {
+        // Иначе добавляем новый заказ
+        state.allFoodsOrders = [
+          ...state.allFoodsOrders,
+          { count: 1, filial: 1, ...action.payload },
+        ];
+      }
+    },
+    discountFoods: (state, action) => {
+      const { codeid } = action.payload;
+
+      const existingOrderIndex = state.allFoodsOrders.findIndex(
+        (obj) => obj.codeid === codeid
+      );
+
+      if (existingOrderIndex !== -1) {
+        const existingOrder = state.allFoodsOrders[existingOrderIndex];
+
+        if (existingOrder.count > 0) {
+          state.allFoodsOrders[existingOrderIndex] = {
+            ...existingOrder,
+            count: existingOrder.count - 1,
+          };
+        }
+      }
+    },
+    delfoodCount: (state, action) => {
+      const { codeid } = action.payload;
+      state.allFoodsOrders = state.allFoodsOrders
+        .map((obj) => {
+          if (obj.codeid === codeid && obj.count > 0) {
+            return { ...obj, count: obj.count - 1 };
+          }
+          return obj;
+        })
+        .filter((obj) => obj.count > 0);
     },
     changeActiveType: (state, action) => {
       state.activeTypeEstab = action.payload;
@@ -43,9 +102,12 @@ export const {
   changePathCatalog,
   changePositionFoods,
   changeSumOrdersFoods,
+  changeSumDishes,
   addFoodsOrders,
   changeActiveType,
   changeIndexSlide,
+  discountFoods,
+  delfoodCount,
 } = statesSlice.actions;
 
 export default statesSlice.reducer;

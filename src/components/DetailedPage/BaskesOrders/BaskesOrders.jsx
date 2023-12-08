@@ -1,15 +1,29 @@
 import React from 'react';
 import styles from './BaskesOrders.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addFoodsOrders,
+  changePositionFoods,
+  changeSumDishes,
+  changeSumOrdersFoods,
+  delfoodCount,
+  discountFoods,
+} from '../../../store/reducers/statesSlice';
 
 const BaskesOrders = ({ item }) => {
-  const [count, setCount] = React.useState(0);
-  // localStorage.getItem('orderBucket') ||
-  const counter = (type) => {
+  const dispatch = useDispatch();
+  const count = item.count || 0;
+
+  const handleCounter = (type) => {
     if (type === 'add') {
-      setCount(count + 1);
-    } else if (type === 'del') {
-      count > 0 ? setCount(count - 1) : setCount(0);
+      dispatch(addFoodsOrders(item));
+    } else if (type === 'del' && count > 0) {
+      dispatch(discountFoods({ codeid: item.codeid }));
+      dispatch(delfoodCount({ count: item.count }));
     }
+    dispatch(changeSumOrdersFoods());
+    dispatch(changePositionFoods());
+    dispatch(changeSumDishes());
   };
 
   return (
@@ -22,9 +36,9 @@ const BaskesOrders = ({ item }) => {
         <p>{item.product_price} сом</p>
       </div>
       <div className={styles.counter}>
-        <button onClick={() => counter('del')}>-</button>
-        <p>{count}</p>
-        <button onClick={() => counter('add')}>+</button>
+        <button onClick={() => handleCounter('del')}>-</button>
+        <p>{item.count}</p>
+        <button onClick={() => handleCounter('add')}>+</button>
       </div>
     </div>
   );

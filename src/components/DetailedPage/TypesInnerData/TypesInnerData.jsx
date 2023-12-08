@@ -4,27 +4,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import arrow from '../../../assets/icons/backBtn.svg';
 import Slider from 'react-slick';
 import { NoneBtn } from '../../SliderMain/SliderMain';
+import { getSortEveryData } from '../../../store/reducers/requestFoodSlice';
 
-const TypesInnerData = () => {
+const TypesInnerData = ({ estab }) => {
   const dispatch = useDispatch();
   const { everyInnerTypes } = useSelector((state) => state.requestFoodSlice);
   const [activeType, setActiveType] = React.useState(0);
   const [activeText, setActiveText] = React.useState('Все');
   // console.log(everyInnerTypes, 'everyInnerTypes');
 
-  //   const handle = (id) => {
-  //     localStorage.setItem('paginationMain', 1);
-  //     dispatch(changePaginationCount(1));
-  //     if (id === 0) {
-  //       dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
-  //     } else {
-  //       dispatch(
-  //         getEstablishmentData(
-  //           `http://kover-site.333.kg/get_establishments?category_code=${id}`
-  //         )
-  //       );
-  //     }
-  //   };
+  const handleClick = (id) => {
+    if (id === 0) {
+      dispatch(
+        getSortEveryData(
+          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=0`
+        )
+      );
+    } else {
+      dispatch(
+        getSortEveryData(
+          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${id}`
+        )
+      );
+    }
+  };
+
 
   const sliderRef = React.createRef();
 

@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './TotalOrder.scss';
 import Modals from '../../Modals/Modals';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   changeOrderUser,
+  changeTypeOrder,
   sendOrderFoods,
 } from '../../../store/reducers/postRequestSlice';
+import { sortOrders } from '../../../helpers/sortOrders';
 
 const TotalOrder = (props) => {
   const dispatch = useDispatch();
   const [count, setCount] = React.useState(0);
-
   const { orderUser } = useSelector((state) => state.postRequestSlice);
+
+  const { sumOrdersFoods, sumDishes, allFoodsOrders } = useSelector(
+    (state) => state.statesSlice
+  );
+  const allSum = +sumDishes + +sumOrdersFoods + 200;
+
+  useEffect(() => {
+    dispatch(
+      changeOrderUser({
+        ...orderUser,
+        summ: allSum,
+        product_list: sortOrders(allFoodsOrders),
+      })
+    );
+  }, [allFoodsOrders]);
+
   const sendData = (e) => {
     e.preventDefault();
+    dispatch(changeOrderUser({ ...orderUser, summ: allSum }));
     dispatch(sendOrderFoods(orderUser));
     props.changeState(false);
   };
@@ -50,36 +68,51 @@ const TotalOrder = (props) => {
         <input
           onChange={(e) => changeInput(e)}
           type="text"
-          name="zakaz_from_address"
+          name="address"
           required
           placeholder="Киевская улица, 71"
-          value={orderUser?.zakaz_from_address}
+          value={orderUser?.address}
         />
         <input
           onChange={(e) => changeInput(e)}
           type="text"
-          name="zakaz_to_address"
+          name="kvartira"
           required
           placeholder="Квартира и этаж"
-          value={orderUser?.zakaz_to_address}
+          value={orderUser?.kvartira}
         />
         <input
           onChange={(e) => changeInput(e)}
           type="text"
-          name="zakaz_to_address_dop"
+          name="hourDeliver"
           required
           placeholder="Время доставки"
-          value={orderUser?.zakaz_to_address_dop}
+          value={orderUser?.hourDeliver}
         />
         <input
           onChange={(e) => changeInput(e)}
           type="text"
-          name="zakaz_comment"
+          name="zakazDopInfo"
           required
           placeholder="Доп. информация (код двери, домофон и т.п.)"
-          value={orderUser?.zakaz_comment}
+          value={orderUser?.zakazDopInfo}
         />
         <h5>Оплата</h5>
+        {/* ////type_oplata */}
+        <div className="inputBtn">
+          <div onClick={() => dispatch(changeTypeOrder(1))}>
+            <div
+              className={orderUser.type_oplata === 1 ? 'activeBtn' : ''}
+            ></div>
+            <p>Картой</p>
+          </div>
+          <div onClick={() => dispatch(changeTypeOrder(2))}>
+            <div
+              className={orderUser.type_oplata === 2 ? 'activeBtn' : ''}
+            ></div>
+            <p>Наличные</p>
+          </div>
+        </div>
         <input
           onChange={(e) => changeInput(e)}
           type="text"
@@ -89,30 +122,30 @@ const TotalOrder = (props) => {
           value={orderUser?.sdacha}
         />
         <h5>Дополнительно</h5>
-        <div className="dishes">
+        {/* <div className="dishes">
           <h6>Посуда</h6>
           <div className="counter">
             <button onClick={() => setCount(count - 1)}>-</button>
             <p>{count}</p>
             <button onClick={() => setCount(count + 1)}>+</button>
           </div>
-        </div>
+        </div> */}
         <input
           onChange={(e) => changeInput(e)}
           type="text"
-          name="nnnn"
+          name="comment_zakaz"
           required
           placeholder="Комментарий к заказу"
-          // value={orderUser?.}// добавь
+          value={orderUser?.comment_zakaz}
         />
         <div className="line"></div>
         <div className="itog">
           <h6>Стоимость товаров</h6>
-          <p>2000 сом</p>
+          <p>{sumOrdersFoods} сом</p>
         </div>
         <div className="itog">
           <h6>Посуда</h6>
-          <p>50 сом</p>
+          <p>{sumDishes} сом</p>
         </div>
         <div className="itog">
           <h6>Доставка</h6>
@@ -120,7 +153,7 @@ const TotalOrder = (props) => {
         </div>
         <div className="allItog">
           <h5>Итого</h5>
-          <h5>2250 сом</h5>
+          <h5>{allSum} сом</h5>
         </div>
         <button className="standartBtn" type="submit">
           Оформить заказ

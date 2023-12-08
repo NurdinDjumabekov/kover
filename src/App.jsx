@@ -30,7 +30,6 @@ const App = () => {
     if (activeTypeEstab === 0) {
       dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
     }
-
     dispatch(
       getDiscounts('http://kover-site.333.kg/get_discount?code_category=1')
     );

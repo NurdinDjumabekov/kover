@@ -8,13 +8,14 @@ import imgArrow from '../../../assets/icons/backBtn.svg';
 import BaskesOrders from '../BaskesOrders/BaskesOrders';
 import img from '../../../assets/images/noneData/Image.png';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const OrderMenu = () => {
   const [look, setLook] = React.useState(false);
   const accordionRef = React.useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleAccordionToggle = () => {
     setLook(!look);
@@ -76,6 +77,8 @@ const OrderMenu = () => {
       look && navigate('/orders');
     }
   };
+
+  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   return (
     <div className={styles.accordinBlock}>

@@ -21,6 +21,7 @@ import dataAllSlice from './reducers/dataAllSlice';
 import requestFoodSlice from './reducers/requestFoodSlice';
 import statesSlice from './reducers/statesSlice';
 import postRequestSlice from './reducers/postRequestSlice';
+import accountSlice from './reducers/accountSlice';
 
 const reducer = combineReducers({
   pathSiteSlice,
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   requestFoodSlice,
   statesSlice,
   postRequestSlice,
+  accountSlice,
 });
 
 const persistConfig = {

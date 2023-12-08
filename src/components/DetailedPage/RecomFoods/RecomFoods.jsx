@@ -5,7 +5,12 @@ import foods from '../../../assets/images/noneData/foodsss.png';
 import OrderMenu from '../OrderMenu/OrderMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import TypesInnerData from '../TypesInnerData/TypesInnerData';
-import { addFoodsOrders } from '../../../store/reducers/statesSlice';
+import {
+  addFoodsOrders,
+  changePositionFoods,
+  changeSumDishes,
+  changeSumOrdersFoods,
+} from '../../../store/reducers/statesSlice';
 import {
   getEveryInnerData,
   searchInnerFood,
@@ -17,31 +22,19 @@ const RecomFoods = ({ estab, categ }) => {
   const { miniLoader, innerData } = useSelector(
     (state) => state.requestFoodSlice
   );
-  const { allFoodsOrders } = useSelector((state) => state.statesSlice);
-  const arrBucket = [
-    {
-      codeid: 1,
-      product_name: 'Салат из свежих овощей',
-      photo: foods,
-      product_price: '90 сом',
-      place: 'Ресторан Фаиза',
-      status: 5,
-    },
-    {
-      codeid: 2,
-      product_name: 'Фаиза Фаиза Фаиза Фаиза  Фаиза',
-      photo: foods,
-      product_price: '150 сом',
-      place: 'Ресторан Фаиза',
-      status: 2,
-    },
-  ];
+  const { allFoodsOrders, sumOrdersFoods } = useSelector(
+    (state) => state.statesSlice
+  );
+
   const addBucket = (data) => {
-    dispatch(addFoodsOrders([...allFoodsOrders, data]));
+    dispatch(addFoodsOrders(data));
+    dispatch(changeSumOrdersFoods());
+    dispatch(changePositionFoods());
+    dispatch(changeSumDishes());
   };
 
   // console.log(innerData, 'innerData');
-  // console.log(allFoodsOrders, 'allFoodsOrders');
+  console.log(allFoodsOrders, 'allFoodsOrders');
 
   const searchInput = debounce((text) => {
     if (text === '') {
@@ -68,18 +61,20 @@ const RecomFoods = ({ estab, categ }) => {
             onChange={(e) => searchInput(e.target.value)}
           />
           <div>
-            <TypesInnerData />
+            <TypesInnerData estab={estab} />
           </div>
           <ul>
             {miniLoader && <MiniPreloader />}
-            {arrBucket?.map((food) => (
+            {innerData?.map((food) => (
               <li key={food.codeid}>
                 {food?.status && <p className={styles.types}>{food?.status}</p>}
                 <img src={food?.photo} alt="временно" />
                 <h6>{food.product_name}</h6>
                 <div>
                   <p>{food.product_price} сом</p>
-                  {/* <span>{food.massa}</span> */}
+                  <span>
+                    {food.v_ves} {food.ves_name}
+                  </span>
                 </div>
                 <button onClick={() => addBucket(food)}>Добавить</button>
               </li>

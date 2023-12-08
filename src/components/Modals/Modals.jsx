@@ -33,6 +33,7 @@ const Modals = (props) => {
         PaperProps={{
           sx: {
             borderRadius: '20px 20px 0px 0px',
+            padding: '20px 0 0 0',
           },
         }}
         anchor="bottom"

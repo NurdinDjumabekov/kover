@@ -26,6 +26,7 @@ const ProductPage = () => {
   const { pathCatalog } = useSelector((state) => state.statesSlice);
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(
       getEveryInnerTypes(
         `http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}`
@@ -34,7 +35,7 @@ const ProductPage = () => {
     dispatch(getEveryData(`http://kover-site.333.kg/get_establishments/${id}`));
     dispatch(
       getEveryInnerData(
-        `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${categ}`
+        `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${'0'}`
       )
     );
   }, []);
