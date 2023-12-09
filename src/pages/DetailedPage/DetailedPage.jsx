@@ -10,11 +10,11 @@ import { useParams } from 'react-router-dom';
 
 const DetailedPage = () => {
   const dispatch = useDispatch();
-  const { estab } = useParams();
+  const { estab, id } = useParams();
+  console.log(id);
 
   const { allDataFood } = useSelector((state) => state.requestFoodSlice);
   const { paginationCount } = useSelector((state) => state.dataAllSlice);
-  const { popular } = useSelector((state) => state.statesSlice);
 
   let startIndex = (paginationCount - 1) * 16;
   let endIndex = paginationCount * 16;
@@ -38,9 +38,17 @@ const DetailedPage = () => {
       <div className="container">
         <div className={styles.detailedBlock__inner}>
           <PathToFiles estab={estab} />
-          <TypesDetailed />
-          <DataCategories allDataFood={sortData} />
-          {allDataFood?.length !== 0 && <Paginations />}
+          <TypesDetailed id={id} />
+          {+id === 15 ? (
+            <>
+              <DataCategories allDataFood={sortData} />
+              {allDataFood?.length !== 0 && <Paginations />}
+            </>
+          ) : (
+            <>
+              <DataCategories allDataFood={[]} />
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -94,6 +94,12 @@ const statesSlice = createSlice({
     changeIndexSlide: (state, action) => {
       state.indexSlide = action.payload;
     },
+    resetBusket: (state, action) => {
+      state.allFoodsOrders = [];
+      state.sumDishes = 0;
+      state.positionFoods = 0;
+      state.sumOrdersFoods = 0;
+    },
   },
 });
 
@@ -108,6 +114,7 @@ export const {
   changeIndexSlide,
   discountFoods,
   delfoodCount,
+  resetBusket,
 } = statesSlice.actions;
 
 export default statesSlice.reducer;

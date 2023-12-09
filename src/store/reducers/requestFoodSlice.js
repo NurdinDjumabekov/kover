@@ -137,23 +137,23 @@ export const getDiscounts = createAsyncThunk(
 
 // учреждение(магазины, рестораны ...), сортировка внутренних типов каждого учреждения
 // http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}
-export const getSortEveryData = createAsyncThunk(
-  'getSortEveryData',
-  async function (api, { dispatch, rejectWithValue }) {
-    try {
-      const response = await axios(api);
-      if (response.status >= 200 || response.status < 300) {
-        console.log(response);
-        // return response?.data?.product_category;
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    } finally {
-    }
-  }
-);
+// export const getSortEveryData = createAsyncThunk(
+//   'getSortEveryData',
+//   async function (api, { dispatch, rejectWithValue }) {
+//     try {
+//       const response = await axios(api);
+//       if (response.status >= 200 || response.status < 300) {
+//         console.log(response);
+//         return response?.data?.product;
+//       } else {
+//         throw Error(`Error: ${response.status}`);
+//       }
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     } finally {
+//     }
+//   }
+// );
 
 // http://kover-site.333.kg/products?search=пирожок?code_establishment=5?code_category=5
 // внутренний поиск по продуктам
@@ -162,7 +162,9 @@ export const searchInnerFood = createAsyncThunk(
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(
-        `http://kover-site.333.kg/products?search=${data?.text}?code_establishment=${data?.estab}?code_category=${"0"}`
+        `http://kover-site.333.kg/products?search=${
+          data?.text
+        }?code_establishment=${data?.estab}?code_category=${'0'}`
       );
       //// поменять!
       console.log(response, 'response');
@@ -301,7 +303,7 @@ const requestFoodSlice = createSlice({
     builder.addCase(getEveryInnerTypes.fulfilled, (state, action) => {
       state.loading = false;
       state.everyInnerTypes = [
-        { category_name: 'Все', codeid: 0 },
+        { category_name: 'Все', codeid: 0, code_category: 0 },
         ...action.payload,
       ];
     });

@@ -16,7 +16,7 @@ import {
   changePopular,
 } from '../../../store/reducers/statesSlice';
 
-const TypesDetailed = () => {
+const TypesDetailed = ({ id }) => {
   const dispatch = useDispatch();
   const sliderRef = React.createRef();
   const { activeTypeEstab } = useSelector((state) => state.statesSlice);
@@ -67,32 +67,38 @@ const TypesDetailed = () => {
   };
 
   return (
-    <ul className={styles.detailed}>
-      <li className={styles.slider}>
-        <Slider ref={sliderRef} {...settings}>
-          {establishmentCategory?.map((type) => (
-            <div
-              key={type.codeid}
-              className={styles.slider__inner}
-              onClick={() => handleClick(type.codeid)}
-            >
-              <button
-                onClick={() => dispatch(changeActiveType(type.codeid))}
-                className={type.codeid === activeTypeEstab ? styles.active : ''}
-              >
-                {type.category_name}
-              </button>
-            </div>
-          ))}
-        </Slider>
-        <button onClick={handleNext} className={styles.nextBtn}>
-          <img src={arrow} alt="<" />
-        </button>
-      </li>
-      <li className={styles.popular}>
-        <SelectsPopular />
-      </li>
-    </ul>
+    <>
+      {+id === 15 && (
+        <ul className={styles.detailed}>
+          <li className={styles.slider}>
+            <Slider ref={sliderRef} {...settings}>
+              {establishmentCategory?.map((type) => (
+                <div
+                  key={type.codeid}
+                  className={styles.slider__inner}
+                  onClick={() => handleClick(type.codeid)}
+                >
+                  <button
+                    onClick={() => dispatch(changeActiveType(type.codeid))}
+                    className={
+                      type.codeid === activeTypeEstab ? styles.active : ''
+                    }
+                  >
+                    {type.category_name}
+                  </button>
+                </div>
+              ))}
+            </Slider>
+            <button onClick={handleNext} className={styles.nextBtn}>
+              <img src={arrow} alt="<" />
+            </button>
+          </li>
+          <li className={styles.popular}>
+            <SelectsPopular />
+          </li>
+        </ul>
+      )}
+    </>
   );
 };
 

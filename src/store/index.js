@@ -22,6 +22,7 @@ import requestFoodSlice from './reducers/requestFoodSlice';
 import statesSlice from './reducers/statesSlice';
 import postRequestSlice from './reducers/postRequestSlice';
 import accountSlice from './reducers/accountSlice';
+import EditDataUser from './reducers/EditDataUser';
 
 const reducer = combineReducers({
   pathSiteSlice,
@@ -30,12 +31,13 @@ const reducer = combineReducers({
   statesSlice,
   postRequestSlice,
   accountSlice,
+  EditDataUser,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['statesSlice'],
+  whitelist: ['statesSlice', 'accountSlice'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

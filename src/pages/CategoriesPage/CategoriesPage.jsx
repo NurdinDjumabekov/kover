@@ -5,14 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changePathTwo } from '../../store/reducers/pathSiteSlice';
 import { getCategory } from '../../store/reducers/requestFoodSlice';
 import Preloader from '../../components/Preloader/Preloader';
-import img from '../../assets/images/noneData/categ.png';
 import ordering from '../../assets/images/Main/ordering.png';
 import delivery from '../../assets/images/Main/delivery.png';
 import { changePathCatalog } from '../../store/reducers/statesSlice';
+import img1 from '../../assets/images/noneData/categ.png';
+import img2 from '../../assets/images/noneData/Rectangle4.png';
+import img3 from '../../assets/images/noneData/Rectangle5.png';
+import img4 from '../../assets/images/noneData/Rectangle6.png';
+import img5 from '../../assets/images/noneData/Rectangle7.png';
+import img6 from '../../assets/images/noneData/Rectangle8.png';
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
+
+  const arrImg = [img2, img6, img5, img6, img2, img4, img3, img5, img5];
 
   React.useEffect(() => {
     dispatch(
@@ -28,7 +35,7 @@ const CategoriesPage = () => {
     localStorage.setItem('pathCatalog', name);
   };
 
-  // console.log(allCategory, 'allCategory');
+  console.log(allCategory, 'allCategory');
   return (
     <div className={styles.caregoryBlock}>
       <div className="container">
@@ -36,7 +43,7 @@ const CategoriesPage = () => {
           {allCategory?.length === 0 ? (
             <Preloader />
           ) : (
-            allCategory?.map((i) => (
+            allCategory?.map((i, ind) => (
               <NavLink
                 to={`/detailed/${i.codeid}/${i.category_name}`}
                 key={i.codeid}
@@ -44,7 +51,7 @@ const CategoriesPage = () => {
                 onClick={() => clickEstablishment(i?.category_name)}
               >
                 <h4>{i.category_name}</h4>
-                <img src={i.foto} alt="категория" />
+                <img src={arrImg[ind]} alt="категория" />
               </NavLink>
             ))
           )}

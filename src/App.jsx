@@ -27,6 +27,13 @@ const App = () => {
   const { activeTypeEstab } = useSelector((state) => state.statesSlice);
 
   useEffect(() => {
+    // if (activeTypeEstab === 0) {
+    //   dispatch(
+    //     getAllDataFood(
+    //       'http://kover-site.333.kg/get_establishments?category_code=15'
+    //     )
+    //   );
+    // }
     if (activeTypeEstab === 0) {
       dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
     }

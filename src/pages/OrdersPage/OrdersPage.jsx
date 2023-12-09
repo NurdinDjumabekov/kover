@@ -22,6 +22,10 @@ const OrdersPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const clickBtnOrder = () => {
+    allFoodsOrders.length === 0 ? navigate('/categories') : setTotalOrder(true);
+  };
+
   // console.log(allFoodsOrders);
   return (
     <>
@@ -37,7 +41,9 @@ const OrdersPage = () => {
               <span>{sumOrdersFoods} сом</span>
             </div>
             {allFoodsOrders.length === 0 ? (
-              <p className={styles.noneFoods}>Ваша корзина пустая!</p>
+              <div className={styles.noneFoods}>
+                <p>Ваша корзина пустая!</p>
+              </div>
             ) : (
               allFoodsOrders?.map((item, ind) => (
                 <EveryOrdersPage key={ind} item={item} />
@@ -46,8 +52,8 @@ const OrdersPage = () => {
             <div className={styles.addOrder}>
               <button
                 className="standartBtn"
-                disabled={allFoodsOrders.length === 0}
-                onClick={() => setTotalOrder(true)}
+                // disabled={allFoodsOrders.length === 0}
+                onClick={clickBtnOrder}
               >
                 Оформить заказ
               </button>

@@ -34,7 +34,7 @@ const RecomFoods = ({ estab, categ }) => {
   };
 
   // console.log(innerData, 'innerData');
-  console.log(allFoodsOrders, 'allFoodsOrders');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   const searchInput = debounce((text) => {
     if (text === '') {
@@ -64,21 +64,32 @@ const RecomFoods = ({ estab, categ }) => {
             <TypesInnerData estab={estab} />
           </div>
           <ul>
-            {miniLoader && <MiniPreloader />}
-            {innerData?.map((food) => (
-              <li key={food.codeid}>
-                {food?.status && <p className={styles.types}>{food?.status}</p>}
-                <img src={food?.photo} alt="временно" />
-                <h6>{food.product_name}</h6>
-                <div>
-                  <p>{food.product_price} сом</p>
-                  <span>
-                    {food.v_ves} {food.ves_name}
-                  </span>
-                </div>
-                <button onClick={() => addBucket(food)}>Добавить</button>
-              </li>
-            ))}
+            {miniLoader ? (
+              <MiniPreloader />
+            ) : (
+              <>
+                {innerData?.length === 0 ? (
+                  <p className="noneData">Данных пока что нету</p>
+                ) : (
+                  innerData?.map((food) => (
+                    <li key={food.codeid}>
+                      {food?.status && (
+                        <p className={styles.types}>{food?.status}</p>
+                      )}
+                      <img src={food?.photo} alt="временно" />
+                      <h6>{food.product_name}</h6>
+                      <div>
+                        <p>{food.product_price} сом</p>
+                        <span>
+                          {food.v_ves} {food.ves_name}
+                        </span>
+                      </div>
+                      <button onClick={() => addBucket(food)}>Добавить</button>
+                    </li>
+                  ))
+                )}
+              </>
+            )}
           </ul>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Preloader from '../../Preloader/Preloader';
 import { changePathCatalog } from '../../../store/reducers/statesSlice';
 
-const MainContent = () => {
+const MainContent = ({ arrImg }) => {
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
   const dispatch = useDispatch();
 
@@ -25,14 +25,14 @@ const MainContent = () => {
           {allCategory?.length === 0 ? (
             <Preloader />
           ) : (
-            allCategory?.map((i) => (
+            allCategory?.map((i, ind) => (
               <NavLink
                 to={`/detailed/${i.codeid}/${i.category_name}`}
                 key={i.codeid}
                 className={styles.everyCategory}
                 onClick={() => clickEstablishment(i?.category_name)}
               >
-                <img src={i.foto} alt="категория" />
+                <img src={arrImg[ind]} alt="категория" />
                 <h4>{i.category_name}</h4>
               </NavLink>
             ))

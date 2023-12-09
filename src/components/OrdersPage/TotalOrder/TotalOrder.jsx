@@ -3,16 +3,22 @@ import './TotalOrder.scss';
 import Modals from '../../Modals/Modals';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  changeError,
+  changeGoodSent,
+  changeLoading,
   changeOrderUser,
   changeTypeOrder,
   sendOrderFoods,
 } from '../../../store/reducers/postRequestSlice';
 import { sortOrders } from '../../../helpers/sortOrders';
+import { useNavigate } from 'react-router-dom';
 
 const TotalOrder = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [count, setCount] = React.useState(0);
   const { orderUser } = useSelector((state) => state.postRequestSlice);
+  const { dataUser } = useSelector((state) => state.accountSlice);
 
   const { sumOrdersFoods, sumDishes, allFoodsOrders } = useSelector(
     (state) => state.statesSlice
@@ -34,7 +40,15 @@ const TotalOrder = (props) => {
     dispatch(changeOrderUser({ ...orderUser, summ: allSum }));
     dispatch(sendOrderFoods(orderUser));
     props.changeState(false);
+
+    setTimeout(() => {
+      dispatch(changeError(false));
+      dispatch(changeLoading(false));
+      dispatch(changeGoodSent(false));
+      navigate('/main');
+    }, 4000);
   };
+
   console.log(orderUser);
 
   const changeInput = (e) => {
@@ -43,6 +57,16 @@ const TotalOrder = (props) => {
       changeOrderUser({ ...orderUser, [e.target.name]: e.target.value })
     );
   };
+
+  React.useEffect(() => {
+    dispatch(
+      changeOrderUser({
+        ...orderUser,
+        fio: dataUser?.name,
+        phone: dataUser?.numberPhone,
+      })
+    );
+  }, []);
 
   return (
     <Modals state={props.state} title={'Итого'} changeState={props.changeState}>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import arrow from '../../../assets/icons/backBtn.svg';
 import Slider from 'react-slick';
 import { NoneBtn } from '../../SliderMain/SliderMain';
-import { getSortEveryData } from '../../../store/reducers/requestFoodSlice';
+import { getEveryInnerData } from '../../../store/reducers/requestFoodSlice';
 
 const TypesInnerData = ({ estab }) => {
   const dispatch = useDispatch();
@@ -12,23 +12,24 @@ const TypesInnerData = ({ estab }) => {
   const [activeType, setActiveType] = React.useState(0);
   const [activeText, setActiveText] = React.useState('Все');
   // console.log(everyInnerTypes, 'everyInnerTypes');
+  // console.log(estab, 'estab');
 
-  const handleClick = (id) => {
-    if (id === 0) {
+  const handleClick = (category) => {
+    console.log(category);
+    if (category === 0) {
       dispatch(
-        getSortEveryData(
+        getEveryInnerData(
           `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=0`
         )
       );
     } else {
       dispatch(
-        getSortEveryData(
-          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${id}`
+        getEveryInnerData(
+          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${category}`
         )
       );
     }
   };
-
 
   const sliderRef = React.createRef();
 
@@ -57,7 +58,7 @@ const TypesInnerData = ({ estab }) => {
                   <div
                     key={type.codeid}
                     className={styles.slider__inner}
-                    onClick={() => handleClick(type.codeid)}
+                    onClick={() => handleClick(type.code_category)}
                   >
                     <button
                       onClick={() => setActiveType(type.codeid)}
