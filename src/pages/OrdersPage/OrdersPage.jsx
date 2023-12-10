@@ -52,7 +52,6 @@ const OrdersPage = () => {
             <div className={styles.addOrder}>
               <button
                 className="standartBtn"
-                // disabled={allFoodsOrders.length === 0}
                 onClick={clickBtnOrder}
               >
                 Оформить заказ

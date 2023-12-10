@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.scss';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainInfo from './pages/MainInfo/MainInfo';
 import Login from './pages/Login/Login';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
@@ -21,10 +21,13 @@ import {
   getExample,
 } from './store/reducers/requestFoodSlice';
 import Preloader from './components/Preloader/Preloader';
+import Alerts from './components/Alerts/Alerts';
 
 const App = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { activeTypeEstab } = useSelector((state) => state.statesSlice);
+  const { alertText } = useSelector((state) => state.EditDataUser);
   const { tokenNum, tokenName } = useSelector((state) => state.accountSlice);
 
   useEffect(() => {
@@ -45,15 +48,13 @@ const App = () => {
   }, []);
 
   const { loading } = useSelector((state) => state.requestFoodSlice);
+  // console.log(alertText, 'alertText');
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<MainInfo />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/welcome" element={<WelcomePage />} />
         <>
-          {tokenNum && tokenName && (
+          {!!tokenNum && !!tokenName ? (
             <Route path="/" element={<Layout />}>
               <Route path="/main" element={<MainPage />} />
               <Route path="/search" element={<SearchPage />} />
@@ -68,10 +69,17 @@ const App = () => {
               <Route path="/delivery" element={<DeliveryPage />} />
               <Route path="/listorder" element={<OrderListPage />} />
             </Route>
+          ) : (
+            <>
+              <Route path="/" element={<MainInfo />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/welcome" element={<WelcomePage />} />
+            </>
           )}
         </>
       </Routes>
       {loading && <Preloader />}
+      <Alerts />
     </>
   );
 };

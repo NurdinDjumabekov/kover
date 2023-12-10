@@ -1,37 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { resetBusket } from './statesSlice';
+import { chnageAlertText } from './EditDataUser';
 import {
   changeDataUser,
   changeTokenName,
   changeTokenNum,
 } from './accountSlice';
-
-// Отправка заказа
-// http://kover-site.333.kg/create_zakaz/
-export const sendOrderFoods = createAsyncThunk(
-  'sendOrderFoods',
-  async function (info, { dispatch, rejectWithValue }) {
-    try {
-      const response = await axios.post(
-        'http://kover-site.333.kg/create_zakaz/',
-        { ...info },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (response.status >= 200 || response.status < 300) {
-        dispatch(resetBusket());
-      } else {
-        throw Error(`Error: ${response.status}`);
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
 
 // Отправка номера для регистрации
 // http://kover-site.333.kg/send_code/
@@ -57,6 +32,13 @@ export const sendNumAuth = createAsyncThunk(
         throw Error(`Error: ${response.status}`);
       }
     } catch (error) {
+      dispatch(
+        chnageAlertText({
+          text: 'Нету соединения с интернетом!',
+          backColor: 'red',
+          state: true,
+        })
+      );
       return rejectWithValue(error.message);
     }
   }
@@ -89,6 +71,13 @@ export const checkNum = createAsyncThunk(
         throw Error(`Error: ${response.status}`);
       }
     } catch (error) {
+      dispatch(
+        chnageAlertText({
+          text: 'Произошла ошибка!',
+          backColor: 'red',
+          state: true,
+        })
+      );
       return rejectWithValue(error.message);
     }
   }
@@ -120,6 +109,46 @@ export const authName = createAsyncThunk(
           ? dispatch(changeTokenName(info?.dataUser?.name))
           : dispatch(changeTokenName(''));
       } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      dispatch(
+        chnageAlertText({
+          text: 'Ошибка! Повторите попытку позже!',
+          backColor: 'red',
+          state: true,
+        })
+      );
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Отправка заказа
+// http://kover-site.333.kg/create_zakaz/
+export const sendOrderFoods = createAsyncThunk(
+  'sendOrderFoods',
+  async function (info, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios.post(
+        'http://kover-site.333.kg/create_zakaz/',
+        { ...info },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response.status >= 200 || response.status < 300) {
+        dispatch(resetBusket());
+      } else {
+        dispatch(
+          chnageAlertText({
+            text: 'Упс! Что-то пошло не так... Повторите попытку позже!',
+            backColor: 'red',
+            state: true,
+          })
+        );
         throw Error(`Error: ${response.status}`);
       }
     } catch (error) {
@@ -207,7 +236,6 @@ const postRequestSlice = createSlice({
     changeGoodSent: (state, action) => {
       state.goodSendOrder = action.payload;
     },
-   
   },
 });
 

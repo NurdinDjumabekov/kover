@@ -3,6 +3,7 @@ import styles from './ConfirmNum.module.scss';
 import { checkNum } from '../../../store/reducers/postRequestSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { chnageAlertText } from '../../../store/reducers/EditDataUser';
 
 const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
   const [seconds, setSeconds] = React.useState(0);
@@ -69,6 +70,14 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
     e.preventDefault();
     if (code?.join('')?.length === 4) {
       dispatch(checkNum({ code, dataUser }));
+    } else {
+      dispatch(
+        chnageAlertText({
+          text: 'Введите все четыре символа',
+          backColor: 'red',
+          state: true,
+        })
+      );
     }
   };
 

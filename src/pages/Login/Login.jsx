@@ -7,6 +7,7 @@ import { addSession, changeDataUser } from '../../store/reducers/accountSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendNumAuth } from '../../store/reducers/postRequestSlice';
 import ConfirmNum from '../../components/LoginPage/ConfirmNum/ConfirmNum';
+import { chnageAlertText } from '../../store/reducers/EditDataUser';
 
 const Login = () => {
   const [stateSendNum, setStateSendNum] = React.useState(1); // уровни логинизации
@@ -40,6 +41,14 @@ const Login = () => {
       dispatch(sendNumAuth(dataUser));
       setStateSendNum(2);
       setTime('03:00');
+    } else {
+      dispatch(
+        chnageAlertText({
+          text: 'Введите правильно номер телефона!',
+          backColor: 'red',
+          state: true,
+        })
+      );
     }
   };
 

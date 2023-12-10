@@ -15,7 +15,6 @@ const AddUserPlace = () => {
     infoDop: '',
   });
 
-  console.log(placeUser, 'placeUser');
   const { dataUser, tokenNum, tokenName } = useSelector(
     (state) => state.accountSlice
   );
@@ -27,12 +26,17 @@ const AddUserPlace = () => {
 
   const sendData = (e) => {
     e.preventDefault();
-    dispatch(authName({ dataUser, placeUser }));
-  };
 
-  React.useEffect(() => {
-    !!tokenName && !!tokenNum ? navigate('/main') : '';
-  }, [tokenName, tokenNum]);
+    const fetchData = async () => {
+      try {
+        await dispatch(authName({ dataUser, placeUser }));
+        navigate('/main');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
+  };
 
   return (
     <div className={styles.delivery}>

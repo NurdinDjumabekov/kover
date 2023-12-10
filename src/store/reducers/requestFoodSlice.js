@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { chnageAlertText } from './EditDataUser';
+import { initialStateAll } from './accountSlice';
 
 // беру все данные
 // http://kover-site.333.kg/get_establishments/
@@ -33,8 +35,13 @@ export const getEstablishmentCategory = createAsyncThunk(
         throw Error(`Error: ${response.status}`);
       }
     } catch (error) {
+      // dispatch(
+      //   chnageAlertText({
+      //     text: 'Что-то пошло не так! Повторите попытку позже',
+      //     backColor: 'red',
+      //   })
+      // );
       return rejectWithValue(error.message);
-    } finally {
     }
   }
 );
@@ -219,7 +226,7 @@ export const getExample = createAsyncThunk(
   }
 );
 
-const initialState = {
+export const initialState = {
   allDataFood: [],
   establishmentCategory: [],
   allCategory: [],
@@ -227,14 +234,10 @@ const initialState = {
   everyInnerTypes: [],
   discounts: [],
   innerData: [],
-  loading: true,
-  miniLoader: true,
-  error: null,
 };
-
 const requestFoodSlice = createSlice({
   name: 'requestFoodSlice',
-  initialState,
+  initialState: { ...initialState, ...initialStateAll },
   extraReducers: (builder) => {
     ///// getAllDataFood
     builder.addCase(getAllDataFood.fulfilled, (state, action) => {
@@ -307,7 +310,6 @@ const requestFoodSlice = createSlice({
         ...action.payload,
       ];
     });
-
     builder.addCase(getEveryInnerTypes.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;

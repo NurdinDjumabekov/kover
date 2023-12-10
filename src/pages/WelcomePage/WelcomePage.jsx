@@ -21,7 +21,8 @@ const WelcomePage = () => {
     dispatch(changeDataUser({ ...dataUser, [e.target.name]: e.target.value }));
   };
 
-  const sendNameUser = () => {
+  const sendNameUser = (e) => {
+    e.preventDefault();
     if (dataUser?.name !== '') {
       setStageLogin(2);
     }
@@ -39,9 +40,10 @@ const WelcomePage = () => {
               className={styles.name}
               type="text"
               name="name"
-              placeholder="Ваше имя"
+              placeholder="Ваше ФИО"
               value={dataUser.name}
               onChange={changeInput}
+              required
             />
             <div className={styles.agreement}>
               <span>

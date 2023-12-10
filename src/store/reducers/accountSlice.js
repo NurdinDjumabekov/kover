@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialStateAll = {
+  loading: true,
+  miniLoader: true,
+  error: null,
+  tokenNum: '',
+  tokenName: '',
   dataUser: {
     name: '',
     numberPhone: '',
@@ -9,13 +14,11 @@ const initialState = {
     contacts: [], // {message:whatsApp,num:996700754454}
     idUser: 0,
   },
-  tokenNum: '',
-  tokenName: '',
 };
 
 const accountSlice = createSlice({
   name: 'accountSlice',
-  initialState,
+  initialState: initialStateAll,
   reducers: {
     changeDataUser: (state, action) => {
       state.dataUser = action.payload;

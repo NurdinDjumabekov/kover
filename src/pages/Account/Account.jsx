@@ -18,18 +18,13 @@ const Account = () => {
   const [location, setLocation] = React.useState(false);
   const [editNum, setEditNum] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
+  const { dataUser } = useSelector((state) => state.accountSlice);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { tokenName, tokenNum, dataUser } = useSelector(
-    (state) => state.accountSlice
-  );
-  const { orderUser } = useSelector((state) => state.postRequestSlice);
-
-  console.log(dataUser, 'dataUser');
-  // console.log(orderUser, 'orderUser');
+  
 
   return (
     <div className={styles.accountBlock}>
