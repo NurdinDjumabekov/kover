@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { resetBusket } from './statesSlice';
-import { changeDataUser, changeTokenName } from './accountSlice';
+import {
+  changeDataUser,
+  changeTokenName,
+  changeTokenNum,
+} from './accountSlice';
 
 // Отправка заказа
 // http://kover-site.333.kg/create_zakaz/
@@ -78,8 +82,8 @@ export const checkNum = createAsyncThunk(
       );
       if (response.status >= 200 || response.status < 300) {
         response?.data?.result === 1
-          ? dispatch(changeDataUser({ ...info }))
-          : dispatch(changeDataUser({ ...info, numberPhone: '' }));
+          ? dispatch(changeTokenNum(info?.dataUser?.numberPhone))
+          : dispatch(changeTokenNum(''));
         return response?.data?.result;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -142,7 +146,6 @@ const initialState = {
   loadingOrder: false,
   goodSendOrder: false,
   checkAuth: 0,
-  enter: false,
 };
 
 const postRequestSlice = createSlice({
@@ -204,9 +207,7 @@ const postRequestSlice = createSlice({
     changeGoodSent: (state, action) => {
       state.goodSendOrder = action.payload;
     },
-    changeEnter: (state, action) => {
-      state.enter = action.payload;
-    },
+   
   },
 });
 
@@ -216,7 +217,6 @@ export const {
   changeError,
   changeLoading,
   changeGoodSent,
-  changeEnter,
 } = postRequestSlice.actions;
 
 export default postRequestSlice.reducer;

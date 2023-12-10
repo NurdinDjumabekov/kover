@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../../assets/images/Logo.png';
 import styles from './Login.module.scss';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 import { addSession, changeDataUser } from '../../store/reducers/accountSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,8 +17,6 @@ const Login = () => {
 
   const { dataUser } = useSelector((state) => state.accountSlice);
 
-  // console.log(dataUser, 'dataUser');
-
   React.useEffect(() => {
     const uniqueNumber = Math.floor(Math.random() * Date.now());
     dispatch(addSession(uniqueNumber));
@@ -30,6 +28,8 @@ const Login = () => {
   };
 
   // console.log(stateSendNum);
+  // console.log(dataUser, 'dataUser');
+
   /////////////////////////////////////////////
 
   ///////////////////////////////////

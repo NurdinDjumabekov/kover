@@ -25,6 +25,7 @@ import Preloader from './components/Preloader/Preloader';
 const App = () => {
   const dispatch = useDispatch();
   const { activeTypeEstab } = useSelector((state) => state.statesSlice);
+  const { tokenNum, tokenName } = useSelector((state) => state.accountSlice);
 
   useEffect(() => {
     // if (activeTypeEstab === 0) {
@@ -51,20 +52,24 @@ const App = () => {
         <Route path="/" element={<MainInfo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/" element={<Layout />}>
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/detailed/:id/:estab" element={<DetailedPage />} />
-          <Route
-            path="/product/:id/:name/:estab/:categ"
-            element={<ProductPage />}
-          />
-          <Route path="/account" element={<Account />} />
-          <Route path="/delivery" element={<DeliveryPage />} />
-          <Route path="/listorder" element={<OrderListPage />} />
-        </Route>
+        <>
+          {tokenNum && tokenName && (
+            <Route path="/" element={<Layout />}>
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/detailed/:id/:estab" element={<DetailedPage />} />
+              <Route
+                path="/product/:id/:name/:estab/:categ"
+                element={<ProductPage />}
+              />
+              <Route path="/account" element={<Account />} />
+              <Route path="/delivery" element={<DeliveryPage />} />
+              <Route path="/listorder" element={<OrderListPage />} />
+            </Route>
+          )}
+        </>
       </Routes>
       {loading && <Preloader />}
     </>

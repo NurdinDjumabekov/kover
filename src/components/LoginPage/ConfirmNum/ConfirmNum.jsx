@@ -3,12 +3,11 @@ import styles from './ConfirmNum.module.scss';
 import { checkNum } from '../../../store/reducers/postRequestSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { changeStateSendNum } from '../../../store/reducers/accountSlice';
 
 const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
   const [seconds, setSeconds] = React.useState(0);
   const { dataUser } = useSelector((state) => state.accountSlice);
-  const { checkAuth, enter } = useSelector((state) => state.postRequestSlice);
+  const { checkAuth } = useSelector((state) => state.postRequestSlice);
   const [code, setCode] = React.useState(['', '', '', '']);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,10 +61,8 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
   React.useEffect(() => {
     if (+checkAuth === 1) {
       navigate('/welcome');
-      dispatch(changeStateSendNum(dataUser?.numberPhone));
     }
     // console.log(checkAuth, 'checkAuth');
-    // console.log(enter, 'enter');
   }, [checkAuth]);
 
   const confirmNum = (e) => {

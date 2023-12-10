@@ -20,6 +20,7 @@ const WelcomePage = () => {
     e.preventDefault();
     dispatch(changeDataUser({ ...dataUser, [e.target.name]: e.target.value }));
   };
+
   const sendNameUser = () => {
     if (dataUser?.name !== '') {
       setStageLogin(2);

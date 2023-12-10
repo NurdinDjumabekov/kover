@@ -9,7 +9,6 @@ const initialState = {
     contacts: [], // {message:whatsApp,num:996700754454}
     idUser: 0,
   },
-  stateSendNum: 1,
   tokenNum: '',
   tokenName: '',
 };
@@ -27,9 +26,6 @@ const accountSlice = createSlice({
         session: action.payload,
       };
     },
-    changeStateSendNum: (state, action) => {
-      state.stateSendNum = action.payload;
-    },
     changeTokenNum: (state, action) => {
       state.tokenNum = action.payload;
     },
@@ -39,12 +35,7 @@ const accountSlice = createSlice({
   },
 });
 
-export const {
-  changeDataUser,
-  addSession,
-  changeStateSendNum,
-  changeTokenNum,
-  changeTokenName,
-} = accountSlice.actions;
+export const { changeDataUser, addSession, changeTokenNum, changeTokenName } =
+  accountSlice.actions;
 
 export default accountSlice.reducer;

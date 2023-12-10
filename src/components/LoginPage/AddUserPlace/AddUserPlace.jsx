@@ -16,7 +16,9 @@ const AddUserPlace = () => {
   });
 
   console.log(placeUser, 'placeUser');
-  const { dataUser, tokenName } = useSelector((state) => state.accountSlice);
+  const { dataUser, tokenNum, tokenName } = useSelector(
+    (state) => state.accountSlice
+  );
 
   const changeInput = (e) => {
     e.preventDefault();
@@ -29,8 +31,8 @@ const AddUserPlace = () => {
   };
 
   React.useEffect(() => {
-    tokenName !== '' ? navigate('/main') : '';
-  }, [tokenName]);
+    !!tokenName && !!tokenNum ? navigate('/main') : '';
+  }, [tokenName, tokenNum]);
 
   return (
     <div className={styles.delivery}>
