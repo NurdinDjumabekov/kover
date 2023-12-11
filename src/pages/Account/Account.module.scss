@@ -29,6 +29,11 @@
       font-weight: 600;
       line-height: normal;
       margin: 20px 0px 8px;
+      // background: red;
+      height: 21px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     p {
       color: var(--Orange, #ffc12e);
@@ -37,6 +42,10 @@
       font-style: normal;
       font-weight: 700;
       line-height: normal;
+      height: 27px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .editLocation {
       margin: 16px 0 0 0;
@@ -45,6 +54,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      span {
+        height: 25px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
       > button {
         color: var(--Orange, #ffc12e);
         font-family: Gilroy;
@@ -54,6 +76,7 @@
         line-height: normal;
         margin: 0;
         background: transparent;
+        padding: 5px;
       }
     }
     .btnContact {

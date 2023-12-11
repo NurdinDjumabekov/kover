@@ -51,8 +51,8 @@ export const editNumUser = createAsyncThunk(
         {
           codeid: data?.dataUser?.idUser,
           client_fio: '',
-          client_phone: data?.tokenNum,
-          client_phone2: data?.inputNum,
+          client_phone: data?.tokenNum?.replace(/[-()]/g, '')?.slice(-9),
+          client_phone2: data?.inputNum?.replace(/[-()]/g, '')?.slice(-9),
           address: '',
         },
         {
@@ -61,6 +61,23 @@ export const editNumUser = createAsyncThunk(
           },
         }
       );
+      if (response.status >= 200 || response.status < 300) {
+        // console.log(response?.data?.error);
+        if (
+          response?.data?.error === 'Введите новый номер!' ||
+          response?.data?.error === 'Этот номер занят!'
+        ) {
+          dispatch(
+            chnageAlertText({
+              text: 'Этот номер уже занят!',
+              backColor: 'red',
+              state: true,
+            })
+          );
+        }
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -68,19 +85,16 @@ export const editNumUser = createAsyncThunk(
 );
 
 // Подтверждение номера пользователя
-// http://kover-site.333.kg/edit_profile/
+// http://kover-site.333.kg/check_code/
 export const checkNumUser = createAsyncThunk(
   'checkNumUser',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        // 'http://kover-site.333.kg/edit_profile/',
+        'http://kover-site.333.kg/check_code/',
         {
-          // codeid: data?.dataUser?.idUser,
-          // client_fio: '',
-          // client_phone: data?.tokenNum,
-          // client_phone2: data?.inputNum,
-          // address: '',
+          phone_client: data?.inputNum?.replace(/[-()]/g, ''),
+          verification_number: data?.code?.join(''),
         },
         {
           headers: {
@@ -89,10 +103,10 @@ export const checkNumUser = createAsyncThunk(
         }
       );
       if (response.status >= 200 || response.status < 300) {
-        // dispatch(
-        //   changeDataUser({ ...data?.dataUser, numberPhone: data?.inputNum })
-        // );
-        // dispatch(changeTokenNum(data?.inputNum));
+        dispatch(
+          changeDataUser({ ...data?.dataUser, numberPhone: data?.inputNum })
+        );
+        dispatch(changeTokenNum(data?.inputNum));
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -111,11 +125,11 @@ export const editPlaceUser = createAsyncThunk(
       const response = await axios.post(
         'http://kover-site.333.kg/edit_profile/',
         {
-          codeid: '',
+          codeid: data?.dataUser?.idUser,
           client_fio: '',
           client_phone: '',
           client_phone2: '',
-          address: '',
+          address: `${data?.placeUser?.mainAdres}, ${data?.placeUser?.noMainAdres}, ${data?.placeUser?.infoDop}`,
         },
         {
           headers: {
@@ -124,8 +138,16 @@ export const editPlaceUser = createAsyncThunk(
         }
       );
       if (response.status >= 200 || response.status < 300) {
-        // dispatch(changeDataUser({ ...data?.dataUser, name: data?.input }));
-        // dispatch(changeTokenName(data?.input));
+        dispatch(
+          changeDataUser({
+            ...data?.dataUser,
+            contacts: [
+              data?.placeUser?.mainAdres,
+              data?.placeUser?.noMainAdres,
+              data?.placeUser?.infoDop,
+            ],
+          })
+        );
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -135,17 +157,18 @@ export const editPlaceUser = createAsyncThunk(
   }
 );
 
-const initialState = {
+export const initialStateEdit = {
   alertText: {
     text: '',
     backColor: '',
     state: false,
   },
+  inputNum: '',
 };
 
 const EditDataUser = createSlice({
   name: 'EditDataUser',
-  initialState: { ...initialState, ...initialStateAll },
+  initialState: { ...initialStateEdit, ...initialStateAll },
   extraReducers: (builder) => {
     //// editNameUser
     builder.addCase(editNameUser.fulfilled, (state, action) => {
@@ -240,9 +263,13 @@ const EditDataUser = createSlice({
     chnageAlertText: (state, action) => {
       state.alertText = action.payload;
     },
+    changeInputNum: (state, action) => {
+      state.inputNum = action.payload;
+    },
   },
 });
 
-export const { changeOrderUser, chnageAlertText } = EditDataUser.actions;
+export const { changeOrderUser, chnageAlertText, changeInputNum } =
+  EditDataUser.actions;
 
 export default EditDataUser.reducer;

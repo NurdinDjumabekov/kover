@@ -78,19 +78,63 @@
         // justify-content: start;
         align-items: center;
         gap: 10px;
-        input {
-          width: 24px;
+        > div {
+          min-width: 24px;
           height: 24px;
+          background-color: #e4e4e4;
           border-radius: 50%;
-          margin: 0;
         }
-        label {
+        .activeBtn {
+          background: #ffc12e !important;
+        }
+        p {
           margin: 0;
+          color: var(--Black, #222);
+          font-family: Gilroy;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
         }
       }
       button {
         width: 100%;
         margin: 0 0 8px 0;
+      }
+      .inputBtn {
+        // display: flex;
+        padding: 10px 0px 30px 0px;
+        gap: 32px;
+        align-items: center;
+        .innerTypes {
+          display: flex;
+          gap: 32px;
+          align-items: center;
+          padding: 0 0 20px 0;
+        }
+        .innerTypesClick {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          > div {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #d4d4d4;
+          }
+          > p {
+            margin: 0;
+            color: var(--Black, #222);
+            font-family: Gilroy;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+          }
+        }
+        .activeBtn {
+          background: #ffc12e !important;
+        }
       }
     }
   }

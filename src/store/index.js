@@ -16,22 +16,22 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 //// slice
-import pathSiteSlice from './reducers/pathSiteSlice';
 import dataAllSlice from './reducers/dataAllSlice';
 import requestFoodSlice from './reducers/requestFoodSlice';
 import statesSlice from './reducers/statesSlice';
 import postRequestSlice from './reducers/postRequestSlice';
 import accountSlice from './reducers/accountSlice';
 import EditDataUser from './reducers/EditDataUser';
+import ordersListSlice from './reducers/ordersListSlice';
 
 const reducer = combineReducers({
-  pathSiteSlice,
   dataAllSlice,
   requestFoodSlice,
   statesSlice,
   postRequestSlice,
   accountSlice,
   EditDataUser,
+  ordersListSlice,
 });
 
 const persistConfig = {

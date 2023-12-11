@@ -17,7 +17,7 @@ export const sendNumAuth = createAsyncThunk(
       const response = await axios.post(
         'http://kover-site.333.kg/send_code/',
         {
-          phone_client: info?.numberPhone?.replace(/[-()]/g, ''), // убмраю лишние символы
+          phone_client: info?.numberPhone?.replace(/[-()]/g, ''), // убираю лишние символы
           session: info?.session,
         },
         {
@@ -105,9 +105,22 @@ export const authName = createAsyncThunk(
         }
       );
       if (response.status >= 200 || response.status < 300) {
-        +response?.data?.result === 1
-          ? dispatch(changeTokenName(info?.dataUser?.name))
-          : dispatch(changeTokenName(''));
+        if (+response?.data?.result === 1) {
+          dispatch(changeTokenName(info?.dataUser?.name));
+          dispatch(
+            changeDataUser({
+              ...info?.dataUser,
+              contacts: [
+                info?.placeUser?.mainAdres,
+                info?.placeUser?.noMainAdres,
+                info?.placeUser?.infoDop,
+              ],
+              name: info?.dataUser?.name,
+            })
+          );
+        } else {
+          dispatch(changeTokenName(''));
+        }
       } else {
         throw Error(`Error: ${response.status}`);
       }

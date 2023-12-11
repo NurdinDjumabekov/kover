@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { initialStateAll } from './accountSlice';
 
 const initialState = {
   popular: 'Все',
@@ -10,11 +11,11 @@ const initialState = {
   allFoodsOrders: [],
   activeTypeEstab: 0,
   indexSlide: 0, // нужен для того , чтобы центрировать активный слайдер на детальной странице
+  listOrdersUser: [],
 };
-
 const statesSlice = createSlice({
   name: 'statesSlice',
-  initialState,
+  initialState: { ...initialState, ...initialStateAll },
   reducers: {
     changePopular: (state, action) => {
       state.popular = action.payload;
@@ -100,6 +101,9 @@ const statesSlice = createSlice({
       state.positionFoods = 0;
       state.sumOrdersFoods = 0;
     },
+    changeListOrdersUser: (state, action) => {
+      state.listOrdersUser = action.payload;
+    },
   },
 });
 
@@ -115,6 +119,7 @@ export const {
   discountFoods,
   delfoodCount,
   resetBusket,
+  changeListOrdersUser,
 } = statesSlice.actions;
 
 export default statesSlice.reducer;

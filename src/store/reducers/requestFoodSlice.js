@@ -235,6 +235,7 @@ export const initialState = {
   discounts: [],
   innerData: [],
 };
+
 const requestFoodSlice = createSlice({
   name: 'requestFoodSlice',
   initialState: { ...initialState, ...initialStateAll },

@@ -51,7 +51,7 @@ const LogOut = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   gap: '60px',
-                  padding: '30px 0 15px 0',
+                  padding: '50px 0 15px 0',
                 }}
               >
                 <button

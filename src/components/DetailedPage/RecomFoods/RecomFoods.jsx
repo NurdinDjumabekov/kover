@@ -19,9 +19,10 @@ import MiniPreloader from '../../MiniPreloader/MiniPreloader';
 
 const RecomFoods = ({ estab, categ }) => {
   const dispatch = useDispatch();
-  const { miniLoader, innerData } = useSelector(
+  const {  innerData } = useSelector(
     (state) => state.requestFoodSlice
   );
+  const { miniLoader } = useSelector((state) => state.accountSlice);
   const { allFoodsOrders, sumOrdersFoods } = useSelector(
     (state) => state.statesSlice
   );

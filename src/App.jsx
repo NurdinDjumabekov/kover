@@ -47,8 +47,11 @@ const App = () => {
     dispatch(getExample());
   }, []);
 
-  const { loading } = useSelector((state) => state.requestFoodSlice);
+  const { loading } = useSelector((state) => state.accountSlice);
+  console.log(loading, 'loading');
   // console.log(alertText, 'alertText');
+
+  const { pathSite } = useSelector((state) => state.ordersListSlice);
 
   return (
     <>

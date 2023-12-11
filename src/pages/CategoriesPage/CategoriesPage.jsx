@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './CategoriesPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePathTwo } from '../../store/reducers/pathSiteSlice';
 import { getCategory } from '../../store/reducers/requestFoodSlice';
 import Preloader from '../../components/Preloader/Preloader';
 import ordering from '../../assets/images/Main/ordering.png';
@@ -58,22 +57,15 @@ const CategoriesPage = () => {
           <NavLink
             to={`/delivery`}
             className={styles.everyCategory}
-            onClick={() =>
-              dispatch(
-                changePathTwo({ link: '', title: 'Курьерская доставка' })
-              )
-            }
+            onClick={() => clickEstablishment('Курьерская доставка')}
           >
             <h4>Курьерская доставка</h4>
             <img src={delivery} alt="delivery" />
           </NavLink>
-
           <NavLink
             to={`/listorder`}
             className={styles.everyCategory}
-            onClick={() =>
-              dispatch(changePathTwo({ link: '', title: 'Заказ по списку' }))
-            }
+            onClick={() => clickEstablishment('Заказ по списку')}
           >
             <h4>Заказ по списку</h4>
             <img src={ordering} alt="ordering" />

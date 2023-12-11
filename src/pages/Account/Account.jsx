@@ -24,8 +24,6 @@ const Account = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  
-
   return (
     <div className={styles.accountBlock}>
       <div className="container">
@@ -37,7 +35,7 @@ const Account = () => {
           <h4>{dataUser?.name}</h4>
           <p>{dataUser?.numberPhone?.replace('+996', '0')}</p>
           <div className={styles.editLocation}>
-            <span>Киевская улица, 71</span>
+            <span>{dataUser?.contacts?.[0]}</span>
             <button onClick={() => setLocation(true)}>Изменить</button>
           </div>
           <button
