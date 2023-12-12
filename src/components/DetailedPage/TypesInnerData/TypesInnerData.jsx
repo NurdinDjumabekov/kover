@@ -6,16 +6,15 @@ import Slider from 'react-slick';
 import { NoneBtn } from '../../SliderMain/SliderMain';
 import { getEveryInnerData } from '../../../store/reducers/requestFoodSlice';
 
-const TypesInnerData = ({ estab }) => {
+const TypesInnerData = ({ estab, activeType, setActiveType }) => {
   const dispatch = useDispatch();
   const { everyInnerTypes } = useSelector((state) => state.requestFoodSlice);
-  const [activeType, setActiveType] = React.useState(0);
   const [activeText, setActiveText] = React.useState('Все');
   // console.log(everyInnerTypes, 'everyInnerTypes');
   // console.log(estab, 'estab');
 
-  const handleClick = (category) => {
-    console.log(category);
+  const handleClick = (category, name) => {
+    setActiveText(name);
     if (category === 0) {
       dispatch(
         getEveryInnerData(
@@ -58,7 +57,9 @@ const TypesInnerData = ({ estab }) => {
                   <div
                     key={type.codeid}
                     className={styles.slider__inner}
-                    onClick={() => handleClick(type.code_category)}
+                    onClick={() =>
+                      handleClick(type.code_category, type.category_name)
+                    }
                   >
                     <button
                       onClick={() => setActiveType(type.codeid)}

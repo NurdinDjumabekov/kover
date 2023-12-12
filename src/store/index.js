@@ -16,11 +16,11 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 //// slice
+import accountSlice from './reducers/accountSlice';
 import dataAllSlice from './reducers/dataAllSlice';
 import requestFoodSlice from './reducers/requestFoodSlice';
 import statesSlice from './reducers/statesSlice';
 import postRequestSlice from './reducers/postRequestSlice';
-import accountSlice from './reducers/accountSlice';
 import EditDataUser from './reducers/EditDataUser';
 import ordersListSlice from './reducers/ordersListSlice';
 
@@ -29,9 +29,9 @@ const reducer = combineReducers({
   requestFoodSlice,
   statesSlice,
   postRequestSlice,
-  accountSlice,
   EditDataUser,
   ordersListSlice,
+  accountSlice,
 });
 
 const persistConfig = {

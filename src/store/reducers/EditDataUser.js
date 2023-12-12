@@ -4,7 +4,6 @@ import {
   changeDataUser,
   changeTokenName,
   changeTokenNum,
-  initialStateAll,
 } from './accountSlice';
 
 // Редактирование имени пользователя
@@ -157,22 +156,24 @@ export const editPlaceUser = createAsyncThunk(
   }
 );
 
-export const initialStateEdit = {
+export const initialState = {
   alertText: {
     text: '',
     backColor: '',
     state: false,
   },
   inputNum: '',
+  loadingEdit: false,
+  errorEdit: null,
 };
 
 const EditDataUser = createSlice({
   name: 'EditDataUser',
-  initialState: { ...initialStateEdit, ...initialStateAll },
+  initialState,
   extraReducers: (builder) => {
     //// editNameUser
     builder.addCase(editNameUser.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingEdit = false;
       state.alertText = {
         text: 'Ваше ФИО успешно переименовано!',
         backColor: 'green',
@@ -180,20 +181,20 @@ const EditDataUser = createSlice({
       };
     });
     builder.addCase(editNameUser.rejected, (state, action) => {
-      state.error = action.payload;
+      state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить ваше ФИО, попробуйте позже...',
         backColor: 'red',
         state: true,
       };
-      state.loading = false;
+      state.loadingEdit = false;
     });
     builder.addCase(editNameUser.pending, (state, action) => {
-      state.loading = true;
+      state.loadingEdit = true;
     });
     ////// editNumUser
     builder.addCase(editNumUser.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingEdit = false;
       // state.alertText = {
       //   text: 'Ваш номер успешно переименован!',
       //   backColor: 'green',
@@ -201,20 +202,20 @@ const EditDataUser = createSlice({
       // };
     });
     builder.addCase(editNumUser.rejected, (state, action) => {
-      state.error = action.payload;
+      state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить номер, попробуйте еще раз...',
         backColor: 'red',
         state: true,
       };
-      state.loading = false;
+      state.loadingEdit = false;
     });
     builder.addCase(editNumUser.pending, (state, action) => {
-      state.loading = true;
+      state.loadingEdit = true;
     });
     ////// checkNumUser
     builder.addCase(checkNumUser.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingEdit = false;
       state.alertText = {
         text: 'Ваш номер успешно переименован!',
         backColor: 'green',
@@ -222,20 +223,20 @@ const EditDataUser = createSlice({
       };
     });
     builder.addCase(checkNumUser.rejected, (state, action) => {
-      state.error = action.payload;
+      state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить номер, попробуйте еще раз...',
         backColor: 'red',
         state: true,
       };
-      state.loading = false;
+      state.loadingEdit = false;
     });
     builder.addCase(checkNumUser.pending, (state, action) => {
-      state.loading = true;
+      state.loadingEdit = true;
     });
     /////// editPlaceUser
     builder.addCase(editPlaceUser.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingEdit = false;
       state.alertText = {
         text: 'Ваш адрес успешно переименован!',
         backColor: 'green',
@@ -243,16 +244,16 @@ const EditDataUser = createSlice({
       };
     });
     builder.addCase(editPlaceUser.rejected, (state, action) => {
-      state.error = action.payload;
+      state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить ваш адрес, попробуйте еще раз...',
         backColor: 'red',
         state: true,
       };
-      state.loading = false;
+      state.loadingEdit = false;
     });
     builder.addCase(editPlaceUser.pending, (state, action) => {
-      state.loading = true;
+      state.loadingEdit = true;
     });
   },
 

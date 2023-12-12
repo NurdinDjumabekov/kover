@@ -24,22 +24,19 @@ const TotalOrder = (props) => {
     (state) => state.statesSlice
   );
   const allSum = +sumDishes + +sumOrdersFoods + 200;
-
-  useEffect(() => {
-    dispatch(
-      changeOrderUser({
-        ...orderUser,
-        summ: allSum,
-        product_list: sortOrders(allFoodsOrders),
-      })
-    );
-  }, [allFoodsOrders]);
+  console.log(allSum, 'allSum');
 
   const sendData = (e) => {
     e.preventDefault();
-    dispatch(changeOrderUser({ ...orderUser, summ: allSum }));
-    dispatch(sendOrderFoods(orderUser));
+    dispatch(
+      sendOrderFoods({
+        ...orderUser,
+        summ: +allSum,
+        product_list: sortOrders(allFoodsOrders),
+      })
+    );
     props.changeState(false);
+    // console.log(orderUser, 'orderUser');
 
     setTimeout(() => {
       dispatch(changeError(false));
@@ -49,7 +46,7 @@ const TotalOrder = (props) => {
     }, 4000);
   };
 
-  console.log(orderUser);
+  // console.log(orderUser);
 
   const changeInput = (e) => {
     e.preventDefault();

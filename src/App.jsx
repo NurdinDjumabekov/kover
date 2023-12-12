@@ -27,7 +27,6 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { activeTypeEstab } = useSelector((state) => state.statesSlice);
-  const { alertText } = useSelector((state) => state.EditDataUser);
   const { tokenNum, tokenName } = useSelector((state) => state.accountSlice);
 
   useEffect(() => {
@@ -47,11 +46,18 @@ const App = () => {
     dispatch(getExample());
   }, []);
 
-  const { loading } = useSelector((state) => state.accountSlice);
-  console.log(loading, 'loading');
-  // console.log(alertText, 'alertText');
+  const { loading } = useSelector((state) => state.requestFoodSlice);
+  const { loadingList } = useSelector((state) => state.ordersListSlice);
+  const { loadingEdit } = useSelector((state) => state.EditDataUser);
+  // console.log(loading, 'loading');
+  // console.log(loadingList, 'loadingList');
 
   const { pathSite } = useSelector((state) => state.ordersListSlice);
+
+  React.useEffect(() => {
+    pathSite ? navigate('/main') : '';
+  }, [pathSite]);
+  ///// Для переходя со страниц заказов в main
 
   return (
     <>
@@ -82,6 +88,8 @@ const App = () => {
         </>
       </Routes>
       {loading && <Preloader />}
+      {loadingList && <Preloader />}
+      {loadingEdit && <Preloader />}
       <Alerts />
     </>
   );

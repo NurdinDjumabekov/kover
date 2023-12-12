@@ -42,6 +42,18 @@
       @media screen and (max-width: 394px) {
         gap: 10px;
       }
+      .noneData {
+        box-shadow: none;
+        padding: 100px 0px;
+        width: 100%;
+        text-align: center;
+        color: var(--Black, #222);
+        font-family: Gilroy;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
 
       li {
         width: 177px;

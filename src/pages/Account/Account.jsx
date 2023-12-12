@@ -18,12 +18,14 @@ const Account = () => {
   const [location, setLocation] = React.useState(false);
   const [editNum, setEditNum] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
+  const [idCounter, setIdCounter] = React.useState(0);
   const { dataUser } = useSelector((state) => state.accountSlice);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // console.log(idCounter, 'idCounter');
   return (
     <div className={styles.accountBlock}>
       <div className="container">
@@ -45,8 +47,15 @@ const Account = () => {
             Контакты
           </button>
           <LogOut />
-          <HistoryOrders setStateModal={setEveryOrder} />
-          <EveryOrder state={everyOrder} changeState={setEveryOrder} />
+          <HistoryOrders
+            setStateModal={setEveryOrder}
+            setIdCounter={setIdCounter}
+          />
+          <EveryOrder
+            state={everyOrder}
+            changeState={setEveryOrder}
+            idCounter={idCounter}
+          />
           <EditUser
             state={editData}
             changeState={setEditData}

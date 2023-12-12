@@ -1,6 +1,9 @@
 .deliveryMain {
   padding: 30px 0 100px;
   background: #f7f7f7;
+  .path {
+    padding: 10px 0px 20px 0px;
+  }
   &__inner {
     h4 {
       color: var(--Orange, #ffc12e);

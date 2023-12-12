@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { initialStateAll } from './accountSlice';
 
 const initialState = {
   popular: 'Все',
@@ -15,7 +14,7 @@ const initialState = {
 };
 const statesSlice = createSlice({
   name: 'statesSlice',
-  initialState: { ...initialState, ...initialStateAll },
+  initialState: initialState,
   reducers: {
     changePopular: (state, action) => {
       state.popular = action.payload;

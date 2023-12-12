@@ -1,15 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  // paginationCount: localStorage.getItem('paginationMain')
-  //   ? Number(localStorage.getItem('paginationMain'))
-  //   : 1,
+export const initialState = {
   paginationCount: 1,
 };
 
 const dataAllSlice = createSlice({
   name: 'dataAllSlice',
-  initialState,
+  initialState: initialState,
   reducers: {
     changePaginationCount: (state, action) => {
       state.paginationCount = action.payload;

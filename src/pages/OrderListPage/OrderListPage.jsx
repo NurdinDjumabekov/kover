@@ -14,6 +14,8 @@ import arrow from '../../assets/icons/arrowTypeFood.svg';
 import styles from './OrderListPage.module.scss';
 import { transformDataOrderList } from '../../helpers/transformDataOrderList';
 import InputMask from 'react-input-mask';
+import { rearg } from 'lodash';
+import PathToFiles from '../../components/PathToFiles/PathToFiles';
 
 const OrderListPage = () => {
   const dispatch = useDispatch();
@@ -131,9 +133,16 @@ const OrderListPage = () => {
     }
   };
 
+  const clickType = (num) => {
+    dispatch(changeDataListOrders({ ...dataListOrders, oplata_type: num }));
+  };
+
   return (
     <div className={styles.orderList}>
       <div className="container">
+        <div className={styles.path}>
+          <PathToFiles estab={'Заказ по списку'} />
+        </div>
         <div className={styles.orderList__inner}>
           <h4>
             Нет времени <i> оформлять доставку?</i>
@@ -192,13 +201,7 @@ const OrderListPage = () => {
 
             <label>Оплата</label>
             <div className={styles.inputBtn}>
-              <div
-                onClick={() =>
-                  dispatch(
-                    changeDataListOrders({ ...dataListOrders, oplata_type: 1 })
-                  )
-                }
-              >
+              <div onClick={() => clickType(1)}>
                 <div
                   className={
                     dataListOrders?.oplata_type === 1 ? styles.activeBtn : ''
@@ -206,13 +209,7 @@ const OrderListPage = () => {
                 ></div>
                 <p>Картой</p>
               </div>
-              <div
-                onClick={() =>
-                  dispatch(
-                    changeDataListOrders({ ...dataListOrders, oplata_type: 2 })
-                  )
-                }
-              >
+              <div onClick={() => clickType(2)}>
                 <div
                   className={
                     dataListOrders?.oplata_type === 2 ? styles.activeBtn : ''
@@ -250,7 +247,7 @@ const OrderListPage = () => {
               {listOrdersUser?.length === 0 ? (
                 <p>Список пустой</p>
               ) : (
-                listOrdersUser?.map((prod, ind) => (
+                listOrdersUser?.map((prod) => (
                   <div key={prod.id}>
                     <b>{prod?.prod}</b>
                     <div>

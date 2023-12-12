@@ -7,9 +7,11 @@ import {
 } from '../../store/reducers/ordersListSlice';
 import InputMask from 'react-input-mask';
 import { chnageAlertText } from '../../store/reducers/EditDataUser';
+import PathToFiles from '../../components/PathToFiles/PathToFiles';
 
 const DeliveryPage = () => {
   const dispatch = useDispatch();
+
   const { deliveryOrders } = useSelector((state) => state.ordersListSlice);
 
   React.useEffect(() => {
@@ -58,7 +60,12 @@ const DeliveryPage = () => {
     const phoneNumberPattern = /^\+\d{3}\(\d{3}\)\d{2}-\d{2}-\d{2}$/;
 
     if (phoneNumberPattern.test(deliveryOrders?.phone)) {
-      dispatch(sendCourier(deliveryOrders));
+      dispatch(
+        sendCourier({
+          ...deliveryOrders,
+          phone: deliveryOrders?.phone?.replace(/[-()]/g, '')?.slice(-9),
+        })
+      );
     } else {
       dispatch(
         chnageAlertText({
@@ -73,6 +80,10 @@ const DeliveryPage = () => {
   return (
     <div className={styles.deliveryMain}>
       <div className="container">
+        <div className={styles.path}>
+          <PathToFiles estab={'Курьерская доставка'} />
+        </div>
+
         <div className={styles.deliveryMain__inner}>
           <h4>
             Личный <i>курьер</i>

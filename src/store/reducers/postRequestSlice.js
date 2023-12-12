@@ -8,6 +8,26 @@ import {
   changeTokenNum,
 } from './accountSlice';
 
+const initialState = {
+  orderUser: {
+    phone: '',
+    fio: '',
+    address: '',
+    kvartira: '',
+    hourDeliver: '',
+    zakazDopInfo: '',
+    type_oplata: 1,
+    sdacha: '',
+    comment_zakaz: '',
+    summ: 0,
+    product_list: [],
+  },
+  errorOrderFood: false,
+  loadingOrder: false,
+  goodSendOrder: false,
+  checkAuth: 0,
+};
+
 // Отправка номера для регистрации
 // http://kover-site.333.kg/send_code/
 export const sendNumAuth = createAsyncThunk(
@@ -17,7 +37,7 @@ export const sendNumAuth = createAsyncThunk(
       const response = await axios.post(
         'http://kover-site.333.kg/send_code/',
         {
-          phone_client: info?.numberPhone?.replace(/[-()]/g, ''), // убираю лишние символы
+          phone_client: info?.numberPhone?.replace(/[-()]/g, '')?.slice(-9), // убираю лишние символы
           session: info?.session,
         },
         {
@@ -53,8 +73,11 @@ export const checkNum = createAsyncThunk(
       const response = await axios.post(
         'http://kover-site.333.kg/check_code/',
         {
-          phone_client: info?.dataUser?.numberPhone?.replace(/[-()]/g, ''),
+          phone_client: info?.dataUser?.numberPhone
+            .replace(/[-()]/g, '')
+            ?.slice(-9),
           verification_number: info?.code?.join(''),
+          codeid: info?.dataUser?.idUser,
         },
         {
           headers: {
@@ -169,26 +192,6 @@ export const sendOrderFoods = createAsyncThunk(
     }
   }
 );
-
-const initialState = {
-  orderUser: {
-    phone: '',
-    fio: '',
-    address: '',
-    kvartira: '',
-    hourDeliver: '',
-    dop: '',
-    type_oplata: 1,
-    sdacha: '',
-    comment_zakaz: '',
-    summ: '',
-    product_list: [],
-  },
-  errorOrderFood: false,
-  loadingOrder: false,
-  goodSendOrder: false,
-  checkAuth: 0,
-};
 
 const postRequestSlice = createSlice({
   name: 'postRequestSlice',

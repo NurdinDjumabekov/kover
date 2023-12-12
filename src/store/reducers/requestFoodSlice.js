@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { chnageAlertText } from './EditDataUser';
-import { initialStateAll } from './accountSlice';
 
 // беру все данные
 // http://kover-site.333.kg/get_establishments/
@@ -169,11 +168,8 @@ export const searchInnerFood = createAsyncThunk(
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(
-        `http://kover-site.333.kg/products?search=${
-          data?.text
-        }?code_establishment=${data?.estab}?code_category=${'0'}`
+        `http://kover-site.333.kg/products?search=${data?.text}&code_establishment=${data?.estab}&code_category=0`
       );
-      //// поменять!
       console.log(response, 'response');
 
       if (response.status >= 200 || response.status < 300) {
@@ -196,6 +192,68 @@ export const getEveryInnerData = createAsyncThunk(
       const response = await axios(api);
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.product;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Беру историю заказов
+// http://kover-site.333.kg/history_zakaz/
+export const historyOrders = createAsyncThunk(
+  'historyOrders',
+  async function (data, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(
+        `http://kover-site.333.kg/history_zakaz?codeid=${data}`
+      );
+      if (response.status >= 200 || response.status < 300) {
+        return response?.data?.result?.recordset;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Беру детальные истории заказов
+// http://kover-site.333.kg/detail_zakaz?codeid=555/
+export const takeDetailedHistory = createAsyncThunk(
+  'takeDetailedHistory',
+  async function (id, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(
+        `http://kover-site.333.kg/detail_zakaz?codeid=${id}`
+      );
+      if (response.status >= 200 || response.status < 300) {
+        // console.log(response);
+        return response?.data?.result;
+      } else {
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Беру детальные истории заказов
+// http://kover-site.333.kg/detail_zakaz?codeid=555/
+export const mainSearch = createAsyncThunk(
+  'mainSearch',
+  async function (data, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios(
+        `http://kover-site.333.kg/search?category=${data?.searchId}&search=${data?.search}`
+      );
+      if (response.status >= 200 || response.status < 300) {
+        console.log(response);
+        // return response?.data?.result;
       } else {
         throw Error(`Error: ${response.status}`);
       }
@@ -234,11 +292,16 @@ export const initialState = {
   everyInnerTypes: [],
   discounts: [],
   innerData: [],
+  dataHistory: [],
+  detailedHistory: [],
+  loading: false,
+  error: false,
+  miniLoader: false,
 };
 
 const requestFoodSlice = createSlice({
   name: 'requestFoodSlice',
-  initialState: { ...initialState, ...initialStateAll },
+  initialState,
   extraReducers: (builder) => {
     ///// getAllDataFood
     builder.addCase(getAllDataFood.fulfilled, (state, action) => {
@@ -354,6 +417,30 @@ const requestFoodSlice = createSlice({
     builder.addCase(searchInnerFood.pending, (state, action) => {
       state.miniLoader = true;
     });
+    //// historyOrders
+    builder.addCase(historyOrders.fulfilled, (state, action) => {
+      state.loading = false;
+      state.dataHistory = action.payload;
+    });
+    builder.addCase(historyOrders.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(historyOrders.pending, (state, action) => {
+      state.loading = true;
+    });
+    //// takeDetailedHistory
+    builder.addCase(takeDetailedHistory.fulfilled, (state, action) => {
+      state.loading = false;
+      state.detailedHistory = action.payload;
+    });
+    builder.addCase(takeDetailedHistory.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(takeDetailedHistory.pending, (state, action) => {
+      state.loading = true;
+    });
   },
   reducers: {
     sortDataPopular: (state, action) => {
@@ -373,9 +460,12 @@ const requestFoodSlice = createSlice({
         state.allDataFood = sortedData;
       }
     },
+    openMiniLoader: (state, action) => {
+      state.miniLoader = true;
+    },
   },
 });
 
-export const { sortDataPopular } = requestFoodSlice.actions;
+export const { sortDataPopular, openMiniLoader } = requestFoodSlice.actions;
 
 export default requestFoodSlice.reducer;

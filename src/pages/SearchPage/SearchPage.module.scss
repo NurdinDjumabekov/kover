@@ -35,6 +35,18 @@
         border-radius: 0px 8px 8px 0px;
         background: var(--Orange, #ffc12e);
       }
+      .selectInput {
+        position: absolute;
+        // height: 60px;
+        display: flex;
+        max-width: 100px;
+        // overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        right: 22%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
 }
