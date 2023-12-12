@@ -1,18 +1,14 @@
 .detailed {
   border-radius: 12px;
   background: #f4f4f4;
-  padding: 8px 12px;
   margin: 24px 0px 16px;
   .slider {
-    display: flex;
-    overflow-x: scroll;
-    white-space: nowrap;
-    padding: 0 0 10px 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    // height: 150px;
-
+    position: relative;
+    // background: red;
+    padding: 0 35px 0px 0;
     &__inner {
+      // background: green;
+
       button {
         color: var(--Black, #222);
         font-family: Gilroy;
@@ -22,30 +18,40 @@
         line-height: normal;
         background-color: transparent;
         border-radius: 8px;
-        padding: 10px 2px;
-        margin: 0 40px 0 0;
+        padding: 10px 12px;
+        margin: 0 20px 0 0;
       }
       .active {
         background: #ffc12e !important;
-        padding: 10px 12px;
+        padding: 8px 12px;
       }
     }
-  }
-  .slider::-webkit-scrollbar {
-    display: none;
+    .nextBtn {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      transform: rotate(180deg);
+      right: 5px;
+      top: 50%;
+      background-color: transparent;
+      transform: translateY(-50%) rotate(180deg);
+    }
   }
   .popular {
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      img {
-        display: block;
-        width: 14px;
-        height: 20px;
-        transform: rotate(270deg);
-      }
+    padding: 10px 0 0 5px;
+    li {
+      width: 200px;
+    }
+    select {
+      border: none;
+      background-color: transparent;
+      color: var(--Black, #222);
+      text-align: right;
+      font-family: Gilroy;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
     }
   }
 }

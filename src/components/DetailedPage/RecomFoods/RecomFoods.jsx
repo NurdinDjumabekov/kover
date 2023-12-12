@@ -1,56 +1,119 @@
 import React from 'react';
+import { debounce } from 'lodash';
 import styles from './RecomFoods.module.scss';
-import foods from '../../../assets/images/noneData/foodsss.png';
 import OrderMenu from '../OrderMenu/OrderMenu';
+import { useDispatch, useSelector } from 'react-redux';
+import TypesInnerData from '../TypesInnerData/TypesInnerData';
+import {
+  addFoodsOrders,
+  changePositionFoods,
+  changeSumDishes,
+  changeSumOrdersFoods,
+} from '../../../store/reducers/statesSlice';
+import {
+  getEveryInnerData,
+  openMiniLoader,
+  searchInnerFood,
+} from '../../../store/reducers/requestFoodSlice';
+import MiniPreloader from '../../MiniPreloader/MiniPreloader';
+import DetailedEveryData from '../DetailedEveryData/DetailedEveryData';
 
-const RecomFoods = () => {
-  const arrData = [
-    {
-      id: 1,
-      img: foods,
-      title: 'Салат из свежих овощей',
-      price: '90см',
-      massa: '260г',
-      type: 'Популярно',
-    },
-    {
-      id: 2,
-      img: foods,
-      title: 'Салат из свежих овощей',
-      price: '90см',
-      massa: '260г',
-      type: 'Популярно',
-    },
-    {
-      id: 3,
-      img: foods,
-      title: 'Салат из свежих овощей',
-      price: '90см',
-      massa: '260г',
-      type: 'Популярно',
-    },
-  ];
+const RecomFoods = ({ estab, categ }) => {
+  const dispatch = useDispatch();
+  const [activeType, setActiveType] = React.useState(0);
+  const [everyProd, setEveryProd] = React.useState(false);
+  const [idCounter, setIdCounter] = React.useState(1);
+  const { innerData } = useSelector((state) => state.requestFoodSlice);
+  const { miniLoader } = useSelector((state) => state.accountSlice);
+  const { allFoodsOrders, sumOrdersFoods } = useSelector(
+    (state) => state.statesSlice
+  );
+
+  const addBucket = (data) => {
+    dispatch(addFoodsOrders(data));
+    dispatch(changeSumOrdersFoods());
+    dispatch(changePositionFoods());
+    dispatch(changeSumDishes());
+  };
+
+  // console.log(innerData, 'innerData');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
+
+  const searchInput = debounce((text) => {
+    dispatch(openMiniLoader());
+    if (text === '') {
+      dispatch(
+        getEveryInnerData(
+          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=0`
+        )
+      );
+    } else {
+      dispatch(searchInnerFood({ text: text?.toLocaleLowerCase(), estab }));
+    }
+  }, 800);
 
   return (
     <div className={styles.recomBLock}>
       <div className="container">
         <div className={styles.recomBLock__inner}>
           <h5>Меню</h5>
-          <input type="search" placeholder="Поиск блюд" />
-          <h5>Салаты</h5>
+          <input
+            type="search"
+            placeholder="Поиск блюд"
+            onChange={(e) => {
+              searchInput(e.target.value);
+              setActiveType(0);
+            }}
+          />
+          <div>
+            <TypesInnerData
+              estab={estab}
+              activeType={activeType}
+              setActiveType={setActiveType}
+            />
+          </div>
           <ul>
-            {arrData?.map((food) => (
-              <li key={food.id}>
-                <img src={food.img} alt="временно" />
-                <h6>{food.title}</h6>
-                <div>
-                  <p>{food.price}</p>
-                  <span>{food.massa}</span>
-                </div>
-                <button>Добавить</button>
-              </li>
-            ))}
+            {miniLoader ? (
+              <MiniPreloader />
+            ) : (
+              <>
+                {innerData?.length === 0 ? (
+                  <li className={styles.noneData}>Данных пока что нету</li>
+                ) : (
+                  innerData?.map((food) => (
+                    <li
+                      key={food.codeid}
+                      onClick={() => {
+                        setEveryProd(true);
+                        setIdCounter(food.codeid);
+                      }}
+                    >
+                      {food?.status && (
+                        <p className={styles.types}>{food?.status}</p>
+                      )}
+                      <img src={food?.photo} alt="временно" />
+                      <h6>{food.product_name}</h6>
+                      <div>
+                        <p>{food.product_price} сом</p>
+                        <span>
+                          {food.v_ves} {food.ves_name}
+                        </span>
+                      </div>
+                      <button onClick={() => addBucket(food)}>Добавить</button>
+                    </li>
+                  ))
+                )}
+              </>
+            )}
           </ul>
+          <>
+            {/* ///// для детального просмотра каждого продукта */}
+            {/* <DetailedEveryData
+              state={everyProd}
+              changeState={setEveryProd}
+              idCounter={idCounter}
+            /> */}
+          </>
         </div>
       </div>
       <OrderMenu />

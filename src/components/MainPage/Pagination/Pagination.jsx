@@ -7,7 +7,7 @@ import { Pagination, Stack, Typography } from '@mui/material';
 export default function Paginations() {
   const dispatch = useDispatch();
   const { paginationCount } = useSelector((state) => state.dataAllSlice);
-  const { allDataFood } = useSelector((state) => state.requestFoodSlide);
+  const { allDataFood } = useSelector((state) => state.requestFoodSlice);
 
   const handleChange = (e, value) => {
     dispatch(changePaginationCount(value));

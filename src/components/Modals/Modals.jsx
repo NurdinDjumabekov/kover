@@ -14,12 +14,26 @@ const Modals = (props) => {
     props.changeState(false);
   };
 
+  const handleClick = (e) => {
+    // Проверка, что клик был не внутри input
+    const isInput1 = e.target.tagName.toLowerCase() === 'input';
+    const isInput2 = e.target.tagName.toLowerCase() === 'form';
+    const isInput3 = e.target.tagName.toLowerCase() === 'p';
+    const isInput4 = e.target.tagName.toLowerCase() === 'div';
+    const isInput5 = e.target.tagName.toLowerCase() === 'button';
+
+    if (!isInput1 && !isInput2 && !isInput3 && !isInput4 && !isInput5) {
+      toggleDrawer();
+    }
+  };
+
   return (
     <div className={styles.modal}>
       <Drawer
         PaperProps={{
           sx: {
             borderRadius: '20px 20px 0px 0px',
+            padding: '20px 0 0 0',
           },
         }}
         anchor="bottom"
@@ -29,8 +43,7 @@ const Modals = (props) => {
         <Box
           sx={{ width: 'auto' }}
           role="presentation"
-          //   onClick={toggleDrawer}
-          onKeyDown={toggleDrawer}
+          onMouseDown={handleClick}
         >
           <List>
             <div className={styles.modal__inner}>

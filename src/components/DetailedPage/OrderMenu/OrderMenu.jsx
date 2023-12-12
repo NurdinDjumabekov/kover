@@ -8,44 +8,49 @@ import imgArrow from '../../../assets/icons/backBtn.svg';
 import BaskesOrders from '../BaskesOrders/BaskesOrders';
 import img from '../../../assets/images/noneData/Image.png';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 const OrderMenu = () => {
   const [look, setLook] = React.useState(false);
   const accordionRef = React.useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleAccordionToggle = () => {
     setLook(!look);
   };
 
-  const arrBucket = [
-    {
-      id: 1,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 2,
-      title: 'Фаиза Фаиза Фаиза Фаиза  Фаиза',
-      img: img,
-      price: '150 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 3,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-    {
-      id: 4,
-      title: 'Салат из свежих овощей',
-      img: img,
-      price: '90 сом',
-      place: 'Ресторан Фаиза',
-    },
-  ];
+  // const arrBucket = [
+  //   {
+  //     id: 1,
+  //     title: 'Салат из свежих овощей',
+  //     img: img,
+  //     price: '90 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Фаиза Фаиза Фаиза Фаиза  Фаиза',
+  //     img: img,
+  //     price: '150 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Салат из свежих овощей',
+  //     img: img,
+  //     price: '90 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'Салат из свежих овощей',
+  //     img: img,
+  //     price: '90 сом',
+  //     place: 'Ресторан Фаиза',
+  //   },
+  // ];
 
   React.useEffect(() => {
     const handleClickOutsideAccordion = (e) => {
@@ -60,6 +65,21 @@ const OrderMenu = () => {
       document.removeEventListener('click', handleClickOutsideAccordion);
     };
   }, [look]);
+
+  const { positionFoods, sumOrdersFoods, allFoodsOrders } = useSelector(
+    (state) => state.statesSlice
+  );
+
+  const ordering = () => {
+    if (allFoodsOrders.length === 0) {
+      return;
+    } else {
+      look && navigate('/orders');
+    }
+  };
+
+  // console.log(allFoodsOrders, 'allFoodsOrders');
+
   return (
     <div className={styles.accordinBlock}>
       <Accordion
@@ -69,7 +89,7 @@ const OrderMenu = () => {
       >
         <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
           <div className={styles.accordinBlock__inner}>
-            <button>Оформить заказ</button>
+            <button onClick={ordering}>Оформить заказ</button>
             <div
               className={styles.accordinBlock__inner__btns}
               onClick={() => setLook(false)}
@@ -83,17 +103,21 @@ const OrderMenu = () => {
                 <p>Корзина</p>
               </button>
               <div>
-                <p>8 позиций</p>
-                <span>2000 сом</span>
+                <p>{positionFoods} позиций</p>
+                <span>{sumOrdersFoods} сом</span>
               </div>
             </div>
           </div>
         </AccordionSummary>
         <AccordionDetails>
           <div className={styles.basketBlock}>
-            {arrBucket?.map((item) => (
-              <BaskesOrders key={item.id} item={item} />
-            ))}
+            {allFoodsOrders?.length === 0 ? (
+              <p className="noneFoods">Ваша корзина пустая!</p>
+            ) : (
+              allFoodsOrders?.map((item, ind) => (
+                <BaskesOrders key={ind} item={item} />
+              ))
+            )}
           </div>
         </AccordionDetails>
       </Accordion>

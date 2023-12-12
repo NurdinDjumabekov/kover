@@ -2,12 +2,34 @@ import React, { useRef } from 'react';
 import './ConfirmNum.scss';
 import Modals from '../../Modals/Modals';
 import CheckNums from '../CheckNums/CheckNums';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkNumUser } from '../../../store/reducers/EditDataUser';
 
 const ConfirmNum = (props) => {
   const [seconds, setSeconds] = React.useState(0);
   const [time, setTime] = React.useState('03:00');
   const [endTime, setEndTime] = React.useState(true);
-  //   console.log(time);
+  const [code, setCode] = React.useState(['', '', '', '']);
+  const dispatch = useDispatch();
+  const { dataUser } = useSelector((state) => state.accountSlice);
+  const { inputNum } = useSelector((state) => state.EditDataUser);
+
+  const inputRefs = useRef([
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+  ]);
+
+  const handleInputChange = (index, value) => {
+    if (value.length === 1 && index < 3) {
+      inputRefs.current[index + 1].current.focus();
+    }
+
+    const updatedCode = [...code];
+    updatedCode[index] = value;
+    setCode(updatedCode);
+  };
 
   React.useEffect(() => {
     setSeconds(179);
@@ -45,6 +67,15 @@ const ConfirmNum = (props) => {
     setSeconds(179);
   };
 
+  const sendData = (e) => {
+    e.preventDefault();
+    dispatch(checkNumUser({ code, inputNum, dataUser }));
+    props.changeState(false);
+    setCode(['', '', '', '']);
+  };
+
+  // console.log(code);
+
   return (
     <Modals
       state={props.state}
@@ -52,16 +83,23 @@ const ConfirmNum = (props) => {
       changeState={props.changeState}
     >
       <div className="confirmNum">
-        <form>
+        <form onSubmit={sendData}>
           {/* <CheckNums /> */}
           <div>
-            <input type="text" placeholder="0" />
-            <input type="text" placeholder="0" />
-            <input type="text" placeholder="0" />
-            <input type="text" placeholder="0" />
+            {code.map((text, index) => (
+              <input
+                key={index}
+                type="text"
+                placeholder="0"
+                value={text}
+                maxLength={1}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+                ref={inputRefs.current[index]}
+              />
+            ))}
           </div>
           {endTime ? (
-            <button disabled={endTime} type="submit" className="standartBtn">
+            <button type="submit" className="standartBtn">
               Подтвердить
             </button>
           ) : (

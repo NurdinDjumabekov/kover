@@ -1,16 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './EditNumber.scss';
 import Modals from '../../Modals/Modals';
 import InputMask from 'react-input-mask';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changeInputNum,
+  chnageAlertText,
+  editNumUser,
+} from '../../../store/reducers/EditDataUser';
 
 const EditNumber = (props) => {
+  const dispatch = useDispatch();
+  const { dataUser, tokenNum } = useSelector((state) => state.accountSlice);
+  const { inputNum } = useSelector((state) => state.EditDataUser);
+
   const sendData = (e) => {
     e.preventDefault();
-    props.changeState(false);
-    setTimeout(() => {
-      props.more(true);
-    }, 400);
+    const phoneNumberPattern = /^\+\d{3}\(\d{3}\)\d{2}-\d{2}-\d{2}$/;
+
+    if (phoneNumberPattern.test(inputNum)) {
+      dispatch(editNumUser({ inputNum, dataUser, tokenNum }));
+      props.changeState(false);
+      setTimeout(() => {
+        props.more(true);
+      }, 400);
+    } else {
+      dispatch(
+        chnageAlertText({
+          text: 'Некорректный номер',
+          backColor: 'red',
+          state: true,
+        })
+      );
+    }
   };
+
   return (
     <Modals
       state={props.state}
@@ -22,9 +46,8 @@ const EditNumber = (props) => {
           <InputMask
             mask="+999(999)99-99-99"
             placeholder="+996(700)75-44-54"
-            // value={}
-            name="number"
-            // onChange={changeInput}
+            value={inputNum}
+            onChange={(e) => dispatch(changeInputNum(e.target.value))}
             required
           />
           <button type="submit" className="standartBtn" onClick={sendData}>

@@ -1,90 +1,74 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './CategoriesPage.module.scss';
-import img from '../../assets/images/noneData/categ.png';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { changePathTwo } from '../../store/reducers/pathSiteSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategory } from '../../store/reducers/requestFoodSlice';
+import Preloader from '../../components/Preloader/Preloader';
+import ordering from '../../assets/images/Main/ordering.png';
+import delivery from '../../assets/images/Main/delivery.png';
+import { changePathCatalog } from '../../store/reducers/statesSlice';
+import img1 from '../../assets/images/noneData/categ.png';
+import img2 from '../../assets/images/noneData/Rectangle4.png';
+import img3 from '../../assets/images/noneData/Rectangle5.png';
+import img4 from '../../assets/images/noneData/Rectangle6.png';
+import img5 from '../../assets/images/noneData/Rectangle7.png';
+import img6 from '../../assets/images/noneData/Rectangle8.png';
 
 const CategoriesPage = () => {
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      title: 'Рестораны',
-      img: img,
-    },
-    {
-      id: 2,
-      title: 'Магазины',
-      img: img,
-    },
-    {
-      id: 3,
-      title: 'Цветы',
-      img: img,
-    },
-    {
-      id: 4,
-      title: 'Лекарства',
-      img: img,
-    },
-    {
-      id: 5,
-      title: 'Цветы',
-      img: img,
-    },
-    {
-      id: 6,
-      title: 'Лекарства',
-      img: img,
-    },
-    {
-      id: 7,
-      title: 'Лекарства',
-      img: img,
-    },
-  ]);
+  const dispatch = useDispatch();
+  const { allCategory } = useSelector((state) => state.requestFoodSlice);
 
-  const dispacht = useDispatch();
+  const arrImg = [img2, img6, img5, img6, img2, img4, img3, img5, img5];
 
+  React.useEffect(() => {
+    dispatch(
+      getCategory(
+        'http://kover-site.333.kg/get_estab_category?category_type=main'
+      )
+    );
+    window.scrollTo(0, 0);
+  }, []);
+
+  const clickEstablishment = (name) => {
+    dispatch(changePathCatalog(name));
+    localStorage.setItem('pathCatalog', name);
+  };
+
+  console.log(allCategory, 'allCategory');
   return (
     <div className={styles.caregoryBlock}>
       <div className="container">
         <div className={styles.caregoryBlock__inner}>
-          {categories?.map((i) => (
-            <NavLink
-              to={`/detailed/${i.id}`}
-              key={i.id}
-              className={styles.everyCategory}
-              onClick={() =>
-                dispacht(changePathTwo({ link: '', title: i.title }))
-              }
-            >
-              <h4>{i.title}</h4>
-              <img src={i.img} alt="" />
-            </NavLink>
-          ))}
+          {allCategory?.length === 0 ? (
+            <Preloader />
+          ) : (
+            allCategory?.map((i, ind) => (
+              <NavLink
+                to={`/detailed/${i.codeid}/${i.category_name}`}
+                key={i.codeid}
+                className={styles.everyCategory}
+                onClick={() => clickEstablishment(i?.category_name)}
+              >
+                <h4>{i.category_name}</h4>
+                <img src={arrImg[ind]} alt="категория" />
+              </NavLink>
+            ))
+          )}
           <NavLink
             to={`/delivery`}
             className={styles.everyCategory}
-            onClick={() =>
-              dispacht(
-                changePathTwo({ link: '', title: 'Курьерская доставка' })
-              )
-            }
+            onClick={() => clickEstablishment('Курьерская доставка')}
           >
             <h4>Курьерская доставка</h4>
-            <img src={img} alt="" />
+            <img src={delivery} alt="delivery" />
           </NavLink>
-
           <NavLink
             to={`/listorder`}
             className={styles.everyCategory}
-            onClick={() =>
-              dispacht(changePathTwo({ link: '', title: 'Заказ по списку' }))
-            }
+            onClick={() => clickEstablishment('Заказ по списку')}
           >
             <h4>Заказ по списку</h4>
-            <img src={img} alt="" />
+            <img src={ordering} alt="ordering" />
           </NavLink>
         </div>
       </div>
