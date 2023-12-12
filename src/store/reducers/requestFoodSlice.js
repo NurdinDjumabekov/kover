@@ -24,7 +24,7 @@ export const getAllDataFood = createAsyncThunk(
 // виды учреждений(нац кухня ....)
 // http://kover-site.333.kg/get_estab_category?category_type=filter
 export const getEstablishmentCategory = createAsyncThunk(
-  "getEstablishmentCategory",
+  'getEstablishmentCategory',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -48,7 +48,7 @@ export const getEstablishmentCategory = createAsyncThunk(
 // типы (магаз, рестораны, аптеки ...)
 // http://kover-site.333.kg/get_estab_category?category_type=main
 export const getCategory = createAsyncThunk(
-  "getCategory",
+  'getCategory',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -267,7 +267,7 @@ export const mainSearch = createAsyncThunk(
 
 // для примера
 export const getExample = createAsyncThunk(
-  "getExample",
+  'getExample',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       // const response = await axios.get(
