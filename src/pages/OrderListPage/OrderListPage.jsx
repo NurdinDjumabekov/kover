@@ -8,8 +8,8 @@ import { changeListOrdersUser } from '../../store/reducers/statesSlice';
 import { chnageAlertText } from '../../store/reducers/EditDataUser';
 
 /// img
-import krest from '../../assets/icons/cancel.svg';
 import arrow from '../../assets/icons/arrowTypeFood.svg';
+import krest from '../../assets/icons/cancel.svg';
 
 import styles from './OrderListPage.module.scss';
 import { transformDataOrderList } from '../../helpers/transformDataOrderList';
