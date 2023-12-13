@@ -1,17 +1,22 @@
-import React from "react";
-import styles from "./SelectInput.module.scss";
-import img from "../../../assets/icons/backBtn.svg";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import styles from './SelectInput.module.scss';
+import img from '../../../assets/icons/backBtn.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changeTypeSearch,
+  changeTypeTextSearch,
+} from '../../../store/reducers/requestFoodSlice';
 
 const SelectInput = ({ setSearchId }) => {
   const [active, setActive] = React.useState(false);
   const accordionRef = React.useRef(null);
+  const dispatch = useDispatch();
+  const { typeTextSearch } = useSelector((state) => state.requestFoodSlice);
 
   const selectArr = [
-    { id: 0, name: "По блюдам" },
-    { id: 1, name: "По ресторанам" },
+    { id: 0, name: 'По блюдам' },
+    { id: 1, name: 'По ресторанам' },
   ];
-  const [type, setType] = React.useState(selectArr?.[0]?.name);
 
   React.useEffect(() => {
     const handleChange = (e) => {
@@ -24,25 +29,19 @@ const SelectInput = ({ setSearchId }) => {
       }
     };
 
-    document.addEventListener("click", handleChange);
+    document.addEventListener('click', handleChange);
 
     return () => {
-      document.removeEventListener("click", handleChange);
+      document.removeEventListener('click', handleChange);
     };
   }, [active]);
 
-  const clickSelect = (name) => {
-    setActive(false);
-    setType(name);
-  };
-
   const clickChoice = (id, name) => {
-    setSearchId(id);
-    clickSelect(name);
-    console.log("sadasd");
+    dispatch(changeTypeSearch(id));
+    dispatch(changeTypeTextSearch(name));
+    setActive(false);
+    // dispatch(changeSearch(''));
   };
-
-  console.log(type, "type");
 
   return (
     <div className={styles.selectBlock} id="uniqueSelectID" ref={accordionRef}>
@@ -50,11 +49,11 @@ const SelectInput = ({ setSearchId }) => {
         className={styles.selectBlock__inner}
         onClick={() => setActive((prevState) => !prevState)}
       >
-        <p>{type}</p>
+        <p>{typeTextSearch}</p>
         <img
           src={img}
           alt="<"
-          style={active ? { transform: "rotate(90deg)" } : {}}
+          style={active ? { transform: 'rotate(90deg)' } : {}}
         />
       </div>
       {active && (

@@ -1,54 +1,63 @@
-import React, { useState } from "react";
-import styles from "./SearchPage.module.scss";
-import SelectInput from "../../components/SearchPage/SelectInput/SelectInput";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import styles from './SearchPage.module.scss';
+import SelectInput from '../../components/SearchPage/SelectInput/SelectInput';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   changeEmptySearch,
   changeMainSearch,
+  changeSearch,
   mainSearch,
-} from "../../store/reducers/requestFoodSlice";
-import MiniPreloader from "../../components/MiniPreloader/MiniPreloader";
-import DataSearch from "../../components/SearchPage/DataSearch/DataSearch";
+} from '../../store/reducers/requestFoodSlice';
+import MiniPreloader from '../../components/MiniPreloader/MiniPreloader';
+import DataSearch from '../../components/SearchPage/DataSearch/DataSearch';
 
 const SearchPage = () => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
-  const [searchId, setSearchId] = useState(1);
-  const { miniLoader, dataSearchMain, emptySearch } = useSelector(
-    (state) => state.requestFoodSlice
-  );
+  const { miniLoader, dataSearchMain, emptySearch, search, typeSearch } =
+    useSelector((state) => state.requestFoodSlice);
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   React.useEffect(() => {
     dispatch(changeEmptySearch(false));
+    search === '' ? dispatch(changeMainSearch([])) : '';
   }, [search]);
+
+  React.useEffect(() => {
+    if (search !== '') {
+      dispatch(changeMainSearch([]));
+      dispatch(mainSearch({ search, typeSearch }));
+    }
+  }, [typeSearch]);
 
   const searchDataFn = (e) => {
     e.preventDefault();
     dispatch(changeMainSearch([]));
-    dispatch(mainSearch({ search, searchId }));
+    dispatch(mainSearch({ search, typeSearch }));
   };
-  console.log(searchId);
 
-  // console.log(dataSearchMain, "dataSearchMain");
+  // console.log(typeSearch, 'typeSearch');
+  // console.log(dataSearchMain, 'dataSearchMain');
 
   return (
     <div className={styles.sarchBlock}>
       <div className="container">
         <div className={styles.sarchBlock__inner}>
-          <form>
+          <form onSubmit={searchDataFn}>
             <input
               // type="search"
               id="search"
               placeholder="Поиск"
-              onChange={(e) => setSearch(e.target.value)}
+              required
+              onChange={(e) => dispatch(changeSearch(e.target.value))}
+              value={search}
             />
             <div className={styles.selectInput}>
-              <SelectInput setSearchId={setSearchId} />
+              <SelectInput />
             </div>
-            <button id="search" onClick={searchDataFn}>
+            <button id="search" type="submit">
               Найти
             </button>
           </form>
@@ -56,7 +65,7 @@ const SearchPage = () => {
           {emptySearch && (
             <i className="noneData">По вашему заросу ничего не найдено!</i>
           )}
-          <DataSearch dataSearchMain={dataSearchMain} />
+          <DataSearch />
         </div>
       </div>
     </div>

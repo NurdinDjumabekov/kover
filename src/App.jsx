@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.scss';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MainInfo from './pages/MainInfo/MainInfo';
 import Login from './pages/Login/Login';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
@@ -18,7 +18,6 @@ import OrderListPage from './pages/OrderListPage/OrderListPage';
 import {
   getAllDataFood,
   getDiscounts,
-  getExample,
 } from './store/reducers/requestFoodSlice';
 import Preloader from './components/Preloader/Preloader';
 import Alerts from './components/Alerts/Alerts';
@@ -26,6 +25,7 @@ import Alerts from './components/Alerts/Alerts';
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { activeTypeEstab } = useSelector((state) => state.statesSlice);
   const { tokenNum, tokenName } = useSelector((state) => state.accountSlice);
 
@@ -43,7 +43,6 @@ const App = () => {
     dispatch(
       getDiscounts('http://kover-site.333.kg/get_discount?code_category=1')
     );
-    dispatch(getExample());
   }, []);
 
   const { loading } = useSelector((state) => state.requestFoodSlice);
@@ -58,6 +57,36 @@ const App = () => {
     pathSite ? navigate('/main') : '';
   }, [pathSite]);
   ///// Для переходя со страниц заказов в main
+
+  // console.log(location.pathname, 'location');
+  // const text = "nurdin513123a1s3da"
+  // console.log(text.includes("n"));
+
+  React.useEffect(() => {
+    pathSite ? navigate('/main') : '';
+    if (tokenNum && tokenName) {
+      if (
+        location.pathname.includes('login') ||
+        location.pathname.includes('welcome')
+      ) {
+        navigate('/main');
+      }
+    } else {
+      if (
+        location.pathname.includes('main') ||
+        location.pathname.includes('search') ||
+        location.pathname.includes('categories') ||
+        location.pathname.includes('orders') ||
+        location.pathname.includes('detailed') ||
+        location.pathname.includes('product') ||
+        location.pathname.includes('account') ||
+        location.pathname.includes('delivery') ||
+        location.pathname.includes('listorder')
+      ) {
+        navigate('/');
+      }
+    }
+  }, [location.pathname]);
 
   return (
     <>

@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { chnageAlertText } from "./EditDataUser";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { chnageAlertText } from './EditDataUser';
 
 // беру все данные
 // http://kover-site.333.kg/get_establishments/
 export const getAllDataFood = createAsyncThunk(
-  "getAllDataFood",
+  'getAllDataFood',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -67,7 +67,7 @@ export const getCategory = createAsyncThunk(
 // беру сортированные данные по учреждениям
 // http://kover-site.333.kg/get_establishments?category_code=${id}
 export const getEstablishmentData = createAsyncThunk(
-  "getEstablishmentData",
+  'getEstablishmentData',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -86,7 +86,7 @@ export const getEstablishmentData = createAsyncThunk(
 // каждое учреждение
 // http://kover-site.333.kg/get_establishments/${id}
 export const getEveryData = createAsyncThunk(
-  "getEveryData",
+  'getEveryData',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -106,7 +106,7 @@ export const getEveryData = createAsyncThunk(
 // учреждение(магазины, рестораны ...), внутренние типы каждого учреждения
 // http://kover-site.333.kg/get_product_categ_estab?estab_code=${id}
 export const getEveryInnerTypes = createAsyncThunk(
-  "getEveryInnerTypes",
+  'getEveryInnerTypes',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -125,7 +125,7 @@ export const getEveryInnerTypes = createAsyncThunk(
 // учреждение(магазины, рестораны ...), внутренние данные каждого учреждения
 // http://kover-site.333.kg/get_discount?code_category=1
 export const getDiscounts = createAsyncThunk(
-  "getDiscounts",
+  'getDiscounts',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -164,7 +164,7 @@ export const getDiscounts = createAsyncThunk(
 // http://kover-site.333.kg/products?search=пирожок?code_establishment=5?code_category=5
 // внутренний поиск по продуктам
 export const searchInnerFood = createAsyncThunk(
-  "searchInnerFood",
+  'searchInnerFood',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(
@@ -185,7 +185,7 @@ export const searchInnerFood = createAsyncThunk(
 // беру каждый продукт определенного учреждения
 // http://kover-site.333.kg/products
 export const getEveryInnerData = createAsyncThunk(
-  "getEveryInnerData",
+  'getEveryInnerData',
   async function (api, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(api);
@@ -203,7 +203,7 @@ export const getEveryInnerData = createAsyncThunk(
 // Беру историю заказов
 // http://kover-site.333.kg/history_zakaz/
 export const historyOrders = createAsyncThunk(
-  "historyOrders",
+  'historyOrders',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(
@@ -223,7 +223,7 @@ export const historyOrders = createAsyncThunk(
 // Беру детальные истории заказов
 // http://kover-site.333.kg/detail_zakaz?codeid=555/
 export const takeDetailedHistory = createAsyncThunk(
-  "takeDetailedHistory",
+  'takeDetailedHistory',
   async function (id, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(
@@ -244,44 +244,22 @@ export const takeDetailedHistory = createAsyncThunk(
 // Главный поиск
 // http://kover-site.333.kg/search?category=${data?.searchId}&search=${data?.search}
 export const mainSearch = createAsyncThunk(
-  "mainSearch",
+  'mainSearch',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios(
-        `http://kover-site.333.kg/search?category=${data?.searchId}&search=${data?.search}`
+        `http://kover-site.333.kg/search?category=${data?.typeSearch}&search=${data?.search}`
       );
       if (response.status >= 200 || response.status < 300) {
         response?.data?.result?.length === 0
           ? dispatch(changeEmptySearch(true))
           : dispatch(changeEmptySearch(false));
-        // console.log(response);
         return response?.data?.result;
       } else {
         throw Error(`Error: ${response.status}`);
       }
     } catch (error) {
       return rejectWithValue(error.message);
-    }
-  }
-);
-
-// для примера
-export const getExample = createAsyncThunk(
-  'getExample',
-  async function (api, { dispatch, rejectWithValue }) {
-    try {
-      // const response = await axios.get(
-      //   'http://kover-site.333.kg/get_estab_category'
-      // );
-      // console.log(response);
-      // if (response.status >= 200 || response.status < 300) {
-      //   return response?.data?.establishment;
-      // } else {
-      //   throw Error(`Error: ${response.status}`);
-      // }
-    } catch (error) {
-      return rejectWithValue(error.message);
-    } finally {
     }
   }
 );
@@ -301,10 +279,13 @@ export const initialState = {
   error: false,
   miniLoader: false,
   emptySearch: false,
+  search: '',
+  typeSearch: 0,
+  typeTextSearch: 'По блюдам',
 };
 
 const requestFoodSlice = createSlice({
-  name: "requestFoodSlice",
+  name: 'requestFoodSlice',
   initialState,
   extraReducers: (builder) => {
     ///// getAllDataFood
@@ -335,7 +316,7 @@ const requestFoodSlice = createSlice({
     builder.addCase(getEstablishmentCategory.fulfilled, (state, action) => {
       state.loading = false;
       state.establishmentCategory = [
-        { category_name: "Все", codeid: 0 },
+        { category_name: 'Все', codeid: 0 },
         ...action.payload,
       ];
     });
@@ -374,7 +355,7 @@ const requestFoodSlice = createSlice({
     builder.addCase(getEveryInnerTypes.fulfilled, (state, action) => {
       state.loading = false;
       state.everyInnerTypes = [
-        { category_name: "Все", codeid: 0, code_category: 0 },
+        { category_name: 'Все', codeid: 0, code_category: 0 },
         ...action.payload,
       ];
     });
@@ -460,7 +441,7 @@ const requestFoodSlice = createSlice({
   },
   reducers: {
     sortDataPopular: (state, action) => {
-      if (action.payload === "Все") {
+      if (action.payload === 'Все') {
         return;
       } else {
         const sortedData = state.allDataFood.slice().sort((a, b) => {
@@ -485,6 +466,15 @@ const requestFoodSlice = createSlice({
     changeEmptySearch: (state, action) => {
       state.emptySearch = action.payload;
     },
+    changeSearch: (state, action) => {
+      state.search = action.payload;
+    },
+    changeTypeSearch: (state, action) => {
+      state.typeSearch = action.payload;
+    },
+    changeTypeTextSearch: (state, action) => {
+      state.typeTextSearch = action.payload;
+    },
   },
 });
 
@@ -493,6 +483,9 @@ export const {
   openMiniLoader,
   changeMainSearch,
   changeEmptySearch,
+  changeSearch,
+  changeTypeSearch,
+  changeTypeTextSearch,
 } = requestFoodSlice.actions;
 
 export default requestFoodSlice.reducer;
