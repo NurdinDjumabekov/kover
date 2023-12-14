@@ -106,7 +106,6 @@ const TotalOrder = (props) => {
           onChange={(e) => changeInput(e)}
           type="text"
           name="hourDeliver"
-          required
           placeholder="Время доставки"
           value={orderUser?.hourDeliver}
         />

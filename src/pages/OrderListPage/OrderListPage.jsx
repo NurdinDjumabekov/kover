@@ -252,7 +252,7 @@ const OrderListPage = () => {
                     <b>{prod?.prod}</b>
                     <div>
                       <span>{`${prod?.quantity} ${prod?.ves}`}</span>
-                      {/* <img src={krest} alt="x" onClick={() => del(prod.id)} /> */}
+                      <img src={krest} alt="x" onClick={() => del(prod.id)} />
                     </div>
                   </div>
                 ))
