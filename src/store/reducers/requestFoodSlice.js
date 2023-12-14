@@ -457,6 +457,13 @@ const requestFoodSlice = createSlice({
         state.allDataFood = sortedData;
       }
     },
+    changeEstablishmentCategory: (state, action) => {
+      // state.establishmentCategory = [
+      //   { category_name: 'Все', codeid: 0 },
+      //   ...action.payload,
+      // ];
+      state.establishmentCategory = action.payload;
+    },
     openMiniLoader: (state, action) => {
       state.miniLoader = true;
     },
@@ -486,6 +493,7 @@ export const {
   changeSearch,
   changeTypeSearch,
   changeTypeTextSearch,
+  changeEstablishmentCategory,
 } = requestFoodSlice.actions;
 
 export default requestFoodSlice.reducer;

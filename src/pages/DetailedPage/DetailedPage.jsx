@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './DetailedPage.module.scss';
 import TypesDetailed from '../../components/DetailedPage/TypesDetailed/TypesDetailed';
 import DataCategories from '../../components/DetailedPage/DataCategories/DataCategories';
 import PathToFiles from '../../components/PathToFiles/PathToFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import Paginations from '../../components/MainPage/Pagination/Pagination';
-import { getEstablishmentCategory } from '../../store/reducers/requestFoodSlice';
 import { useParams } from 'react-router-dom';
+import { getAllDataFood } from '../../store/reducers/requestFoodSlice';
 
 const DetailedPage = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const DetailedPage = () => {
 
   const { allDataFood } = useSelector((state) => state.requestFoodSlice);
   const { paginationCount } = useSelector((state) => state.dataAllSlice);
+  const { activeTypeEstab } = useSelector((state) => state.statesSlice);
 
   let startIndex = (paginationCount - 1) * 16;
   let endIndex = paginationCount * 16;
@@ -21,16 +22,19 @@ const DetailedPage = () => {
   let sortData = allDataFood?.slice(startIndex, endIndex);
 
   React.useEffect(() => {
-    dispatch(
-      getEstablishmentCategory('http://kover-site.333.kg/get_estab_category')
-    );
-  }, []);
-
-  React.useEffect(() => {
     window.scrollTo(0, 0);
+    if (activeTypeEstab === 0) {
+      dispatch(
+        getAllDataFood(
+          `http://kover-site.333.kg/get_establishments?category_code=${id}`
+        )
+      );
+    }
+    /// для получения всех ресторанов дефолтное состояние ("Все")
   }, [paginationCount]);
 
   // console.log(allDataFood, 'allDataFood');
+  // console.log(id);
 
   return (
     <div className={styles.detailedBlock}>
@@ -38,16 +42,8 @@ const DetailedPage = () => {
         <div className={styles.detailedBlock__inner}>
           <PathToFiles estab={estab} />
           <TypesDetailed id={id} />
-          {+id === 15 ? (
-            <>
-              <DataCategories allDataFood={sortData} />
-              {allDataFood?.length !== 0 && <Paginations />}
-            </>
-          ) : (
-            <>
-              <DataCategories allDataFood={[]} />
-            </>
-          )}
+          <DataCategories allDataFood={sortData} />
+          {allDataFood?.length !== 0 && <Paginations />}
         </div>
       </div>
     </div>

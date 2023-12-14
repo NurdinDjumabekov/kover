@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './DataCategories.module.scss';
 import { NavLink } from 'react-router-dom';
 import foods from '../../../assets/images/noneData/foodsss.png';
@@ -8,13 +8,8 @@ import kitchen from '../../../assets/icons/kitchen.svg';
 import transport from '../../../assets/icons/transport.svg';
 import check from '../../../assets/icons/check.svg';
 
-// import { useDispatch, useSelector } from 'react-redux';
-
 const DataCategories = ({ allDataFood }) => {
-  // const dispatch = useDispatch();
-
   // console.log(allDataFood, 'allDataFood');
-
   return (
     <>
       <div className={styles.category}>

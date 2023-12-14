@@ -5,7 +5,10 @@ import styles from './MainContent.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Preloader from '../../Preloader/Preloader';
-import { changePathCatalog } from '../../../store/reducers/statesSlice';
+import {
+  changeActiveType,
+  changePathCatalog,
+} from '../../../store/reducers/statesSlice';
 
 const MainContent = ({ arrImg }) => {
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
@@ -14,14 +17,22 @@ const MainContent = ({ arrImg }) => {
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
     localStorage.setItem('pathCatalog', name);
+    dispatch(changeActiveType(0));
   };
 
-  console.log(allCategory, 'allCategory');
+  // console.log(allCategory, 'allCategory');
 
   return (
     <div className={styles.mainContent}>
       <div className="container">
         <div className={styles.mainContent__inner}>
+          <NavLink
+            to={`/detailed/${'0'}/${'Рестораны'}`}
+            className={styles.everyCategory}
+          >
+            <img src={arrImg[9]} alt="Рестораны" />
+            <h4>Рестораны</h4>
+          </NavLink>
           {allCategory?.length === 0 ? (
             <Preloader />
           ) : (

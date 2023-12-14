@@ -26,6 +26,8 @@ const EveryOrdersPage = ({ item }) => {
     dispatch(changeSumDishes());
   };
 
+  console.log(item, 'item');
+
   return (
     <div className={styles.order}>
       <div className="container">
@@ -35,7 +37,7 @@ const EveryOrdersPage = ({ item }) => {
             <div>
               <h4>{item.product_name} </h4>
               <p>{item.product_price} сом</p>
-              <span>{item.place}</span>
+              <span>{item.establishment_name}</span>
             </div>
           </div>
           <div className={styles.counter}>

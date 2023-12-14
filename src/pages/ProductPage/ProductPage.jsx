@@ -76,13 +76,18 @@ const ProductPage = () => {
                   </div>
                   <div>
                     <img src={transport} alt="transport" />
-                    <p>{everyData.price_dostavka}</p>
+                    <p>
+                      {everyData.price_dostavka ? everyData.price_dostavka : 0} сом
+                    </p>
                   </div>
                 </div>
                 <div className={styles.mainContent__downTwo}>
                   <div>
                     <img src={check} alt="check" />
-                    <p>~{everyData.percent_stavka} сом</p>
+                    <p>
+                      ~{everyData.percent_stavka ? everyData.percent_stavka : 0}
+                      сом
+                    </p>
                   </div>
                   <div>
                     <img src={kitchen} alt="kitchen" />

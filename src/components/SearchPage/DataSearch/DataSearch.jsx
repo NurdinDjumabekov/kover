@@ -16,6 +16,7 @@ import {
   changeSumDishes,
   changeSumOrdersFoods,
 } from '../../../store/reducers/statesSlice';
+import { chnageAlertText } from '../../../store/reducers/EditDataUser';
 
 const DataSearch = () => {
   const dispatch = useDispatch();
@@ -28,13 +29,34 @@ const DataSearch = () => {
     dispatch(changeSumOrdersFoods());
     dispatch(changePositionFoods());
     dispatch(changeSumDishes());
+    alertAddBucket();
   };
-  console.log(dataSearchMain, 'dataSearchMain');
 
-   const clickEstablishment = (name) => {
-     dispatch(changePathCatalog(name));
-     localStorage.setItem('pathCatalog', name);
-   };
+  const alertAddBucket = () => {
+    dispatch(
+      chnageAlertText({
+        text: 'Продук был добавлен в корзину',
+        backColor: 'green',
+        state: true,
+      })
+    );
+    setTimeout(() => {
+      dispatch(
+        chnageAlertText({
+          text: '',
+          backColor: 'transparent',
+          state: false,
+        })
+      );
+    }, 800);
+  };
+
+  // console.log(dataSearchMain, 'dataSearchMain');
+
+  const clickEstablishment = (name) => {
+    dispatch(changePathCatalog(name));
+    localStorage.setItem('pathCatalog', name);
+  };
 
   return (
     <div className={styles.alldata}>
@@ -46,7 +68,7 @@ const DataSearch = () => {
                   key={food.codeid}
                   to={`/product/${food?.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
                   className={styles.everyData}
-                  onClick={() => clickEstablishment("Магазины")}
+                  onClick={() => clickEstablishment('Магазины')}
                 >
                   <div className={styles.imgs}>
                     {food?.photo ? (

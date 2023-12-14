@@ -95,9 +95,9 @@ const OrderListPage = () => {
     dispatch(changeListOrdersUser(newData));
   };
 
-  console.log(listOrdersUser, 'listOrdersUser');
+  // console.log(listOrdersUser, 'listOrdersUser');
   // console.log(counter);
-  console.log(dataListOrders, 'dataListOrders');
+  // console.log(dataListOrders, 'dataListOrders');
 
   const sendData = (e) => {
     e.preventDefault();

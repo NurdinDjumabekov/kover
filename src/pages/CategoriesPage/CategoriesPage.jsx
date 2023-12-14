@@ -6,8 +6,12 @@ import { getCategory } from '../../store/reducers/requestFoodSlice';
 import Preloader from '../../components/Preloader/Preloader';
 import ordering from '../../assets/images/Main/ordering.png';
 import delivery from '../../assets/images/Main/delivery.png';
-import { changePathCatalog } from '../../store/reducers/statesSlice';
-import img1 from '../../assets/images/noneData/categ.png';
+import {
+  changeActiveType,
+  changePathCatalog,
+} from '../../store/reducers/statesSlice';
+
+import img1 from '../../assets/images/noneData/everyFood.png';
 import img2 from '../../assets/images/noneData/Rectangle4.png';
 import img3 from '../../assets/images/noneData/Rectangle5.png';
 import img4 from '../../assets/images/noneData/Rectangle6.png';
@@ -18,7 +22,8 @@ const CategoriesPage = () => {
   const dispatch = useDispatch();
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
 
-  const arrImg = [img2, img6, img5, img6, img2, img4, img3, img5, img5];
+  const arrImg = [img2, img6, img5, img6, img2, img4, img3, img5, img5, img1];
+  // удалить
 
   React.useEffect(() => {
     dispatch(
@@ -32,13 +37,21 @@ const CategoriesPage = () => {
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
     localStorage.setItem('pathCatalog', name);
+    dispatch(changeActiveType(0));
   };
 
-  console.log(allCategory, 'allCategory');
   return (
     <div className={styles.caregoryBlock}>
       <div className="container">
         <div className={styles.caregoryBlock__inner}>
+          <NavLink
+            to={`/detailed/${'0'}/${'Рестораны'}`}
+            className={styles.everyCategory}
+            onClick={() => clickEstablishment('Рестораны')}
+          >
+            <h4>Рестораны</h4>
+            <img src={arrImg[9]} alt="Рестораны" />
+          </NavLink>
           {allCategory?.length === 0 ? (
             <Preloader />
           ) : (

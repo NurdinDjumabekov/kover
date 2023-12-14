@@ -44,7 +44,7 @@ const MainInfo = () => {
         setPtext('Мы делаем вашу жизнь проще и доставим заказ в любое время');
         setTimeout(() => {
           navigate('/login');
-        }, 2000);
+        }, 1000);
         break;
       default:
     }

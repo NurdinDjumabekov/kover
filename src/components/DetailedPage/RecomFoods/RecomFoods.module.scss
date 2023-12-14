@@ -60,6 +60,7 @@
         box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         position: relative;
+        // background: red;
         @media screen and (max-width: 384px) {
           width: 200px;
         }
@@ -137,6 +138,7 @@
           padding: 12px 16px;
           border-radius: 0 0 8px 8px;
           background: var(--Orange, #ffc12e);
+          // background: transparent;
           width: 100%;
           margin: 5px 0 0 0;
         }

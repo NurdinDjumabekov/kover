@@ -3,6 +3,7 @@ import './DeliveryAddress.scss';
 import Modals from '../../Modals/Modals';
 import { useDispatch, useSelector } from 'react-redux';
 import { editPlaceUser } from '../../../store/reducers/EditDataUser';
+import mapImg from '../../../assets/images/noneData/Map.png';
 
 const DeliveryAddress = (props) => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const DeliveryAddress = (props) => {
             Подтвердить
           </button>
         </form>
+        <img src={mapImg} alt="" />
       </div>
     </Modals>
   );

@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 const TotalOrder = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [count, setCount] = React.useState(0);
   const { orderUser } = useSelector((state) => state.postRequestSlice);
   const { dataUser } = useSelector((state) => state.accountSlice);
 
@@ -24,7 +23,7 @@ const TotalOrder = (props) => {
     (state) => state.statesSlice
   );
   const allSum = +sumDishes + +sumOrdersFoods + 200;
-  console.log(allSum, 'allSum');
+  // console.log(allSum, 'allSum');
 
   const sendData = (e) => {
     e.preventDefault();

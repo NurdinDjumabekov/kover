@@ -50,10 +50,7 @@ const OrdersPage = () => {
               ))
             )}
             <div className={styles.addOrder}>
-              <button
-                className="standartBtn"
-                onClick={clickBtnOrder}
-              >
+              <button className="standartBtn" onClick={clickBtnOrder}>
                 Оформить заказ
               </button>
             </div>

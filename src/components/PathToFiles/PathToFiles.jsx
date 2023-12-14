@@ -17,8 +17,8 @@ const PathToFiles = ({ estab, name }) => {
           <img src={imgPrev} alt="<" />
           <p>Каталог</p>
         </button>
-        <button onClick={backPrev}>{estab}</button>
-        {name && <button onClick={backPrev}>{name}</button>}
+        <button>{estab}</button>
+        {name && <button>{name}</button>}
       </div>
     </div>
   );

@@ -100,6 +100,9 @@ const statesSlice = createSlice({
       state.positionFoods = 0;
       state.sumOrdersFoods = 0;
     },
+    changeAllFoodsOrders: (state, action) => {
+      state.allFoodsOrders = [...state.allFoodsOrders, action.payload];
+    },
     changeListOrdersUser: (state, action) => {
       state.listOrdersUser = action.payload;
     },
@@ -118,6 +121,7 @@ export const {
   discountFoods,
   delfoodCount,
   resetBusket,
+  changeAllFoodsOrders,
   changeListOrdersUser,
 } = statesSlice.actions;
 

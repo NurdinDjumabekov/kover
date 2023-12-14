@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { debounce } from 'lodash';
 import styles from './RecomFoods.module.scss';
 import OrderMenu from '../OrderMenu/OrderMenu';
@@ -17,6 +17,7 @@ import {
 } from '../../../store/reducers/requestFoodSlice';
 import MiniPreloader from '../../MiniPreloader/MiniPreloader';
 import DetailedEveryData from '../DetailedEveryData/DetailedEveryData';
+import { chnageAlertText } from '../../../store/reducers/EditDataUser';
 
 const RecomFoods = ({ estab, categ }) => {
   const dispatch = useDispatch();
@@ -34,10 +35,27 @@ const RecomFoods = ({ estab, categ }) => {
     dispatch(changeSumOrdersFoods());
     dispatch(changePositionFoods());
     dispatch(changeSumDishes());
+    alertAddBucket();
   };
 
-  // console.log(innerData, 'innerData');
-  // console.log(allFoodsOrders, 'allFoodsOrders');
+  const alertAddBucket = () => {
+    dispatch(
+      chnageAlertText({
+        text: 'Продук был добавлен в корзину',
+        backColor: 'green',
+        state: true,
+      })
+    );
+    setTimeout(() => {
+      dispatch(
+        chnageAlertText({
+          text: '',
+          backColor: 'transparent',
+          state: false,
+        })
+      );
+    }, 800);
+  };
 
   const searchInput = debounce((text) => {
     dispatch(openMiniLoader());
@@ -51,6 +69,16 @@ const RecomFoods = ({ estab, categ }) => {
       dispatch(searchInnerFood({ text: text?.toLocaleLowerCase(), estab }));
     }
   }, 800);
+
+  // console.log(innerData, 'innerData');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
+
+  const [dataEvery, setDataEvery] = useState({});
+
+  const clickProduct = (data) => {
+    setEveryProd(true);
+    setDataEvery(data);
+  };
 
   return (
     <div className={styles.recomBLock}>
@@ -83,17 +111,25 @@ const RecomFoods = ({ estab, categ }) => {
                   innerData?.map((food) => (
                     <li
                       key={food.codeid}
-                      onClick={() => {
-                        setEveryProd(true);
-                        setIdCounter(food.codeid);
-                      }}
+                      onClick={() => setIdCounter(food.codeid)}
                     >
                       {food?.status && (
-                        <p className={styles.types}>{food?.status}</p>
+                        <p
+                          className={styles.types}
+                          onClick={() => clickProduct(food)}
+                        >
+                          {food?.status}
+                        </p>
                       )}
-                      <img src={food?.photo} alt="временно" />
-                      <h6>{food.product_name}</h6>
-                      <div>
+                      <img
+                        src={food?.photo}
+                        alt="временно"
+                        onClick={() => clickProduct(food)}
+                      />
+                      <h6 onClick={() => clickProduct(food)}>
+                        {food.product_name}
+                      </h6>
+                      <div onClick={() => clickProduct(food)}>
                         <p>{food.product_price} сом</p>
                         <span>
                           {food.v_ves} {food.ves_name}
@@ -108,11 +144,12 @@ const RecomFoods = ({ estab, categ }) => {
           </ul>
           <>
             {/* ///// для детального просмотра каждого продукта */}
-            {/* <DetailedEveryData
+            <DetailedEveryData
               state={everyProd}
               changeState={setEveryProd}
               idCounter={idCounter}
-            /> */}
+              dataEvery={dataEvery}
+            />
           </>
         </div>
       </div>

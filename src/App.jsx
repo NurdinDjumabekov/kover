@@ -15,10 +15,7 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import DeliveryPage from './pages/DeliveryPage/DeliveryPage';
 import { useDispatch, useSelector } from 'react-redux';
 import OrderListPage from './pages/OrderListPage/OrderListPage';
-import {
-  getAllDataFood,
-  getDiscounts,
-} from './store/reducers/requestFoodSlice';
+import { getDiscounts } from './store/reducers/requestFoodSlice';
 import Preloader from './components/Preloader/Preloader';
 import Alerts from './components/Alerts/Alerts';
 
@@ -26,30 +23,18 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { activeTypeEstab } = useSelector((state) => state.statesSlice);
   const { tokenNum, tokenName } = useSelector((state) => state.accountSlice);
 
   useEffect(() => {
-    // if (activeTypeEstab === 0) {
-    //   dispatch(
-    //     getAllDataFood(
-    //       'http://kover-site.333.kg/get_establishments?category_code=15'
-    //     )
-    //   );
-    // }
-    if (activeTypeEstab === 0) {
-      dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/'));
-    }
     dispatch(
       getDiscounts('http://kover-site.333.kg/get_discount?code_category=1')
     );
+    /// для рекламы
   }, []);
 
   const { loading } = useSelector((state) => state.requestFoodSlice);
   const { loadingList } = useSelector((state) => state.ordersListSlice);
   const { loadingEdit } = useSelector((state) => state.EditDataUser);
-  // console.log(loading, 'loading');
-  // console.log(loadingList, 'loadingList');
 
   const { pathSite } = useSelector((state) => state.ordersListSlice);
 
@@ -59,8 +44,8 @@ const App = () => {
   ///// Для переходя со страниц заказов в main
 
   // console.log(location.pathname, 'location');
-  // const text = "nurdin513123a1s3da"
-  // console.log(text.includes("n"));
+  // console.log(loading, 'loading');
+  // console.log(loadingList, 'loadingList');
 
   React.useEffect(() => {
     pathSite ? navigate('/main') : '';
