@@ -45,7 +45,9 @@ const App = () => {
   console.log(allFoodsOrders, 'allFoodsOrders');
 
   React.useEffect(() => {
-    pathSite ? navigate('/main') : '';
+    if (pathSite) {
+      navigate('/main');
+    }
   }, [pathSite]);
   ///// Для переходя со страниц заказов в main
 
