@@ -73,6 +73,7 @@ export const editNumUser = createAsyncThunk(
               state: true,
             })
           );
+          dispatch(changeInputNum(""));
         }
       } else {
         throw Error(`Error: ${response.status}`);
@@ -92,7 +93,7 @@ export const checkNumUser = createAsyncThunk(
       const response = await axios.post(
         'http://kover-site.333.kg/check_code/',
         {
-          phone_client: data?.inputNum?.replace(/[-()]/g, ''),
+          phone_client: data?.inputNum?.replace(/[-()]/g, '')?.slice(-9),
           verification_number: data?.code?.join(''),
         },
         {

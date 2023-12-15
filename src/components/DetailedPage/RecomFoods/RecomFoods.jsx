@@ -70,7 +70,7 @@ const RecomFoods = ({ estab, categ }) => {
     }
   }, 800);
 
-  // console.log(innerData, 'innerData');
+  console.log(innerData, 'innerData');
   // console.log(allFoodsOrders, 'allFoodsOrders');
 
   const [dataEvery, setDataEvery] = useState({});
@@ -121,11 +121,13 @@ const RecomFoods = ({ estab, categ }) => {
                           {food?.status}
                         </p>
                       )}
-                      <img
-                        src={food?.photo}
-                        alt="временно"
-                        onClick={() => clickProduct(food)}
-                      />
+                      <div className={styles.imgMain}>
+                        <img
+                          src={food?.photo}
+                          alt="временно"
+                          onClick={() => clickProduct(food)}
+                        />
+                      </div>
                       <h6 onClick={() => clickProduct(food)}>
                         {food.product_name}
                       </h6>

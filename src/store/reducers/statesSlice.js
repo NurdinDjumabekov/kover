@@ -11,6 +11,7 @@ const initialState = {
   activeTypeEstab: 0,
   indexSlide: 0, // нужен для того , чтобы центрировать активный слайдер на детальной странице
   listOrdersUser: [],
+  countDishes: 1,
 };
 const statesSlice = createSlice({
   name: 'statesSlice',
@@ -33,9 +34,14 @@ const statesSlice = createSlice({
       state.sumOrdersFoods = allSum || 0;
     },
     changeSumDishes: (state, action) => {
+      // const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
+      //   const itemSum = +obj.count * +obj.posuda_price;
+      //   return sum + itemSum;
+      // }, 0);
+      // state.sumDishes = allSum || 0;
       const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
-        const itemSum = +obj.count * +obj.posuda_price;
-        return sum + itemSum;
+        // const itemSum = +obj.count * +obj.posuda_price;
+        return sum + +obj.posuda_price;
       }, 0);
       state.sumDishes = allSum || 0;
     },
@@ -99,12 +105,16 @@ const statesSlice = createSlice({
       state.sumDishes = 0;
       state.positionFoods = 0;
       state.sumOrdersFoods = 0;
+      state.countDishes = 1
     },
     changeAllFoodsOrders: (state, action) => {
       state.allFoodsOrders = [...state.allFoodsOrders, action.payload];
     },
     changeListOrdersUser: (state, action) => {
       state.listOrdersUser = action.payload;
+    },
+    changeCountDishes: (state, action) => {
+      state.countDishes = action.payload; // для подсчета посуды всех продуктов(посуда counter)
     },
   },
 });
@@ -123,6 +133,7 @@ export const {
   resetBusket,
   changeAllFoodsOrders,
   changeListOrdersUser,
+  changeCountDishes,
 } = statesSlice.actions;
 
 export default statesSlice.reducer;

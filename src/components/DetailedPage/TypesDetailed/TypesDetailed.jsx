@@ -113,7 +113,7 @@ const TypesDetailed = ({ id }) => {
   };
 
   // console.log(activeTypeEstab, 'activeTypeEstab');
-  console.log(establishmentCategory, 'establishmentCategory');
+  // console.log(establishmentCategory, 'establishmentCategory');
 
   return (
     <>

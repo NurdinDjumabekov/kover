@@ -12,6 +12,7 @@ import {
 } from '../../../store/reducers/postRequestSlice';
 import { sortOrders } from '../../../helpers/sortOrders';
 import { useNavigate } from 'react-router-dom';
+import { changeCountDishes } from '../../../store/reducers/statesSlice';
 
 const TotalOrder = (props) => {
   const dispatch = useDispatch();
@@ -19,10 +20,9 @@ const TotalOrder = (props) => {
   const { orderUser } = useSelector((state) => state.postRequestSlice);
   const { dataUser } = useSelector((state) => state.accountSlice);
 
-  const { sumOrdersFoods, sumDishes, allFoodsOrders } = useSelector(
-    (state) => state.statesSlice
-  );
-  const allSum = +sumDishes + +sumOrdersFoods + 200;
+  const { sumOrdersFoods, sumDishes, allFoodsOrders, countDishes } =
+    useSelector((state) => state.statesSlice);
+  const allSum = +sumDishes * countDishes + +sumOrdersFoods + 200;
   // console.log(allSum, 'allSum');
 
   const sendData = (e) => {
@@ -64,12 +64,20 @@ const TotalOrder = (props) => {
     );
   }, []);
 
+  const counterDishes = (type) => {
+    if (type === '+') {
+      dispatch(changeCountDishes(countDishes + 1));
+    } else if (type === '-') {
+      countDishes > 1 ? dispatch(changeCountDishes(countDishes - 1)) : '';
+    }
+  };
+
   return (
     <Modals state={props.state} title={'Итого'} changeState={props.changeState}>
       <form className="totalOrder" onSubmit={sendData}>
         <h5>Покупатель</h5>
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="phone"
           required
@@ -77,7 +85,7 @@ const TotalOrder = (props) => {
           value={orderUser?.phone}
         />
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="fio"
           required
@@ -86,7 +94,7 @@ const TotalOrder = (props) => {
         />
         <h5>Доставка</h5>
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="address"
           required
@@ -94,7 +102,7 @@ const TotalOrder = (props) => {
           value={orderUser?.address}
         />
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="kvartira"
           required
@@ -102,14 +110,14 @@ const TotalOrder = (props) => {
           value={orderUser?.kvartira}
         />
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="hourDeliver"
           placeholder="Время доставки"
           value={orderUser?.hourDeliver}
         />
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="zakazDopInfo"
           required
@@ -133,7 +141,7 @@ const TotalOrder = (props) => {
           </div>
         </div>
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="sdacha"
           required
@@ -141,16 +149,16 @@ const TotalOrder = (props) => {
           value={orderUser?.sdacha}
         />
         <h5>Дополнительно</h5>
-        {/* <div className="dishes">
+        <div className="dishes">
           <h6>Посуда</h6>
           <div className="counter">
-            <button onClick={() => setCount(count - 1)}>-</button>
-            <p>{count}</p>
-            <button onClick={() => setCount(count + 1)}>+</button>
+            <p onClick={() => counterDishes('-')}>-</p>
+            <p>{countDishes}</p>
+            <p onClick={() => counterDishes('+')}>+</p>
           </div>
-        </div> */}
+        </div>
         <input
-          onChange={(e) => changeInput(e)}
+          onChange={changeInput}
           type="text"
           name="comment_zakaz"
           required
@@ -164,7 +172,7 @@ const TotalOrder = (props) => {
         </div>
         <div className="itog">
           <h6>Посуда</h6>
-          <p>{sumDishes} сом</p>
+          <p>{sumDishes * countDishes} сом</p>
         </div>
         <div className="itog">
           <h6>Доставка</h6>

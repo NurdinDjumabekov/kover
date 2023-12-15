@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './DetailedEveryData.scss';
 import Modals from '../../Modals/Modals';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import {
 
 const DetailedEveryData = (props) => {
   const dispatch = useDispatch();
+  const [count, setCount] = useState(0);
   const { allFoodsOrders } = useSelector((state) => state.statesSlice);
   const data = props?.dataEvery;
 
@@ -35,7 +36,16 @@ const DetailedEveryData = (props) => {
   };
 
   // console.log(props?.dataEvery, 'dataEvery');
-  // console.log(allFoodsOrders, 'allFoodsOrders');
+  console.log(allFoodsOrders, 'allFoodsOrders');
+
+  React.useEffect(() => {
+    allFoodsOrders?.map((koll) => {
+      if (koll?.codeid === data?.codeid) {
+        setCount(koll?.count);
+      }
+    });
+    return () => setCount(0);
+  }, [allFoodsOrders, data]);
 
   return (
     <Modals
@@ -56,8 +66,8 @@ const DetailedEveryData = (props) => {
         <div className="everyProd__btns">
           <div>
             <button onClick={() => handleCounter('del')}>-</button>
-            {/* <p>{item.count}</p> */}
-            <p>555</p>
+            <p>{count}</p>
+            {/* <p>555</p> */}
             <button onClick={() => handleCounter('add')}>+</button>
           </div>
           <button onClick={() => handleCounter('add')}>Добавить</button>

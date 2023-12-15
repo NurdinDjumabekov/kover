@@ -35,8 +35,14 @@ const App = () => {
   const { loading } = useSelector((state) => state.requestFoodSlice);
   const { loadingList } = useSelector((state) => state.ordersListSlice);
   const { loadingEdit } = useSelector((state) => state.EditDataUser);
-
   const { pathSite } = useSelector((state) => state.ordersListSlice);
+  const { sumDishes, sumOrdersFoods, positionFoods, allFoodsOrders } =
+    useSelector((state) => state.statesSlice);
+
+  console.log(sumDishes, 'sumDishes');
+  console.log(sumOrdersFoods, 'sumOrdersFoods');
+  console.log(positionFoods, 'positionFoods');
+  console.log(allFoodsOrders, 'allFoodsOrders');
 
   React.useEffect(() => {
     pathSite ? navigate('/main') : '';

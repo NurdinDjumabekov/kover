@@ -168,7 +168,7 @@ export const sendOrderFoods = createAsyncThunk(
     try {
       const response = await axios.post(
         'http://kover-site.333.kg/create_zakaz/',
-        { ...info },
+        info,
         {
           headers: {
             'Content-Type': 'application/json',

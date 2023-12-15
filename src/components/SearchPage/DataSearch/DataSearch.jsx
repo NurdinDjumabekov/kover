@@ -72,11 +72,20 @@ const DataSearch = () => {
                 >
                   <div className={styles.imgs}>
                     {food?.photo ? (
-                      <img src={food.photo} alt="food" />
+                      <>
+                        {food?.photo === 'null' ? (
+                          <img src={foods} alt="food" />
+                        ) : (
+                          <img src={food?.photo} alt="food" />
+                        )}
+                      </>
                     ) : (
+                      // <img src={food.photo} alt="food" />
                       <img src={foods} alt="food" />
                     )}
-                    <img src={food?.logo} className={styles.logo} alt="" />
+                    {food?.logo && (
+                      <img src={food?.logo} className={styles.logo} alt="" />
+                    )}
                   </div>
                   <div className={styles.everyData__inner}>
                     <h4>{food.establishment_name}</h4>
@@ -111,11 +120,13 @@ const DataSearch = () => {
                   {food?.status && (
                     <p className={styles.types}>{food?.status}</p>
                   )}
-                  {food?.photo ? (
-                    <img src={food?.photo} alt="временно" />
-                  ) : (
-                    <img src={foods} alt="временно" />
-                  )}
+                  <div className={styles.imgFood}>
+                    {food?.photo ? (
+                      <img src={food?.photo} alt="временно" />
+                    ) : (
+                      <img src={foods} alt="временно" />
+                    )}
+                  </div>
                   <h6>{food.product_name}</h6>
                   <div>
                     <p>{food.product_price} сом</p>
