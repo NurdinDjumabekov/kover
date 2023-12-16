@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './DataSearch.module.scss';
 //// imgs
@@ -17,6 +17,7 @@ import {
   changeSumOrdersFoods,
 } from '../../../store/reducers/statesSlice';
 import { chnageAlertText } from '../../../store/reducers/EditDataUser';
+import DetailedEveryData from '../../DetailedPage/DetailedEveryData/DetailedEveryData';
 
 const DataSearch = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const DataSearch = () => {
     dispatch(changePositionFoods());
     dispatch(changeSumDishes());
     alertAddBucket();
+    clickProduct(data);
   };
 
   const alertAddBucket = () => {
@@ -51,11 +53,20 @@ const DataSearch = () => {
     }, 800);
   };
 
-  // console.log(dataSearchMain, 'dataSearchMain');
+  console.log(dataSearchMain, 'dataSearchMain');
 
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
     localStorage.setItem('pathCatalog', name);
+  };
+
+  const [everyProd, setEveryProd] = React.useState(false);
+  const [idCounter, setIdCounter] = React.useState(1);
+  const [dataEvery, setDataEvery] = useState({});
+
+  const clickProduct = (data) => {
+    setEveryProd(true);
+    setDataEvery(data);
   };
 
   return (
@@ -68,7 +79,7 @@ const DataSearch = () => {
                   key={food.codeid}
                   to={`/product/${food?.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
                   className={styles.everyData}
-                  onClick={() => clickEstablishment('Магазины')}
+                  onClick={() => clickEstablishment('Рестораны')}
                 >
                   <div className={styles.imgs}>
                     {food?.photo ? (
@@ -116,19 +127,29 @@ const DataSearch = () => {
                 </NavLink>
               ))
             : dataSearchMain?.map((food) => (
-                <li key={food.codeid}>
+                <li key={food.codeid} onClick={() => setIdCounter(food.codeid)}>
                   {food?.status && (
-                    <p className={styles.types}>{food?.status}</p>
+                    <p
+                      className={styles.types}
+                      onClick={() => clickProduct(food)}
+                    >
+                      {food?.status}
+                    </p>
                   )}
-                  <div className={styles.imgFood}>
-                    {food?.photo ? (
-                      <img src={food?.photo} alt="временно" />
+                  <div
+                    className={styles.imgFood}
+                    onClick={() => clickProduct(food)}
+                  >
+                    {food?.prod_photo ? (
+                      <img src={food?.prod_photo} alt="временно" />
                     ) : (
                       <img src={foods} alt="временно" />
                     )}
                   </div>
-                  <h6>{food.product_name}</h6>
-                  <div>
+                  <h6 onClick={() => clickProduct(food)}>
+                    {food.product_name}
+                  </h6>
+                  <div onClick={() => clickProduct(food)}>
                     <p>{food.product_price} сом</p>
                     <span>
                       {food.v_ves} {food.ves_name}
@@ -139,6 +160,15 @@ const DataSearch = () => {
               ))}
         </>
       )}
+      <>
+        {/* ///// для детального просмотра каждого продукта */}
+        <DetailedEveryData
+          state={everyProd}
+          changeState={setEveryProd}
+          idCounter={idCounter}
+          dataEvery={dataEvery}
+        />
+      </>
     </div>
   );
 };

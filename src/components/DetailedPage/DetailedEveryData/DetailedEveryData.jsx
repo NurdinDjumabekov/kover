@@ -55,7 +55,11 @@ const DetailedEveryData = (props) => {
     >
       <div className="everyProd">
         <div className="everyProd__img">
-          <img src={data?.photo} alt="" />
+          {data?.prod_photo ? (
+            <img src={data?.prod_photo} alt="еда" />
+          ) : (
+            <img src={data?.photo} alt="еда" />
+          )}
         </div>
         <div className="everyProd__text">
           <p>{data?.product_price} сом</p>
@@ -67,21 +71,25 @@ const DetailedEveryData = (props) => {
           <div>
             <button onClick={() => handleCounter('del')}>-</button>
             <p>{count}</p>
-            {/* <p>555</p> */}
             <button onClick={() => handleCounter('add')}>+</button>
           </div>
           <button onClick={() => handleCounter('add')}>Добавить</button>
         </div>
         <h6>Описание</h6>
-        {/* <b>{data?.establishment_name}</b> */}
-        <b>
+        {data?.description === '' ? (
+          <b>Описание отсутствует</b>
+        ) : (
+          <b>{data?.description}</b>
+        )}
+
+        {/* <b>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui officia
           quam excepturi ab harum impedit veritatis quod tempora quaerat ratione
           provident eaque, vitae recusandae ex, distinctio et dolore possimus
           eveniet. Alias, nam ad quasi eveniet fuga accusamus enim! Qui sunt
           quam praesentium, dicta eos a nesciunt voluptatibus laudantium
           doloribus asperiores?
-        </b>
+        </b> */}
       </div>
     </Modals>
   );

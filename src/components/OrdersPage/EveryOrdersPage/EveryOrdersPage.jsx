@@ -33,7 +33,11 @@ const EveryOrdersPage = ({ item }) => {
       <div className="container">
         <div className={styles.order__inner}>
           <div className={styles.order__mainData}>
-            <img src={item.photo} alt="" />
+            {item?.prod_photo ? (
+              <img src={item.prod_photo} alt="еда" />
+            ) : (
+              <img src={item.photo} alt="еда" />
+            )}
             <div>
               <h4>{item.product_name} </h4>
               <p>{item.product_price} сом</p>

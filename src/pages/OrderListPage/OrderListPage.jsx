@@ -219,14 +219,19 @@ const OrderListPage = () => {
               </div>
             </div>
 
-            <input
-              type="text"
-              required
-              placeholder="Нужна сдача с..."
-              onChange={changeInput}
-              name="sdacha"
-              value={dataListOrders?.sdacha}
-            />
+            {dataListOrders?.oplata_type === 2 ? (
+              <input
+                type="text"
+                required
+                placeholder="Нужна сдача с..."
+                onChange={changeInput}
+                name="sdacha"
+                value={dataListOrders?.sdacha}
+              />
+            ) : (
+              ''
+            )}
+
             <label>Комментарий к заказу</label>
             <input
               type="text"

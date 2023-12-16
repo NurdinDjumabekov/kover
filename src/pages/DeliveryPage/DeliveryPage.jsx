@@ -218,14 +218,18 @@ const DeliveryPage = () => {
               </div>
             </div>
 
-            <input
-              type="text"
-              required
-              placeholder="Нужна сдача с..."
-              name="sdacha"
-              onChange={changeInput}
-              value={deliveryOrders?.sdacha}
-            />
+            {deliveryOrders?.oplata_type === 2 ? (
+              <input
+                type="text"
+                required
+                placeholder="Нужна сдача с..."
+                name="sdacha"
+                onChange={changeInput}
+                value={deliveryOrders?.sdacha}
+              />
+            ) : (
+              ''
+            )}
 
             <label>Комментарий к заказу</label>
             <input

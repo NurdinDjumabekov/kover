@@ -11,7 +11,7 @@ export const sendOrderFoods = createAsyncThunk(
     try {
       const response = await axios.post(
         'http://kover-site.333.kg/create_zakaz_list/',
-        { ...data },
+        data,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -22,6 +22,9 @@ export const sendOrderFoods = createAsyncThunk(
         dispatch(clearDataListOrders());
         dispatch(changeListOrdersUser([]));
         dispatch(changePathSite(true));
+        setTimeout(() => {
+          dispatch(changePathSite(false));
+        }, 1000);
         dispatch(
           chnageAlertText({
             text: 'Ваш заказ был успешно создан!!',
@@ -53,7 +56,7 @@ export const sendCourier = createAsyncThunk(
     try {
       const response = await axios.post(
         'http://kover-site.333.kg/create_zakaz_courier/',
-        { ...data },
+        data,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -70,6 +73,9 @@ export const sendCourier = createAsyncThunk(
           })
         );
         dispatch(changePathSite(true));
+        setTimeout(() => {
+          dispatch(changePathSite(false));
+        }, 1000);
       } else {
         dispatch(
           chnageAlertText({
@@ -149,10 +155,34 @@ const ordersListSlice = createSlice({
       }, 1000);
     },
     clearDataListOrders: (state, action) => {
-      state.dataListOrders = [];
+      state.dataListOrders = {
+        phone: '',
+        fio: '',
+        client_adress: '',
+        client_time_delivery: '',
+        oplata_type: 1,
+        sdacha: '',
+        comment_zakaz: '',
+        product_list: [],
+      };
     },
     clearDeliveryOrders: (state, action) => {
-      state.deliveryOrders = [];
+      state.deliveryOrders = {
+        phone: '',
+        fio: '',
+        adress_from: '',
+        apartment_address_from: '',
+        time_from: '',
+        adress_to: '',
+        apartment_address_to: '',
+        time_to: '',
+        descr_delivery: '',
+        gab_gruz: 0,
+        sdacha: '',
+        comment_zakaz: '',
+        oplata_type: 1,
+        dostavka_type: 1,
+      };
     },
   },
 });

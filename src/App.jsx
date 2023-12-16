@@ -39,10 +39,10 @@ const App = () => {
   const { sumDishes, sumOrdersFoods, positionFoods, allFoodsOrders } =
     useSelector((state) => state.statesSlice);
 
-  console.log(sumDishes, 'sumDishes');
-  console.log(sumOrdersFoods, 'sumOrdersFoods');
-  console.log(positionFoods, 'positionFoods');
-  console.log(allFoodsOrders, 'allFoodsOrders');
+  // console.log(sumDishes, 'sumDishes');
+  // console.log(sumOrdersFoods, 'sumOrdersFoods');
+  // console.log(positionFoods, 'positionFoods');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   React.useEffect(() => {
     if (pathSite) {
