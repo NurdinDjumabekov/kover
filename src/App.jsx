@@ -64,6 +64,19 @@ const App = () => {
       ) {
         navigate('/main');
       }
+      if (
+        !location.pathname.includes('main') ||
+        !location.pathname.includes('search') ||
+        !location.pathname.includes('categories') ||
+        !location.pathname.includes('orders') ||
+        !location.pathname.includes('detailed') ||
+        !location.pathname.includes('product') ||
+        !location.pathname.includes('account') ||
+        !location.pathname.includes('delivery') ||
+        !location.pathname.includes('listorder')
+      ) {
+        // navigate('/main');
+      }
     } else {
       if (
         location.pathname.includes('main') ||

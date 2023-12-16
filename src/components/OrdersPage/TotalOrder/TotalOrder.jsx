@@ -140,14 +140,19 @@ const TotalOrder = (props) => {
             <p>Наличные</p>
           </div>
         </div>
-        <input
-          onChange={changeInput}
-          type="text"
-          name="sdacha"
-          required
-          placeholder="Нужна сдача с..."
-          value={orderUser?.sdacha}
-        />
+        {orderUser.type_oplata === 2 ? (
+          <input
+            onChange={changeInput}
+            type="text"
+            name="sdacha"
+            required
+            placeholder="Нужна сдача с..."
+            value={orderUser?.sdacha}
+          />
+        ) : (
+          ''
+        )}
+
         <h5>Дополнительно</h5>
         <div className="dishes">
           <h6>Посуда</h6>
