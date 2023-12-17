@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import styles from './DataSearch.module.scss';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import styles from "./DataSearch.module.scss";
 //// imgs
-import foods from '../../../assets/images/noneData/foodsss.png';
-import star from '../../../assets/icons/star.svg';
-import clock from '../../../assets/icons/clock.svg';
-import kitchen from '../../../assets/icons/kitchen.svg';
-import transport from '../../../assets/icons/transport.svg';
-import check from '../../../assets/icons/check.svg';
-import { useDispatch, useSelector } from 'react-redux';
+import foods from "../../../assets/images/noneData/foodsss.png";
+import star from "../../../assets/icons/star.svg";
+import clock from "../../../assets/icons/clock.svg";
+import kitchen from "../../../assets/icons/kitchen.svg";
+import transport from "../../../assets/icons/transport.svg";
+import check from "../../../assets/icons/check.svg";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addFoodsOrders,
   changePathCatalog,
   changePositionFoods,
   changeSumDishes,
   changeSumOrdersFoods,
-} from '../../../store/reducers/statesSlice';
-import { chnageAlertText } from '../../../store/reducers/EditDataUser';
-import DetailedEveryData from '../../DetailedPage/DetailedEveryData/DetailedEveryData';
+} from "../../../store/reducers/statesSlice";
+import { chnageAlertText } from "../../../store/reducers/EditDataUser";
+import DetailedEveryData from "../../DetailedPage/DetailedEveryData/DetailedEveryData";
 
 const DataSearch = () => {
   const dispatch = useDispatch();
@@ -31,33 +31,33 @@ const DataSearch = () => {
     dispatch(changePositionFoods());
     dispatch(changeSumDishes());
     alertAddBucket();
-    clickProduct(data);
+    // clickProduct(data);
   };
 
   const alertAddBucket = () => {
     dispatch(
       chnageAlertText({
-        text: 'Продук был добавлен в корзину',
-        backColor: 'green',
+        text: "Продук был добавлен в корзину",
+        backColor: "green",
         state: true,
       })
     );
     setTimeout(() => {
       dispatch(
         chnageAlertText({
-          text: '',
-          backColor: 'transparent',
+          text: "",
+          backColor: "transparent",
           state: false,
         })
       );
     }, 800);
   };
 
-  console.log(dataSearchMain, 'dataSearchMain');
+  console.log(dataSearchMain, "dataSearchMain");
 
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
-    localStorage.setItem('pathCatalog', name);
+    localStorage.setItem("pathCatalog", name);
   };
 
   const [everyProd, setEveryProd] = React.useState(false);
@@ -79,12 +79,12 @@ const DataSearch = () => {
                   key={food.codeid}
                   to={`/product/${food?.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
                   className={styles.everyData}
-                  onClick={() => clickEstablishment('Рестораны')}
+                  onClick={() => clickEstablishment("Рестораны")}
                 >
                   <div className={styles.imgs}>
                     {food?.photo ? (
                       <>
-                        {food?.photo === 'null' ? (
+                        {food?.photo === "null" ? (
                           <img src={foods} alt="food" />
                         ) : (
                           <img src={food?.photo} alt="food" />

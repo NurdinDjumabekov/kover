@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
-import styles from './ConfirmNum.module.scss';
-import { checkNum } from '../../../store/reducers/postRequestSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { chnageAlertText } from '../../../store/reducers/EditDataUser';
+import React, { useRef } from "react";
+import styles from "./ConfirmNum.module.scss";
+import { checkNum } from "../../../store/reducers/postRequestSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { chnageAlertText } from "../../../store/reducers/EditDataUser";
 
-const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
+const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
   const [seconds, setSeconds] = React.useState(0);
   const { dataUser } = useSelector((state) => state.accountSlice);
   const { checkAuth } = useSelector((state) => state.postRequestSlice);
-  const [code, setCode] = React.useState(['', '', '', '']);
+  const [code, setCode] = React.useState(["", "", "", ""]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
       if (seconds === 0) {
         // Таймер завершен.
         clearInterval(intervalId);
-        setTime('00:00');
+        setTime("00:00");
         setEndTime(false);
       }
     }, 1000);
@@ -43,9 +43,9 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
       2,
-      '0'
+      "0"
     )}`;
   };
 
@@ -61,30 +61,38 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
 
   React.useEffect(() => {
     if (+checkAuth === 1) {
-      navigate('/welcome');
+      navigate("/welcome");
     }
     // console.log(checkAuth, 'checkAuth');
   }, [checkAuth]);
 
   const confirmNum = (e) => {
     e.preventDefault();
-    if (code?.join('')?.length === 4) {
+    if (code?.join("")?.length === 4) {
       dispatch(checkNum({ code, dataUser }));
     } else {
       dispatch(
         chnageAlertText({
-          text: 'Введите все четыре символа',
-          backColor: 'red',
+          text: "Введите все четыре символа",
+          backColor: "red",
           state: true,
         })
       );
     }
   };
 
+  console.log(endTime, "endTime");
+
+  const sendNumAgain = (e) => {
+    sendNum(e);
+    setSeconds(179);
+    setTime("03:00");
+  };
+
   return (
     <div>
       <form className={styles.formConfirm} onSubmit={confirmNum}>
-        <div>
+        <div className={styles.inputs}>
           {code.map((text, index) => (
             <input
               key={index}
@@ -97,9 +105,15 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime }) => {
             />
           ))}
         </div>
-        <button type="submit" className="standartBtn">
-          Подтвердить
-        </button>
+        {endTime ? (
+          <button type="submit" className="standartBtn">
+            Подтвердить
+          </button>
+        ) : (
+          <div className={styles.btnSend} onClick={sendNumAgain}>
+            Отправить код еще раз
+          </div>
+        )}
         <label>
           Код отправлен на ваш номер. Повторная отправка через
           <span>{time}</span>

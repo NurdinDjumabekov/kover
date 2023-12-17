@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import Modals from '../../Modals/Modals';
-import './EditUser.scss';
-import { changeDataUser } from '../../../store/reducers/accountSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { editNameUser } from '../../../store/reducers/EditDataUser';
+import React, { useState } from "react";
+import Modals from "../../Modals/Modals";
+import "./EditUser.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { editNameUser } from "../../../store/reducers/EditDataUser";
 
 const EditUser = (props) => {
   const { dataUser, tokenNum } = useSelector((state) => state.accountSlice);
@@ -26,7 +25,7 @@ const EditUser = (props) => {
   return (
     <Modals
       state={props.state}
-      title={'Редактирование профиля'}
+      title={"Редактирование профиля"}
       changeState={props.changeState}
     >
       <form className="editUser" onSubmit={editData}>

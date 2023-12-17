@@ -1,18 +1,17 @@
-import React from 'react';
-import logo from '../../assets/images/Logo.png';
-import styles from './Login.module.scss';
-import { NavLink } from 'react-router-dom';
-import InputMask from 'react-input-mask';
-import { addSession, changeDataUser } from '../../store/reducers/accountSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { sendNumAuth } from '../../store/reducers/postRequestSlice';
-import ConfirmNum from '../../components/LoginPage/ConfirmNum/ConfirmNum';
-import { chnageAlertText } from '../../store/reducers/EditDataUser';
+import React from "react";
+import logo from "../../assets/images/Logo.png";
+import styles from "./Login.module.scss";
+import InputMask from "react-input-mask";
+import { addSession, changeDataUser } from "../../store/reducers/accountSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { sendNumAuth } from "../../store/reducers/postRequestSlice";
+import ConfirmNum from "../../components/LoginPage/ConfirmNum/ConfirmNum";
+import { chnageAlertText } from "../../store/reducers/EditDataUser";
 
 const Login = () => {
   const [stateSendNum, setStateSendNum] = React.useState(1); // уровни логинизации
   const [endTime, setEndTime] = React.useState(true);
-  const [time, setTime] = React.useState('03:00');
+  const [time, setTime] = React.useState("03:00");
 
   const dispatch = useDispatch();
 
@@ -28,11 +27,6 @@ const Login = () => {
     dispatch(changeDataUser({ ...dataUser, [e.target.name]: e.target.value }));
   };
 
-  // console.log(stateSendNum);
-  // console.log(dataUser, 'dataUser');
-
-  /////////////////////////////////////////////
-  
   ///////////////////////////////////
   const sendNum = (e) => {
     e.preventDefault();
@@ -40,17 +34,20 @@ const Login = () => {
     if (phoneNumberPattern.test(dataUser?.numberPhone)) {
       dispatch(sendNumAuth(dataUser));
       setStateSendNum(2);
-      setTime('03:00');
+      setTime("03:00");
     } else {
       dispatch(
         chnageAlertText({
-          text: 'Введите правильно номер телефона!',
-          backColor: 'red',
+          text: "Введите правильно номер телефона!",
+          backColor: "red",
           state: true,
         })
       );
     }
   };
+
+  // console.log(stateSendNum);
+  // console.log(dataUser, 'dataUser');
 
   return (
     <div className={styles.login}>
@@ -85,6 +82,7 @@ const Login = () => {
               time={time}
               setTime={setTime}
               endTime={endTime}
+              sendNum={sendNum}
             />
           )}
         </div>

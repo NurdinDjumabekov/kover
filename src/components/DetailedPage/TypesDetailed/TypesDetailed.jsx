@@ -74,7 +74,7 @@ const TypesDetailed = ({ id }) => {
         // dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/')); заменил на:
         dispatch(
           getAllDataFood(
-            `http://kover-site.333.kg/get_establishments?category_code=${'0'}` // дефортное значение, когда отображаются все данные категорий ("все")
+            `http://kover-site.333.kg/get_establishments?category_code=${'0'}` // дефолтное значение, когда отображаются все данные категорий ("все")
           )
         );
       }

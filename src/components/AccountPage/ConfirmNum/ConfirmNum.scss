@@ -5,7 +5,7 @@
     // background: red;
     margin: 0 auto;
 
-    > div {
+    .inputsCode {
       display: flex;
       justify-content: space-between;
       padding: 20px 0px;
@@ -27,8 +27,24 @@
         text-transform: uppercase;
       }
     }
+    .btnSendNums {
+      background: var(--Orange, #ffc12e);
+      color: var(--Black, #222);
+      text-align: center;
+      margin: 0 auto 15px;
+      font-family: Gilroy;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: 0.64px;
+      text-transform: uppercase;
+      padding: 16px 24px;
+      border-radius: 8px;
+    }
     button {
       width: 100%;
+      margin-bottom: 15px !important;
     }
     label,
     span {

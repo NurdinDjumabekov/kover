@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import './EditNumber.scss';
-import Modals from '../../Modals/Modals';
-import InputMask from 'react-input-mask';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import "./EditNumber.scss";
+import Modals from "../../Modals/Modals";
+import InputMask from "react-input-mask";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeInputNum,
   chnageAlertText,
   editNumUser,
-} from '../../../store/reducers/EditDataUser';
+} from "../../../store/reducers/EditDataUser";
 
 const EditNumber = (props) => {
   const dispatch = useDispatch();
@@ -27,8 +27,8 @@ const EditNumber = (props) => {
     } else {
       dispatch(
         chnageAlertText({
-          text: 'Некорректный номер',
-          backColor: 'red',
+          text: "Некорректный номер",
+          backColor: "red",
           state: true,
         })
       );
@@ -38,7 +38,7 @@ const EditNumber = (props) => {
   return (
     <Modals
       state={props.state}
-      title={'Смена номера'}
+      title={"Смена номера"}
       changeState={props.changeState}
     >
       <div className="editNumber">
