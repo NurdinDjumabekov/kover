@@ -42,7 +42,7 @@ const RecomFoods = ({ estab, categ }) => {
     dispatch(
       chnageAlertText({
         text: 'Продук был добавлен в корзину',
-        backColor: 'green',
+        backColor: 'yellow',
         state: true,
       })
     );

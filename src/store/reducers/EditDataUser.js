@@ -1,29 +1,29 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import {
   changeDataUser,
   changeTokenName,
   changeTokenNum,
-} from "./accountSlice";
+} from './accountSlice';
 
 // Редактирование имени пользователя
 // http://kover-site.333.kg/edit_profile/
 export const editNameUser = createAsyncThunk(
-  "editNameUser",
+  'editNameUser',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        "http://kover-site.333.kg/edit_profile/",
+        'http://kover-site.333.kg/edit_profile/',
         {
           codeid: data?.dataUser?.idUser,
           client_fio: data?.inputName,
-          client_phone: "",
-          client_phone2: "",
-          address: "",
+          client_phone: '',
+          client_phone2: '',
+          address: '',
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -42,39 +42,39 @@ export const editNameUser = createAsyncThunk(
 // Редактирование номера пользователя
 // http://kover-site.333.kg/edit_profile/
 export const editNumUser = createAsyncThunk(
-  "editNumUser",
+  'editNumUser',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        "http://kover-site.333.kg/edit_profile/",
+        'http://kover-site.333.kg/edit_profile/',
         {
           codeid: data?.dataUser?.idUser,
-          client_fio: "",
-          client_phone: data?.tokenNum?.replace(/[-()]/g, "")?.slice(-9),
-          client_phone2: data?.inputNum?.replace(/[-()]/g, "")?.slice(-9),
-          address: "",
+          client_fio: '',
+          client_phone: data?.tokenNum?.replace(/[-()]/g, '')?.slice(-9),
+          client_phone2: data?.inputNum?.replace(/[-()]/g, '')?.slice(-9),
+          address: '',
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
       if (response.status >= 200 || response.status < 300) {
         // console.log(response?.data?.error);
         if (
-          response?.data?.error === "Введите новый номер!" ||
-          response?.data?.error === "Этот номер занят!"
+          response?.data?.error === 'Введите новый номер!' ||
+          response?.data?.error === 'Этот номер занят!'
         ) {
-          dispatch(changeError("ошибка"));
+          dispatch(changeError('ошибка'));
           dispatch(
             chnageAlertText({
-              text: "Этот номер уже занят!",
-              backColor: "red",
+              text: 'Этот номер уже занят!',
+              backColor: 'red',
               state: true,
             })
           );
-          dispatch(changeInputNum(""));
+          dispatch(changeInputNum(''));
         }
       } else {
         throw Error(`Error: ${response.status}`);
@@ -88,18 +88,18 @@ export const editNumUser = createAsyncThunk(
 // Подтверждение номера пользователя
 // http://kover-site.333.kg/check_code/
 export const checkNumUser = createAsyncThunk(
-  "checkNumUser",
+  'checkNumUser',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        "http://kover-site.333.kg/check_code/",
+        'http://kover-site.333.kg/check_code/',
         {
-          phone_client: data?.inputNum?.replace(/[-()]/g, "")?.slice(-9),
-          verification_number: data?.code?.join(""),
+          phone_client: data?.inputNum?.replace(/[-()]/g, '')?.slice(-9),
+          verification_number: data?.code?.join(''),
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -120,21 +120,21 @@ export const checkNumUser = createAsyncThunk(
 // Редактирование адреса пользователя
 // http://kover-site.333.kg/edit_profile/
 export const editPlaceUser = createAsyncThunk(
-  "editPlaceUser",
+  'editPlaceUser',
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        "http://kover-site.333.kg/edit_profile/",
+        'http://kover-site.333.kg/edit_profile/',
         {
           codeid: data?.dataUser?.idUser,
-          client_fio: "",
-          client_phone: "",
-          client_phone2: "",
+          client_fio: '',
+          client_phone: '',
+          client_phone2: '',
           address: `${data?.placeUser?.mainAdres}, ${data?.placeUser?.noMainAdres}, ${data?.placeUser?.infoDop}`,
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -160,33 +160,33 @@ export const editPlaceUser = createAsyncThunk(
 
 export const initialState = {
   alertText: {
-    text: "",
-    backColor: "",
+    text: '',
+    backColor: '',
     state: false,
   },
-  inputNum: "",
+  inputNum: '',
   loadingEdit: false,
   errorEdit: null,
 };
 
 const EditDataUser = createSlice({
-  name: "EditDataUser",
+  name: 'EditDataUser',
   initialState,
   extraReducers: (builder) => {
     //// editNameUser
     builder.addCase(editNameUser.fulfilled, (state, action) => {
       state.loadingEdit = false;
       state.alertText = {
-        text: "Ваше ФИО успешно переименовано!",
-        backColor: "green",
+        text: 'Ваше ФИО успешно переименовано!',
+        backColor: 'yellow',
         state: true,
       };
     });
     builder.addCase(editNameUser.rejected, (state, action) => {
       state.errorEdit = action.payload;
       state.alertText = {
-        text: "Не удалось изменить ваше ФИО, попробуйте позже...",
-        backColor: "red",
+        text: 'Не удалось изменить ваше ФИО, попробуйте позже...',
+        backColor: 'red',
         state: true,
       };
       state.loadingEdit = false;
@@ -206,8 +206,8 @@ const EditDataUser = createSlice({
     builder.addCase(editNumUser.rejected, (state, action) => {
       state.errorEdit = action.payload;
       state.alertText = {
-        text: "Не удалось изменить номер, попробуйте еще раз...",
-        backColor: "red",
+        text: 'Не удалось изменить номер, попробуйте еще раз...',
+        backColor: 'red',
         state: true,
       };
       state.loadingEdit = false;
@@ -219,16 +219,16 @@ const EditDataUser = createSlice({
     builder.addCase(checkNumUser.fulfilled, (state, action) => {
       state.loadingEdit = false;
       state.alertText = {
-        text: "Ваш номер успешно переименован!",
-        backColor: "green",
+        text: 'Ваш номер успешно переименован!',
+        backColor: 'yellow',
         state: true,
       };
     });
     builder.addCase(checkNumUser.rejected, (state, action) => {
       state.errorEdit = action.payload;
       state.alertText = {
-        text: "Не удалось изменить номер, попробуйте еще раз...",
-        backColor: "red",
+        text: 'Не удалось изменить номер, попробуйте еще раз...',
+        backColor: 'red',
         state: true,
       };
       state.loadingEdit = false;
@@ -240,16 +240,16 @@ const EditDataUser = createSlice({
     builder.addCase(editPlaceUser.fulfilled, (state, action) => {
       state.loadingEdit = false;
       state.alertText = {
-        text: "Ваш адрес успешно переименован!",
-        backColor: "green",
+        text: 'Ваш адрес успешно переименован!',
+        backColor: 'yellow',
         state: true,
       };
     });
     builder.addCase(editPlaceUser.rejected, (state, action) => {
       state.errorEdit = action.payload;
       state.alertText = {
-        text: "Не удалось изменить ваш адрес, попробуйте еще раз...",
-        backColor: "red",
+        text: 'Не удалось изменить ваш адрес, попробуйте еще раз...',
+        backColor: 'red',
         state: true,
       };
       state.loadingEdit = false;

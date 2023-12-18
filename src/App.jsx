@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
-import "./App.scss";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import MainInfo from "./pages/MainInfo/MainInfo";
-import Login from "./pages/Login/Login";
-import WelcomePage from "./pages/WelcomePage/WelcomePage";
-import MainPage from "./pages/MainPage/MainPage";
-import Layout from "./components/hoc/Layout/Layout";
-import SearchPage from "./pages/SearchPage/SearchPage";
-import CategoriesPage from "./pages/CategoriesPage/CategoriesPage";
-import OrdersPage from "./pages/OrdersPage/OrdersPage";
-import Account from "./pages/Account/Account";
-import DetailedPage from "./pages/DetailedPage/DetailedPage";
-import ProductPage from "./pages/ProductPage/ProductPage";
-import DeliveryPage from "./pages/DeliveryPage/DeliveryPage";
-import { useDispatch, useSelector } from "react-redux";
-import OrderListPage from "./pages/OrderListPage/OrderListPage";
-import { getDiscounts } from "./store/reducers/requestFoodSlice";
-import Preloader from "./components/Preloader/Preloader";
-import Alerts from "./components/Alerts/Alerts";
+import React, { useEffect } from 'react';
+import './App.scss';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import MainInfo from './pages/MainInfo/MainInfo';
+import Login from './pages/Login/Login';
+import WelcomePage from './pages/WelcomePage/WelcomePage';
+import MainPage from './pages/MainPage/MainPage';
+import Layout from './components/hoc/Layout/Layout';
+import SearchPage from './pages/SearchPage/SearchPage';
+import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
+import OrdersPage from './pages/OrdersPage/OrdersPage';
+import Account from './pages/Account/Account';
+import DetailedPage from './pages/DetailedPage/DetailedPage';
+import ProductPage from './pages/ProductPage/ProductPage';
+import DeliveryPage from './pages/DeliveryPage/DeliveryPage';
+import { useDispatch, useSelector } from 'react-redux';
+import OrderListPage from './pages/OrderListPage/OrderListPage';
+import { getDiscounts } from './store/reducers/requestFoodSlice';
+import Preloader from './components/Preloader/Preloader';
+import Alerts from './components/Alerts/Alerts';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(
-      getDiscounts("http://kover-site.333.kg/get_discount?code_category=1")
+      getDiscounts('http://kover-site.333.kg/get_discount?code_category=1')
     );
     /// для рекламы
   }, []);
@@ -44,46 +44,46 @@ const App = () => {
 
   React.useEffect(() => {
     if (pathSite) {
-      navigate("/main");
+      navigate('/main');
     }
   }, [pathSite]);
   ///// Для переходя со страниц заказов в main
 
   React.useEffect(() => {
-    pathSite ? navigate("/main") : "";
+    pathSite ? navigate('/main') : '';
     if (tokenNum && tokenName) {
       if (
-        location.pathname.includes("login") ||
-        location.pathname.includes("welcome")
+        location.pathname.includes('login') ||
+        location.pathname.includes('welcome')
       ) {
-        navigate("/main");
+        navigate('/main');
       }
       if (
-        !location.pathname.includes("main") &&
-        !location.pathname.includes("search") &&
-        !location.pathname.includes("categories") &&
-        !location.pathname.includes("orders") &&
-        !location.pathname.includes("detailed") &&
-        !location.pathname.includes("product") &&
-        !location.pathname.includes("account") &&
-        !location.pathname.includes("delivery") &&
-        !location.pathname.includes("listorder")
+        !location.pathname.includes('main') &&
+        !location.pathname.includes('search') &&
+        !location.pathname.includes('categories') &&
+        !location.pathname.includes('orders') &&
+        !location.pathname.includes('detailed') &&
+        !location.pathname.includes('product') &&
+        !location.pathname.includes('account') &&
+        !location.pathname.includes('delivery') &&
+        !location.pathname.includes('listorder')
       ) {
-        navigate("/main");
+        navigate('/main');
       }
     } else {
       if (
-        location.pathname.includes("main") ||
-        location.pathname.includes("search") ||
-        location.pathname.includes("categories") ||
-        location.pathname.includes("orders") ||
-        location.pathname.includes("detailed") ||
-        location.pathname.includes("product") ||
-        location.pathname.includes("account") ||
-        location.pathname.includes("delivery") ||
-        location.pathname.includes("listorder")
+        location.pathname.includes('main') ||
+        location.pathname.includes('search') ||
+        location.pathname.includes('categories') ||
+        location.pathname.includes('orders') ||
+        location.pathname.includes('detailed') ||
+        location.pathname.includes('product') ||
+        location.pathname.includes('account') ||
+        location.pathname.includes('delivery') ||
+        location.pathname.includes('listorder')
       ) {
-        navigate("/");
+        navigate('/');
       }
     }
   }, [location.pathname]);
@@ -95,7 +95,7 @@ const App = () => {
   // console.log(location.pathname, 'location');
   // console.log(loading, 'loading');
   // console.log(loadingList, 'loadingList');
-  console.log(allDataFood, "allDataFood");
+  console.log(allDataFood, 'allDataFood');
 
   return (
     <>
@@ -134,3 +134,5 @@ const App = () => {
 };
 
 export default App;
+
+//// в getAllDataFood кпц творится!

@@ -9,7 +9,7 @@ import { chnageAlertText } from '../../store/reducers/EditDataUser';
 
 /// img
 import arrow from '../../assets/icons/arrowTypeFood.svg';
-import krest from '../../assets/icons/cancel.svg';
+import krest from '../../assets/icons/Cancel.svg';
 
 import styles from './OrderListPage.module.scss';
 import { transformDataOrderList } from '../../helpers/transformDataOrderList';

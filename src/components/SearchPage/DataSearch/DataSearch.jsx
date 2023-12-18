@@ -37,8 +37,8 @@ const DataSearch = () => {
   const alertAddBucket = () => {
     dispatch(
       chnageAlertText({
-        text: "Продук был добавлен в корзину",
-        backColor: "green",
+        text: 'Продук был добавлен в корзину',
+        backColor: 'yellow',
         state: true,
       })
     );

@@ -28,7 +28,7 @@ export const sendOrderFoods = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: 'Ваш заказ был успешно создан!!',
-            backColor: 'green',
+            backColor: 'yellow',
             state: true,
           })
         );
@@ -68,7 +68,7 @@ export const sendCourier = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: 'Ваша заяка была успешно отправлена!',
-            backColor: 'green',
+            backColor: 'yellow',
             state: true,
           })
         );
