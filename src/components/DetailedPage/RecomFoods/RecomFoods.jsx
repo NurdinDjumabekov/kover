@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { debounce } from 'lodash';
-import styles from './RecomFoods.module.scss';
-import OrderMenu from '../OrderMenu/OrderMenu';
-import { useDispatch, useSelector } from 'react-redux';
-import TypesInnerData from '../TypesInnerData/TypesInnerData';
+import React, { useState } from "react";
+import { debounce } from "lodash";
+import styles from "./RecomFoods.module.scss";
+import OrderMenu from "../OrderMenu/OrderMenu";
+import { useDispatch, useSelector } from "react-redux";
+import TypesInnerData from "../TypesInnerData/TypesInnerData";
 import {
   addFoodsOrders,
   changePositionFoods,
   changeSumDishes,
   changeSumOrdersFoods,
-} from '../../../store/reducers/statesSlice';
+} from "../../../store/reducers/statesSlice";
 import {
   getEveryInnerData,
   openMiniLoader,
   searchInnerFood,
-} from '../../../store/reducers/requestFoodSlice';
-import MiniPreloader from '../../MiniPreloader/MiniPreloader';
-import DetailedEveryData from '../DetailedEveryData/DetailedEveryData';
-import { chnageAlertText } from '../../../store/reducers/EditDataUser';
+} from "../../../store/reducers/requestFoodSlice";
+import MiniPreloader from "../../MiniPreloader/MiniPreloader";
+import DetailedEveryData from "../DetailedEveryData/DetailedEveryData";
+import { chnageAlertText } from "../../../store/reducers/EditDataUser";
 
 const RecomFoods = ({ estab, categ }) => {
   const dispatch = useDispatch();
@@ -41,16 +41,16 @@ const RecomFoods = ({ estab, categ }) => {
   const alertAddBucket = () => {
     dispatch(
       chnageAlertText({
-        text: 'Продук был добавлен в корзину',
-        backColor: 'yellow',
+        text: "Продук был добавлен в корзину",
+        backColor: "yellow",
         state: true,
       })
     );
     setTimeout(() => {
       dispatch(
         chnageAlertText({
-          text: '',
-          backColor: 'transparent',
+          text: "",
+          backColor: "transparent",
           state: false,
         })
       );
@@ -59,7 +59,7 @@ const RecomFoods = ({ estab, categ }) => {
 
   const searchInput = debounce((text) => {
     dispatch(openMiniLoader());
-    if (text === '') {
+    if (text === "") {
       dispatch(
         getEveryInnerData(
           `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=0`
@@ -70,7 +70,7 @@ const RecomFoods = ({ estab, categ }) => {
     }
   }, 800);
 
-  console.log(innerData, 'innerData');
+  // console.log(innerData, 'innerData');
   // console.log(allFoodsOrders, 'allFoodsOrders');
 
   const [dataEvery, setDataEvery] = useState({});
@@ -85,14 +85,17 @@ const RecomFoods = ({ estab, categ }) => {
       <div className="container">
         <div className={styles.recomBLock__inner}>
           <h5>Меню</h5>
-          <input
-            type="search"
-            placeholder="Поиск блюд"
-            onChange={(e) => {
-              searchInput(e.target.value);
-              setActiveType(0);
-            }}
-          />
+          <form onSubmit={searchInput}>
+            <input
+              type="search"
+              placeholder="Поиск блюд"
+              onChange={(e) => {
+                searchInput(e.target.value);
+                setActiveType(0);
+              }}
+            />
+            <button type="submit"></button>
+          </form>
           <div>
             <TypesInnerData
               estab={estab}

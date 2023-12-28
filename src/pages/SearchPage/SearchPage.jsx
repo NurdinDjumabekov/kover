@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './SearchPage.module.scss';
-import SelectInput from '../../components/SearchPage/SelectInput/SelectInput';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import styles from "./SearchPage.module.scss";
+import SelectInput from "../../components/SearchPage/SelectInput/SelectInput";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeEmptySearch,
   changeMainSearch,
   changeSearch,
   mainSearch,
-} from '../../store/reducers/requestFoodSlice';
-import MiniPreloader from '../../components/MiniPreloader/MiniPreloader';
-import DataSearch from '../../components/SearchPage/DataSearch/DataSearch';
+} from "../../store/reducers/requestFoodSlice";
+import MiniPreloader from "../../components/MiniPreloader/MiniPreloader";
+import DataSearch from "../../components/SearchPage/DataSearch/DataSearch";
 
 const SearchPage = () => {
   const dispatch = useDispatch();
@@ -22,11 +22,11 @@ const SearchPage = () => {
 
   React.useEffect(() => {
     dispatch(changeEmptySearch(false));
-    search === '' ? dispatch(changeMainSearch([])) : '';
+    search === "" ? dispatch(changeMainSearch([])) : "";
   }, [search]);
 
   React.useEffect(() => {
-    if (search !== '') {
+    if (search !== "") {
       dispatch(changeMainSearch([]));
       dispatch(mainSearch({ search, typeSearch }));
     }

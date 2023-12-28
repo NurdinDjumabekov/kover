@@ -9,7 +9,7 @@ import transport from '../../../assets/icons/transport.svg';
 import check from '../../../assets/icons/check.svg';
 
 const DataCategories = ({ allDataFood }) => {
-  // console.log(allDataFood, 'allDataFood');
+  console.log(allDataFood, 'allDataFood');
   return (
     <>
       <div className={styles.category}>
@@ -35,8 +35,8 @@ const DataCategories = ({ allDataFood }) => {
                 <h4>{food.establishment_name}</h4>
                 <div>
                   <img src={star} alt="*" />
-                  {/* <span>{food.status}</span> */}
-                  <p>{food.quantity}</p>
+                  <span>{food.rating}</span>
+                  <p>({food.count_rating})</p>
                 </div>
                 <div className={styles.rating}>
                   <img src={clock} alt="time" />

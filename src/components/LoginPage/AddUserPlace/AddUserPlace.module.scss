@@ -1,6 +1,8 @@
 .delivery {
   height: 90vh;
   position: relative;
+  min-height: 650px;
+
   > h4 {
     color: var(--Black, #222);
     text-align: center;

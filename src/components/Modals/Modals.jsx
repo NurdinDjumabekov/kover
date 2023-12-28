@@ -1,9 +1,9 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import styles from './Modals.module.scss';
-import krest from '../../assets/icons/krest.svg';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import styles from "./Modals.module.scss";
+import krest from "../../assets/icons/krest.svg";
 
 const Modals = (props) => {
   const toggleDrawer = () => {
@@ -16,11 +16,11 @@ const Modals = (props) => {
 
   const handleClick = (e) => {
     // Проверка, что клик был не внутри input
-    const isInput1 = e.target.tagName.toLowerCase() === 'input';
-    const isInput2 = e.target.tagName.toLowerCase() === 'form';
-    const isInput3 = e.target.tagName.toLowerCase() === 'p';
-    const isInput4 = e.target.tagName.toLowerCase() === 'div';
-    const isInput5 = e.target.tagName.toLowerCase() === 'button';
+    const isInput1 = e.target.tagName.toLowerCase() === "input";
+    const isInput2 = e.target.tagName.toLowerCase() === "form";
+    const isInput3 = e.target.tagName.toLowerCase() === "p";
+    const isInput4 = e.target.tagName.toLowerCase() === "div";
+    const isInput5 = e.target.tagName.toLowerCase() === "button";
 
     if (!isInput1 && !isInput2 && !isInput3 && !isInput4 && !isInput5) {
       toggleDrawer();
@@ -32,8 +32,9 @@ const Modals = (props) => {
       <Drawer
         PaperProps={{
           sx: {
-            borderRadius: '20px 20px 0px 0px',
-            padding: '20px 0 0 0',
+            borderRadius: "20px 20px 0px 0px",
+            padding: "20px 0 0 0",
+            borderTop: "10px solid transparent",
           },
         }}
         anchor="bottom"
@@ -41,7 +42,7 @@ const Modals = (props) => {
         onClose={toggleDrawer}
       >
         <Box
-          sx={{ width: 'auto' }}
+          sx={{ width: "auto" }}
           role="presentation"
           onMouseDown={handleClick}
         >

@@ -1,23 +1,23 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import styles from './ProductPage.module.scss';
+import React from "react";
+import { useParams } from "react-router-dom";
+import styles from "./ProductPage.module.scss";
 /////////////img//////////////
-import foods from '../../assets/images/noneData/foodsss.png';
-import star from '../../assets/icons/star.svg';
-import clock from '../../assets/icons/clock.svg';
-import kitchen from '../../assets/icons/kitchen.svg';
-import transport from '../../assets/icons/transport.svg';
-import check from '../../assets/icons/check.svg';
+import foods from "../../assets/images/noneData/foodsss.png";
+import star from "../../assets/icons/star.svg";
+import clock from "../../assets/icons/clock.svg";
+import kitchen from "../../assets/icons/kitchen.svg";
+import transport from "../../assets/icons/transport.svg";
+import check from "../../assets/icons/check.svg";
 
-import SliderMain from '../../components/SliderMain/SliderMain';
-import RecomFoods from '../../components/DetailedPage/RecomFoods/RecomFoods';
-import { useDispatch, useSelector } from 'react-redux';
-import PathToFiles from '../../components/PathToFiles/PathToFiles';
+import SliderMain from "../../components/SliderMain/SliderMain";
+import RecomFoods from "../../components/DetailedPage/RecomFoods/RecomFoods";
+import { useDispatch, useSelector } from "react-redux";
+import PathToFiles from "../../components/PathToFiles/PathToFiles";
 import {
   getEveryData,
   getEveryInnerData,
   getEveryInnerTypes,
-} from '../../store/reducers/requestFoodSlice';
+} from "../../store/reducers/requestFoodSlice";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -35,12 +35,13 @@ const ProductPage = () => {
     dispatch(getEveryData(`http://kover-site.333.kg/get_establishments/${id}`));
     dispatch(
       getEveryInnerData(
-        `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${'0'}`
+        `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=${"0"}`
       )
     );
   }, []);
 
   // console.log(everyData, 'everyData');
+  console.log(pathCatalog, "pathCatalog");
 
   return (
     <div className={styles.producblock}>
@@ -51,7 +52,7 @@ const ProductPage = () => {
       <div className={styles.producblock__inner}>
         <div className={styles.mainContent}>
           <div className={styles.mainImg}>
-            {everyData.photo !== 'null' ? (
+            {everyData.photo !== "null" ? (
               <img src={everyData.photo} alt="food" />
             ) : (
               <img src={foods} alt="food" />
@@ -77,7 +78,8 @@ const ProductPage = () => {
                   <div>
                     <img src={transport} alt="transport" />
                     <p>
-                      {everyData.price_dostavka ? everyData.price_dostavka : 0} сом
+                      {everyData.price_dostavka ? everyData.price_dostavka : 0}{" "}
+                      сом
                     </p>
                   </div>
                 </div>

@@ -1,24 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { resetBusket } from './statesSlice';
-import { chnageAlertText } from './EditDataUser';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { resetBusket } from "./statesSlice";
+import { chnageAlertText } from "./EditDataUser";
 import {
   changeDataUser,
   changeTokenName,
   changeTokenNum,
-} from './accountSlice';
+} from "./accountSlice";
 
 const initialState = {
   orderUser: {
-    phone: '',
-    fio: '',
-    address: '',
-    kvartira: '',
-    hourDeliver: '',
-    zakazDopInfo: '',
+    phone: "",
+    fio: "",
+    address: "",
+    kvartira: "",
+    hourDeliver: "",
+    zakazDopInfo: "",
     type_oplata: 1,
-    sdacha: '',
-    comment_zakaz: '',
+    sdacha: "",
+    comment_zakaz: "",
     summ: 0,
     product_list: [],
   },
@@ -31,18 +31,18 @@ const initialState = {
 // Отправка номера для регистрации
 // http://kover-site.333.kg/send_code/
 export const sendNumAuth = createAsyncThunk(
-  'sendNumAuth',
+  "sendNumAuth",
   async function (info, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        'http://kover-site.333.kg/send_code/',
+        "http://kover-site.333.kg/send_code/",
         {
-          phone_client: info?.numberPhone?.replace(/[-()]/g, '')?.slice(-9), // убираю лишние символы
+          phone_client: info?.numberPhone?.replace(/[-()]/g, "")?.slice(-9), // убираю лишние символы
           session: info?.session,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -54,8 +54,8 @@ export const sendNumAuth = createAsyncThunk(
     } catch (error) {
       dispatch(
         chnageAlertText({
-          text: 'Нету соединения с интернетом!',
-          backColor: 'red',
+          text: "Нету соединения с интернетом!",
+          backColor: "red",
           state: true,
         })
       );
@@ -67,28 +67,37 @@ export const sendNumAuth = createAsyncThunk(
 // Подтверждение номера
 // http://kover-site.333.kg/check_code/
 export const checkNum = createAsyncThunk(
-  'checkNum',
+  "checkNum",
   async function (info, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        'http://kover-site.333.kg/check_code/',
+        "http://kover-site.333.kg/check_code/",
         {
           phone_client: info?.dataUser?.numberPhone
-            .replace(/[-()]/g, '')
+            .replace(/[-()]/g, "")
             ?.slice(-9),
-          verification_number: info?.code?.join(''),
+          verification_number: info?.code?.join(""),
           codeid: info?.dataUser?.idUser,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       if (response.status >= 200 || response.status < 300) {
-        response?.data?.result === 1
-          ? dispatch(changeTokenNum(info?.dataUser?.numberPhone))
-          : dispatch(changeTokenNum(''));
+        if (response?.data?.result === 1) {
+          dispatch(changeTokenNum(info?.dataUser?.numberPhone));
+        } else {
+          dispatch(changeTokenNum(""));
+          dispatch(
+            chnageAlertText({
+              text: "Неверный код",
+              backColor: "red",
+              state: true,
+            })
+          );
+        }
         return response?.data?.result;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -96,8 +105,8 @@ export const checkNum = createAsyncThunk(
     } catch (error) {
       dispatch(
         chnageAlertText({
-          text: 'Произошла ошибка!',
-          backColor: 'red',
+          text: "Произошла ошибка!",
+          backColor: "red",
           state: true,
         })
       );
@@ -109,21 +118,21 @@ export const checkNum = createAsyncThunk(
 // Отправка всех данных для регистрации(имени тоже)
 // http://kover-site.333.kg/edit_profile/
 export const authName = createAsyncThunk(
-  'authName',
+  "authName",
   async function (info, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        'http://kover-site.333.kg/edit_profile/',
+        "http://kover-site.333.kg/edit_profile/",
         {
           codeid: info?.dataUser?.idUser,
           client_fio: info?.dataUser?.name,
-          client_phone: '',
-          client_phone2: '',
+          client_phone: "",
+          client_phone2: "",
           address: `${info?.placeUser?.mainAdres}, ${info?.placeUser?.noMainAdres}, ${info?.placeUser?.infoDop}`,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -142,7 +151,7 @@ export const authName = createAsyncThunk(
             })
           );
         } else {
-          dispatch(changeTokenName(''));
+          dispatch(changeTokenName(""));
         }
       } else {
         throw Error(`Error: ${response.status}`);
@@ -150,8 +159,8 @@ export const authName = createAsyncThunk(
     } catch (error) {
       dispatch(
         chnageAlertText({
-          text: 'Ошибка! Повторите попытку позже!',
-          backColor: 'red',
+          text: "Ошибка! Повторите попытку позже!",
+          backColor: "red",
           state: true,
         })
       );
@@ -163,15 +172,15 @@ export const authName = createAsyncThunk(
 // Отправка заказа
 // http://kover-site.333.kg/create_zakaz/
 export const sendOrderFoods = createAsyncThunk(
-  'sendOrderFoods',
+  "sendOrderFoods",
   async function (info, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        'http://kover-site.333.kg/create_zakaz/',
+        "http://kover-site.333.kg/create_zakaz/",
         info,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -180,8 +189,8 @@ export const sendOrderFoods = createAsyncThunk(
       } else {
         dispatch(
           chnageAlertText({
-            text: 'Упс! Что-то пошло не так... Повторите попытку позже!',
-            backColor: 'red',
+            text: "Упс! Что-то пошло не так... Повторите попытку позже!",
+            backColor: "red",
             state: true,
           })
         );
@@ -194,7 +203,7 @@ export const sendOrderFoods = createAsyncThunk(
 );
 
 const postRequestSlice = createSlice({
-  name: 'postRequestSlice',
+  name: "postRequestSlice",
   initialState,
   extraReducers: (builder) => {
     //// sendOrderFoods
@@ -202,16 +211,16 @@ const postRequestSlice = createSlice({
       state.loadingOrder = false;
       state.goodSendOrder = true;
       state.orderUser = {
-        phone: '',
-        fio: '',
-        address: '',
-        kvartira: '',
-        hourDeliver: '',
-        dop: '',
+        phone: "",
+        fio: "",
+        address: "",
+        kvartira: "",
+        hourDeliver: "",
+        dop: "",
         type_oplata: 1,
-        sdacha: '',
-        comment_zakaz: '',
-        summ: '',
+        sdacha: "",
+        comment_zakaz: "",
+        summ: "",
         product_list: [],
       };
     });

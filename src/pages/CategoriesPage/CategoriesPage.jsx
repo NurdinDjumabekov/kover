@@ -1,22 +1,22 @@
-import React from 'react';
-import styles from './CategoriesPage.module.scss';
-import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCategory } from '../../store/reducers/requestFoodSlice';
-import Preloader from '../../components/Preloader/Preloader';
-import ordering from '../../assets/images/Main/ordering.png';
-import delivery from '../../assets/images/Main/delivery.png';
+import React from "react";
+import styles from "./CategoriesPage.module.scss";
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategory } from "../../store/reducers/requestFoodSlice";
+import Preloader from "../../components/Preloader/Preloader";
+import ordering from "../../assets/images/Main/ordering.png";
+import delivery from "../../assets/images/Main/delivery.png";
 import {
   changeActiveType,
   changePathCatalog,
-} from '../../store/reducers/statesSlice';
+} from "../../store/reducers/statesSlice";
 
-import img1 from '../../assets/images/noneData/everyFood.png';
-import img2 from '../../assets/images/noneData/Rectangle4.png';
-import img3 from '../../assets/images/noneData/Rectangle5.png';
-import img4 from '../../assets/images/noneData/Rectangle6.png';
-import img5 from '../../assets/images/noneData/Rectangle7.png';
-import img6 from '../../assets/images/noneData/Rectangle8.png';
+import img1 from "../../assets/images/noneData/everyFood.png";
+import img2 from "../../assets/images/noneData/Rectangle4.png";
+import img3 from "../../assets/images/noneData/Rectangle5.png";
+import img4 from "../../assets/images/noneData/Rectangle6.png";
+import img5 from "../../assets/images/noneData/Rectangle7.png";
+import img6 from "../../assets/images/noneData/Rectangle8.png";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const CategoriesPage = () => {
   React.useEffect(() => {
     dispatch(
       getCategory(
-        'http://kover-site.333.kg/get_estab_category?category_type=main'
+        "http://kover-site.333.kg/get_estab_category?category_type=main"
       )
     );
     window.scrollTo(0, 0);
@@ -36,7 +36,7 @@ const CategoriesPage = () => {
 
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
-    localStorage.setItem('pathCatalog', name);
+    localStorage.setItem("pathCatalog", name);
     dispatch(changeActiveType(0));
   };
 
@@ -45,9 +45,9 @@ const CategoriesPage = () => {
       <div className="container">
         <div className={styles.caregoryBlock__inner}>
           <NavLink
-            to={`/detailed/${'0'}/${'Рестораны'}`}
+            to={`/detailed/${"0"}/${"Рестораны"}`}
             className={styles.everyCategory}
-            onClick={() => clickEstablishment('Рестораны')}
+            onClick={() => clickEstablishment("Рестораны")}
           >
             <h4>Рестораны</h4>
             <img src={arrImg[9]} alt="Рестораны" />
@@ -70,7 +70,7 @@ const CategoriesPage = () => {
           <NavLink
             to={`/delivery`}
             className={styles.everyCategory}
-            onClick={() => clickEstablishment('Курьерская доставка')}
+            onClick={() => clickEstablishment("Курьерская доставка")}
           >
             <h4>Курьерская доставка</h4>
             <img src={delivery} alt="delivery" />
@@ -78,9 +78,9 @@ const CategoriesPage = () => {
           <NavLink
             to={`/listorder`}
             className={styles.everyCategory}
-            onClick={() => clickEstablishment('Заказ по списку')}
+            onClick={() => clickEstablishment("Доставка с гипермаркетов")}
           >
-            <h4>Заказ по списку</h4>
+            <h4>Доставка с гипермаркетов</h4>
             <img src={ordering} alt="ordering" />
           </NavLink>
         </div>

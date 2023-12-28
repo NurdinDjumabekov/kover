@@ -39,7 +39,7 @@ const App = () => {
   const { loadingList } = useSelector((state) => state.ordersListSlice);
   const { loadingEdit } = useSelector((state) => state.EditDataUser);
   const { pathSite } = useSelector((state) => state.ordersListSlice);
-  const { sumDishes, sumOrdersFoods, positionFoods, allFoodsOrders } =
+  const { sumDishes, sumOrdersFoods, positionFoods, allFoodsOrders ,pathCatalog} =
     useSelector((state) => state.statesSlice);
 
   React.useEffect(() => {
@@ -95,7 +95,8 @@ const App = () => {
   // console.log(location.pathname, 'location');
   // console.log(loading, 'loading');
   // console.log(loadingList, 'loadingList');
-  console.log(allDataFood, 'allDataFood');
+  // console.log(allDataFood, 'allDataFood');
+  // console.log(pathCatalog,"pathCatalog");
 
   return (
     <>

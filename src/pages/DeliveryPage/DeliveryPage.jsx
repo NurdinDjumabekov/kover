@@ -1,13 +1,13 @@
-import React from 'react';
-import styles from './DeliveryPage.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import styles from "./DeliveryPage.module.scss";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeDeliveryOrders,
   sendCourier,
-} from '../../store/reducers/ordersListSlice';
-import InputMask from 'react-input-mask';
-import { chnageAlertText } from '../../store/reducers/EditDataUser';
-import PathToFiles from '../../components/PathToFiles/PathToFiles';
+} from "../../store/reducers/ordersListSlice";
+import InputMask from "react-input-mask";
+import { chnageAlertText } from "../../store/reducers/EditDataUser";
+import PathToFiles from "../../components/PathToFiles/PathToFiles";
 
 const DeliveryPage = () => {
   const dispatch = useDispatch();
@@ -63,14 +63,14 @@ const DeliveryPage = () => {
       dispatch(
         sendCourier({
           ...deliveryOrders,
-          phone: deliveryOrders?.phone?.replace(/[-()]/g, '')?.slice(-9),
+          phone: deliveryOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
         })
       );
     } else {
       dispatch(
         chnageAlertText({
-          text: 'Введите правильный номер!',
-          backColor: 'red',
+          text: "Введите правильный номер!",
+          backColor: "red",
           state: true,
         })
       );
@@ -81,29 +81,31 @@ const DeliveryPage = () => {
     <div className={styles.deliveryMain}>
       <div className="container">
         <div className={styles.path}>
-          <PathToFiles estab={'Курьерская доставка'} />
+          <PathToFiles estab={"Курьерская доставка"} />
         </div>
 
         <div className={styles.deliveryMain__inner}>
-          <h4>
-            Личный <i>курьер</i>
-          </h4>
-          <h5>
-            Отправьте нам список покупок и мы доставим всё к вам домой через 3
-            часа!
-          </h5>
-          <p>
-            Основной принцип нашей работы — доставка «из рук в руки». Услуга
-            личный курьер – это гарантия того, что заказчик получит свою
-            доставку вовремя. Мы несем ответственность за перевозимые товары. Во
-            всех случаях один ответ – "Служба Доставки".{' '}
-          </p>
-          <p>
-            Вот решение, которое Вы искали. И которое мы с удовольствием можем
-            Вам предложить. Сделайте заказ и наш сотрудник в минимальный срок,
-            быстро и надежно, будет стоять у Вашей двери с доставкой.
-          </p>
-          <h6>Доставка от 200 сом</h6>
+          <div className={styles.deliveryMain__texts}>
+            <h4>
+              Личный <i>курьер</i>
+            </h4>
+            <h5>
+              Отправьте нам список покупок и мы доставим всё к вам домой через 3
+              часа!
+            </h5>
+            <p>
+              Основной принцип нашей работы — доставка «из рук в руки». Услуга
+              личный курьер – это гарантия того, что заказчик получит свою
+              доставку вовремя. Мы несем ответственность за перевозимые товары.
+              Во всех случаях один ответ – "Служба Доставки".{" "}
+            </p>
+            <p>
+              Вот решение, которое Вы искали. И которое мы с удовольствием можем
+              Вам предложить. Сделайте заказ и наш сотрудник в минимальный срок,
+              быстро и надежно, будет стоять у Вашей двери с доставкой.
+            </p>
+            <h6>Доставка от 200 сом</h6>
+          </div>
           <form onSubmit={sendData}>
             <label>Отправитель</label>
             <InputMask
@@ -186,21 +188,21 @@ const DeliveryPage = () => {
             <div className={styles.gruz} onClick={clickCargo}>
               <div
                 className={
-                  deliveryOrders?.gab_gruz === 1 ? styles.activeBtn : ''
+                  deliveryOrders?.gab_gruz === 1 ? styles.activeBtn : ""
                 }
               ></div>
               <p>Габаритный груз свыше 20 кг или больше 1х1х1м</p>
             </div>
 
             <label>Оплата</label>
-            <div className={styles.inputBtn} style={{ display: 'flex' }}>
+            <div className={styles.inputBtn} style={{ display: "flex" }}>
               <div
                 onClick={() => clickPay(1)}
                 className={styles.innerTypesClick}
               >
                 <div
                   className={
-                    deliveryOrders?.oplata_type === 1 ? styles.activeBtn : ''
+                    deliveryOrders?.oplata_type === 1 ? styles.activeBtn : ""
                   }
                 ></div>
                 <p>Картой</p>
@@ -211,7 +213,7 @@ const DeliveryPage = () => {
               >
                 <div
                   className={
-                    deliveryOrders?.oplata_type === 2 ? styles.activeBtn : ''
+                    deliveryOrders?.oplata_type === 2 ? styles.activeBtn : ""
                   }
                 ></div>
                 <p>Наличные</p>
@@ -228,7 +230,7 @@ const DeliveryPage = () => {
                 value={deliveryOrders?.sdacha}
               />
             ) : (
-              ''
+              ""
             )}
 
             <label>Комментарий к заказу</label>
@@ -251,7 +253,7 @@ const DeliveryPage = () => {
                     className={
                       deliveryOrders?.dostavka_type === 1
                         ? styles.activeBtn
-                        : ''
+                        : ""
                     }
                   ></div>
                   <p>Срочно</p>
@@ -264,7 +266,7 @@ const DeliveryPage = () => {
                     className={
                       deliveryOrders?.dostavka_type === 2
                         ? styles.activeBtn
-                        : ''
+                        : ""
                     }
                   ></div>
                   <p>Не срочно</p>
@@ -276,7 +278,7 @@ const DeliveryPage = () => {
               >
                 <div
                   className={
-                    deliveryOrders?.dostavka_type === 3 ? styles.activeBtn : ''
+                    deliveryOrders?.dostavka_type === 3 ? styles.activeBtn : ""
                   }
                 ></div>
                 <p>В течение дня</p>

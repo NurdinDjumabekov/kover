@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './DetailedEveryData.scss';
-import Modals from '../../Modals/Modals';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import "./DetailedEveryData.scss";
+import Modals from "../../Modals/Modals";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addFoodsOrders,
   changeAllFoodsOrders,
@@ -10,7 +10,7 @@ import {
   changeSumOrdersFoods,
   delfoodCount,
   discountFoods,
-} from '../../../store/reducers/statesSlice';
+} from "../../../store/reducers/statesSlice";
 
 const DetailedEveryData = (props) => {
   const dispatch = useDispatch();
@@ -19,9 +19,9 @@ const DetailedEveryData = (props) => {
   const data = props?.dataEvery;
 
   const handleCounter = (type) => {
-    if (type === 'add') {
+    if (type === "add") {
       dispatch(addFoodsOrders(data));
-    } else if (type === 'del') {
+    } else if (type === "del") {
       ///&& count > 0
       allFoodsOrders?.forEach((food) => {
         if (food.codeid === data?.codeid) {
@@ -36,7 +36,7 @@ const DetailedEveryData = (props) => {
   };
 
   // console.log(props?.dataEvery, 'dataEvery');
-  console.log(allFoodsOrders, 'allFoodsOrders');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   React.useEffect(() => {
     allFoodsOrders?.map((koll) => {
@@ -69,27 +69,18 @@ const DetailedEveryData = (props) => {
         </div>
         <div className="everyProd__btns">
           <div>
-            <button onClick={() => handleCounter('del')}>-</button>
+            <button onClick={() => handleCounter("del")}>-</button>
             <p>{count}</p>
-            <button onClick={() => handleCounter('add')}>+</button>
+            <button onClick={() => handleCounter("add")}>+</button>
           </div>
-          <button onClick={() => handleCounter('add')}>Добавить</button>
+          <button onClick={() => handleCounter("add")}>Добавить</button>
         </div>
         <h6>Описание</h6>
-        {data?.description === '' ? (
+        {data?.description === "" ? (
           <b>Описание отсутствует</b>
         ) : (
           <b>{data?.description}</b>
         )}
-
-        {/* <b>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui officia
-          quam excepturi ab harum impedit veritatis quod tempora quaerat ratione
-          provident eaque, vitae recusandae ex, distinctio et dolore possimus
-          eveniet. Alias, nam ad quasi eveniet fuga accusamus enim! Qui sunt
-          quam praesentium, dicta eos a nesciunt voluptatibus laudantium
-          doloribus asperiores?
-        </b> */}
       </div>
     </Modals>
   );

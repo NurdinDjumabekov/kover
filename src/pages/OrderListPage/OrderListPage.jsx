@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeDataListOrders,
   sendOrderFoods,
-} from '../../store/reducers/ordersListSlice';
-import { changeListOrdersUser } from '../../store/reducers/statesSlice';
-import { chnageAlertText } from '../../store/reducers/EditDataUser';
+} from "../../store/reducers/ordersListSlice";
+import { changeListOrdersUser } from "../../store/reducers/statesSlice";
+import { chnageAlertText } from "../../store/reducers/EditDataUser";
 
 /// img
-import arrow from '../../assets/icons/arrowTypeFood.svg';
-import krest from '../../assets/icons/Cancel.svg';
+import arrow from "../../assets/icons/arrowTypeFood.svg";
+import krest from "../../assets/icons/Cancel.svg";
 
-import styles from './OrderListPage.module.scss';
-import { transformDataOrderList } from '../../helpers/transformDataOrderList';
-import InputMask from 'react-input-mask';
-import { rearg } from 'lodash';
-import PathToFiles from '../../components/PathToFiles/PathToFiles';
+import styles from "./OrderListPage.module.scss";
+import { transformDataOrderList } from "../../helpers/transformDataOrderList";
+import InputMask from "react-input-mask";
+import { rearg } from "lodash";
+import PathToFiles from "../../components/PathToFiles/PathToFiles";
 
 const OrderListPage = () => {
   const dispatch = useDispatch();
-  const [inputProd, setInputProd] = useState('');
-  const [quantity, setquantity] = useState('');
+  const [inputProd, setInputProd] = useState("");
+  const [quantity, setquantity] = useState("");
   const [counter, setCounter] = useState(1);
-  const [typeFood, setTypeFood] = useState('шт');
+  const [typeFood, setTypeFood] = useState("шт");
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,11 +37,11 @@ const OrderListPage = () => {
 
   React.useEffect(() => {
     if (counter === 0) {
-      setTypeFood('кг');
+      setTypeFood("кг");
     } else if (counter === 1) {
-      setTypeFood('шт');
+      setTypeFood("шт");
     } else if (counter === 2) {
-      setTypeFood('л');
+      setTypeFood("л");
     }
   }, [counter]);
 
@@ -56,7 +56,7 @@ const OrderListPage = () => {
   };
 
   const addOrder = () => {
-    if (quantity !== '' && inputProd !== '') {
+    if (quantity !== "" && inputProd !== "") {
       if (listOrdersUser?.length === 0) {
         dispatch(
           changeListOrdersUser([
@@ -77,13 +77,13 @@ const OrderListPage = () => {
           ])
         );
       }
-      setquantity('');
-      setInputProd('');
+      setquantity("");
+      setInputProd("");
     } else {
       dispatch(
         chnageAlertText({
-          text: 'Заполните все поля!',
-          backColor: 'red',
+          text: "Заполните все поля!",
+          backColor: "red",
           state: true,
         })
       );
@@ -106,8 +106,8 @@ const OrderListPage = () => {
     if (listOrdersUser?.length === 0) {
       dispatch(
         chnageAlertText({
-          text: 'Ваш список заказов пустой!',
-          backColor: 'red',
+          text: "Ваш список заказов пустой!",
+          backColor: "red",
           state: true,
         })
       );
@@ -118,14 +118,14 @@ const OrderListPage = () => {
           sendOrderFoods({
             ...dataListOrders,
             product_list: newData,
-            phone: dataListOrders?.phone?.replace(/[-()]/g, '')?.slice(-9),
+            phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
           })
         );
       } else {
         dispatch(
           chnageAlertText({
-            text: 'Введите правильный номер!',
-            backColor: 'red',
+            text: "Введите правильный номер!",
+            backColor: "red",
             state: true,
           })
         );
@@ -141,28 +141,30 @@ const OrderListPage = () => {
     <div className={styles.orderList}>
       <div className="container">
         <div className={styles.path}>
-          <PathToFiles estab={'Заказ по списку'} />
+          <PathToFiles estab={"Заказ по списку"} />
         </div>
         <div className={styles.orderList__inner}>
-          <h4>
-            Нет времени <i> оформлять доставку?</i>
-          </h4>
-          <h5>
-            Отправьте нам список покупок и мы доставим всё к вам домой через 3
-            часа!
-          </h5>
-          <p>
-            Мы работаем с большим количеством партнеров, чтобы предложить вам
-            широкий выбор продуктов и услуг. Вы можете заказать еду из
-            разнообразных ресторанов, включая итальянскую, японскую, китайскую
-            кухни и многое другое.
-          </p>
-          <p>
-            Мы также предлагаем доставку товаров из магазинов, аптек и других
-            учреждений - все, что вам может понадобиться для вашего
-            повседневного рутинного покупок.
-          </p>
-          <h6>Доставка от 200 сом</h6>
+          <div>
+            <h4>
+              Нет времени <i> оформлять доставку?</i>
+            </h4>
+            <h5>
+              Отправьте нам список покупок и мы доставим всё к вам домой через 3
+              часа!
+            </h5>
+            <p>
+              Мы работаем с большим количеством партнеров, чтобы предложить вам
+              широкий выбор продуктов и услуг. Вы можете заказать еду из
+              разнообразных ресторанов, включая итальянскую, японскую, китайскую
+              кухни и многое другое.
+            </p>
+            <p>
+              Мы также предлагаем доставку товаров из магазинов, аптек и других
+              учреждений - все, что вам может понадобиться для вашего
+              повседневного рутинного покупок.
+            </p>
+            <h6>Доставка от 200 сом</h6>
+          </div>
           <form onSubmit={sendData}>
             <label>Отправитель</label>
             <InputMask
@@ -204,7 +206,7 @@ const OrderListPage = () => {
               <div onClick={() => clickType(1)}>
                 <div
                   className={
-                    dataListOrders?.oplata_type === 1 ? styles.activeBtn : ''
+                    dataListOrders?.oplata_type === 1 ? styles.activeBtn : ""
                   }
                 ></div>
                 <p>Картой</p>
@@ -212,7 +214,7 @@ const OrderListPage = () => {
               <div onClick={() => clickType(2)}>
                 <div
                   className={
-                    dataListOrders?.oplata_type === 2 ? styles.activeBtn : ''
+                    dataListOrders?.oplata_type === 2 ? styles.activeBtn : ""
                   }
                 ></div>
                 <p>Наличные</p>
@@ -229,7 +231,7 @@ const OrderListPage = () => {
                 value={dataListOrders?.sdacha}
               />
             ) : (
-              ''
+              ""
             )}
 
             <label>Комментарий к заказу</label>

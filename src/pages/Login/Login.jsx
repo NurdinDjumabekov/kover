@@ -56,8 +56,8 @@ const Login = () => {
           <div className="logoImg">
             <img src={logo} alt="logo" />
           </div>
-          <h1>Ковёр-Самолёт доставит всё!</h1>
-          <p>Доставка обедов, продуктов, напитков, медикаментов и цветов</p>
+          <h1>Добро пожаловать!</h1>
+          <p>Авторизуйтесь и наслаждайтесь любимыми блюдами!</p>
           {/* //////////login1////////// */}
           {stateSendNum === 1 && (
             <form className={styles.formSendNum} onSubmit={sendNum}>

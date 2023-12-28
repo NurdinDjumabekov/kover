@@ -23,13 +23,20 @@ const ConfirmNum = (props) => {
     React.createRef(),
   ]);
 
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && index > 0 && !code[index]) {
+      inputRefs.current[index - 1].current.focus();
+    }
+  };
   const handleInputChange = (index, value) => {
-    if (value.length === 1 && index < 3) {
+    const sanitizedValue = value.replace(/\D/g, "");
+  
+    if (sanitizedValue.length === 1 && index < 3) {
       inputRefs.current[index + 1].current.focus();
     }
-
+  
     const updatedCode = [...code];
-    updatedCode[index] = value;
+    updatedCode[index] = sanitizedValue;
     setCode(updatedCode);
   };
 
@@ -115,6 +122,7 @@ const ConfirmNum = (props) => {
                 value={text}
                 maxLength={1}
                 onChange={(e) => handleInputChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
                 ref={inputRefs.current[index]}
               />
             ))}

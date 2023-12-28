@@ -23,6 +23,7 @@ export const getAllDataFood = createAsyncThunk(
 
 // виды учреждений(нац кухня ....)
 // http://kover-site.333.kg/get_estab_category?category_type=filter
+// http://kover-site.333.kg/get_estab_category
 export const getEstablishmentCategory = createAsyncThunk(
   'getEstablishmentCategory',
   async function (api, { dispatch, rejectWithValue }) {

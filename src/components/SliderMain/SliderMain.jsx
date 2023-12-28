@@ -24,7 +24,7 @@ const SliderMain = () => {
   };
   const { discounts } = useSelector((state) => state.requestFoodSlice);
 
-  // console.log(discounts, 'discounts');
+  console.log(discounts, 'discounts');
 
   return (
     <div className={styles.parentSlider}>
@@ -53,7 +53,7 @@ const SliderMain = () => {
               ) : (
                 <a key={slid.codeid} className={styles.parentSlider__altEvery}>
                   {slid?.baner ? (
-                    <img src={slid?.baner} alt="banner" />
+                    <img src={slid?.baner} alt="banner" href={slid.link}/>
                   ) : (
                     <p>Здесь могла быть ваша реклама</p>
                   )}

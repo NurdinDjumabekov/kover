@@ -40,6 +40,12 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
     return () => clearInterval(intervalId);
   }, [seconds]);
 
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && index > 0 && !code[index]) {
+      inputRefs.current[index - 1].current.focus();
+    }
+  };
+
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -48,17 +54,17 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
       "0"
     )}`;
   };
-
   const handleInputChange = (index, value) => {
-    if (value.length === 1 && index < 3) {
+    const sanitizedValue = value.replace(/\D/g, "");
+
+    if (sanitizedValue.length === 1 && index < 3) {
       inputRefs.current[index + 1].current.focus();
     }
 
     const updatedCode = [...code];
-    updatedCode[index] = value;
+    updatedCode[index] = sanitizedValue;
     setCode(updatedCode);
   };
-
   React.useEffect(() => {
     if (+checkAuth === 1) {
       navigate("/welcome");
@@ -81,12 +87,13 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
     }
   };
 
-  console.log(endTime, "endTime");
+  // console.log(endTime, "endTime");
 
   const sendNumAgain = (e) => {
     sendNum(e);
     setSeconds(179);
     setTime("03:00");
+    setEndTime(true);
   };
 
   return (
@@ -101,6 +108,7 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
               value={text}
               maxLength={1}
               onChange={(e) => handleInputChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
               ref={inputRefs.current[index]}
             />
           ))}

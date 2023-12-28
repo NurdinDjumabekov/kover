@@ -29,7 +29,7 @@ const TypesDetailed = ({ id }) => {
   React.useEffect(() => {
     if (+id === 0) {
       dispatch(
-        getEstablishmentCategory('http://kover-site.333.kg/get_estab_category')
+        getEstablishmentCategory('http://kover-site.333.kg/get_estab_category?category_type=filter')
         /// сюда добавить qery params
       );
     } else if (+id === 15) {
