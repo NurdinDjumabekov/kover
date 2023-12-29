@@ -1,22 +1,22 @@
-import React from 'react';
-import styles from './TypesDetailed.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import Slider from 'react-slick';
-import { NoneBtn } from '../../SliderMain/SliderMain';
-import arrow from '../../../assets/icons/backBtn.svg';
+import React from "react";
+import styles from "./TypesDetailed.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import Slider from "react-slick";
+import { NoneBtn } from "../../SliderMain/SliderMain";
+import arrow from "../../../assets/icons/backBtn.svg";
 /// func
-import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
+import { changePaginationCount } from "../../../store/reducers/dataAllSlice";
 import {
   changeEstablishmentCategory,
   getAllDataFood,
   getEstablishmentCategory,
   getEstablishmentData,
-} from '../../../store/reducers/requestFoodSlice';
-import SelectsPopular from '../Selects/SelectsPopular';
+} from "../../../store/reducers/requestFoodSlice";
+import SelectsPopular from "../Selects/SelectsPopular";
 import {
   changeActiveType,
   changePopular,
-} from '../../../store/reducers/statesSlice';
+} from "../../../store/reducers/statesSlice";
 
 const TypesDetailed = ({ id }) => {
   const dispatch = useDispatch();
@@ -29,27 +29,29 @@ const TypesDetailed = ({ id }) => {
   React.useEffect(() => {
     if (+id === 0) {
       dispatch(
-        getEstablishmentCategory('http://kover-site.333.kg/get_estab_category?category_type=filter')
+        getEstablishmentCategory(
+          "http://kover-site.333.kg/get_estab_category?category_type=filter"
+        )
         /// сюда добавить qery params
       );
     } else if (+id === 15) {
       dispatch(
         getEstablishmentCategory(
-          'http://kover-site.333.kg/get_estab_category?number=2'
+          "http://kover-site.333.kg/get_estab_category?number=2"
         )
         /// сюда добавить qery params
       );
     } else if (+id === 16) {
       dispatch(
         getEstablishmentCategory(
-          'http://kover-site.333.kg/get_estab_category?number=3'
+          "http://kover-site.333.kg/get_estab_category?number=3"
         )
         /// сюда добавить qery params
       );
     } else if (+id === 17) {
       dispatch(
         getEstablishmentCategory(
-          'http://kover-site.333.kg/get_estab_category?number=4'
+          "http://kover-site.333.kg/get_estab_category?number=4"
         )
         /// сюда добавить qery params
       );
@@ -67,14 +69,14 @@ const TypesDetailed = ({ id }) => {
   // console.log(id, 'id');
 
   const handleClick = (codeId) => {
-    localStorage.setItem('paginationMain', 1);
+    localStorage.setItem("paginationMain", 1);
     dispatch(changePaginationCount(1));
     if (+codeId === 0) {
       if (+id === 0) {
         // dispatch(getAllDataFood('http://kover-site.333.kg/get_establishments/')); заменил на:
         dispatch(
           getAllDataFood(
-            `http://kover-site.333.kg/get_establishments?category_code=${'0'}` // дефолтное значение, когда отображаются все данные категорий ("все")
+            `http://kover-site.333.kg/get_establishments?category_code=${"0"}` // дефолтное значение, когда отображаются все данные категорий ("все")
           )
         );
       }
@@ -86,7 +88,7 @@ const TypesDetailed = ({ id }) => {
       );
     }
     // dispatch(changePopular(popular));
-    dispatch(changePopular('Все')); // новинка,акции .....
+    dispatch(changePopular("Все")); // новинка,акции .....
   };
 
   React.useEffect(() => {
@@ -113,33 +115,39 @@ const TypesDetailed = ({ id }) => {
   };
 
   // console.log(activeTypeEstab, 'activeTypeEstab');
-  // console.log(establishmentCategory, 'establishmentCategory');
+  // console.log(establishmentCategory, "establishmentCategory");
 
   return (
     <>
       <ul className={styles.detailed}>
         <li className={styles.slider}>
-          <Slider ref={sliderRef} {...settings}>
-            {establishmentCategory?.map((type) => (
-              <div
-                key={type.codeid}
-                className={styles.slider__inner}
-                onClick={() => handleClick(type.codeid)}
-              >
-                <button
-                  onClick={() => dispatch(changeActiveType(type.codeid))}
-                  className={
-                    type.codeid === activeTypeEstab ? styles.active : ''
-                  }
-                >
-                  {type.category_name}
-                </button>
-              </div>
-            ))}
-          </Slider>
-          <button onClick={handleNext} className={styles.nextBtn}>
-            <img src={arrow} alt="<" />
-          </button>
+          {establishmentCategory?.length === 0 ? (
+            <></>
+          ) : (
+            <>
+              <Slider ref={sliderRef} {...settings}>
+                {establishmentCategory?.map((type) => (
+                  <div
+                    key={type.codeid}
+                    className={styles.slider__inner}
+                    onClick={() => handleClick(type.codeid)}
+                  >
+                    <button
+                      onClick={() => dispatch(changeActiveType(type.codeid))}
+                      className={
+                        type.codeid === activeTypeEstab ? styles.active : ""
+                      }
+                    >
+                      {type.category_name}
+                    </button>
+                  </div>
+                ))}
+              </Slider>
+              <button onClick={handleNext} className={styles.nextBtn}>
+                <img src={arrow} alt="<" />
+              </button>
+            </>
+          )}
         </li>
         <li className={styles.popular}>
           <SelectsPopular />

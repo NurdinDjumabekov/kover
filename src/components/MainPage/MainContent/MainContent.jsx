@@ -20,7 +20,7 @@ const MainContent = ({ arrImg }) => {
     dispatch(changeActiveType(0));
   };
 
-  console.log(allCategory, "allCategory");
+  // console.log(allCategory, "allCategory");
 
   return (
     <div className={styles.mainContent}>

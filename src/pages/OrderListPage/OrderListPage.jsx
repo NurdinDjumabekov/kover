@@ -141,7 +141,7 @@ const OrderListPage = () => {
     <div className={styles.orderList}>
       <div className="container">
         <div className={styles.path}>
-          <PathToFiles estab={"Заказ по списку"} />
+          <PathToFiles estab={"Доставка с гипермаркетов"} />
         </div>
         <div className={styles.orderList__inner}>
           <div>

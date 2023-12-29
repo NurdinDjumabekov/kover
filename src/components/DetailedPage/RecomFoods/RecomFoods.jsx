@@ -26,9 +26,6 @@ const RecomFoods = ({ estab, categ }) => {
   const [idCounter, setIdCounter] = React.useState(1);
   const { innerData } = useSelector((state) => state.requestFoodSlice);
   const { miniLoader } = useSelector((state) => state.accountSlice);
-  const { allFoodsOrders, sumOrdersFoods } = useSelector(
-    (state) => state.statesSlice
-  );
 
   const addBucket = (data) => {
     dispatch(addFoodsOrders(data));
@@ -70,8 +67,27 @@ const RecomFoods = ({ estab, categ }) => {
     }
   }, 800);
 
-  // console.log(innerData, 'innerData');
-  // console.log(allFoodsOrders, 'allFoodsOrders');
+  const formRef = React.useRef(null);
+
+  const searchInputBtn = (e) => {
+    e.preventDefault();
+    const inputValue = formRef.current.querySelector(
+      'input[type="search"]'
+    ).value;
+
+    dispatch(openMiniLoader());
+    if (inputValue === "") {
+      dispatch(
+        getEveryInnerData(
+          `http://kover-site.333.kg/products?code_establishment=${estab}&code_category=0`
+        )
+      );
+    } else {
+      dispatch(
+        searchInnerFood({ text: inputValue?.toLocaleLowerCase(), estab })
+      );
+    }
+  };
 
   const [dataEvery, setDataEvery] = useState({});
 
@@ -85,7 +101,7 @@ const RecomFoods = ({ estab, categ }) => {
       <div className="container">
         <div className={styles.recomBLock__inner}>
           <h5>Меню</h5>
-          <form onSubmit={searchInput}>
+          <form ref={formRef} onSubmit={(e) => searchInputBtn(e)}>
             <input
               type="search"
               placeholder="Поиск блюд"

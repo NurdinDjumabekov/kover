@@ -5,7 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { chnageAlertText } from "../../../store/reducers/EditDataUser";
 
-const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
+const ConfirmNum = ({
+  setEndTime,
+  endTime,
+  time,
+  setTime,
+  sendNum,
+  setStateSendNum,
+}) => {
   const [seconds, setSeconds] = React.useState(0);
   const { dataUser } = useSelector((state) => state.accountSlice);
   const { checkAuth } = useSelector((state) => state.postRequestSlice);
@@ -68,6 +75,7 @@ const ConfirmNum = ({ setEndTime, endTime, time, setTime, sendNum }) => {
   React.useEffect(() => {
     if (+checkAuth === 1) {
       navigate("/welcome");
+      setStateSendNum(1);
     }
     // console.log(checkAuth, 'checkAuth');
   }, [checkAuth]);

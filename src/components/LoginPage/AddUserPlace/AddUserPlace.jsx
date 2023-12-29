@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
-import styles from './AddUserPlace.module.scss';
-import mapImg from '../../../assets/images/noneData/Map.png';
-import warning from '../../../assets/icons/warning.svg';
-import { useNavigate } from 'react-router-dom';
-import { authName } from '../../../store/reducers/postRequestSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import styles from "./AddUserPlace.module.scss";
+import mapImg from "../../../assets/images/noneData/Map.png";
+import warning from "../../../assets/icons/warning.svg";
+import { useNavigate } from "react-router-dom";
+import { authName } from "../../../store/reducers/postRequestSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeTokenName,
+  changeTokenNum,
+} from "../../../store/reducers/accountSlice";
 
 const AddUserPlace = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [placeUser, setPlaceUser] = useState({
-    mainAdres: '',
-    noMainAdres: '',
-    infoDop: '',
+    mainAdres: "",
+    noMainAdres: "",
+    infoDop: "",
   });
 
   const { dataUser, tokenNum, tokenName } = useSelector(
@@ -26,17 +30,22 @@ const AddUserPlace = () => {
 
   const sendData = (e) => {
     e.preventDefault();
-
     const fetchData = async () => {
       try {
+        await dispatch(changeTokenName(dataUser?.name));
+        await dispatch(changeTokenNum(dataUser?.numberPhone));
         await dispatch(authName({ dataUser, placeUser }));
-        navigate('/main');
+        await navigate("/main");
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
     fetchData();
   };
+
+  // console.log(tokenNum, "tokenNum");
+  // console.log(tokenName, "tokenName");
+  // console.log(dataUser, "dataUser");
 
   return (
     <div className={styles.delivery}>

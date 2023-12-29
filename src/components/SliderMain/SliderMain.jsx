@@ -1,14 +1,14 @@
-import React from 'react';
-import foods from '../../assets/images/noneData/orderingFood.png';
-import { NavLink } from 'react-router-dom';
-import styles from './SliderMain.module.scss';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import foods from "../../assets/images/noneData/orderingFood.png";
+import { NavLink } from "react-router-dom";
+import styles from "./SliderMain.module.scss";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useSelector } from "react-redux";
 
 export const NoneBtn = () => {
-  return <div style={{ display: 'none' }} />;
+  return <div style={{ display: "none" }} />;
 };
 
 const SliderMain = () => {
@@ -24,7 +24,7 @@ const SliderMain = () => {
   };
   const { discounts } = useSelector((state) => state.requestFoodSlice);
 
-  console.log(discounts, 'discounts');
+  // console.log(discounts, 'discounts');
 
   return (
     <div className={styles.parentSlider}>
@@ -32,7 +32,7 @@ const SliderMain = () => {
         <div className={styles.parentSlider__inner}>
           <Slider {...settings}>
             {discounts?.map((slid) => {
-              return slid?.baner === 'null' ? (
+              return slid?.baner === "null" ? (
                 <a
                   key={slid.codeid}
                   className={styles.parentSlider__every}
@@ -53,7 +53,7 @@ const SliderMain = () => {
               ) : (
                 <a key={slid.codeid} className={styles.parentSlider__altEvery}>
                   {slid?.baner ? (
-                    <img src={slid?.baner} alt="banner" href={slid.link}/>
+                    <img src={slid?.baner} alt="banner" href={slid.link} />
                   ) : (
                     <p>Здесь могла быть ваша реклама</p>
                   )}

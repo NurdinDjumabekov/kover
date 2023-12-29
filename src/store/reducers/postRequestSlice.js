@@ -261,6 +261,9 @@ const postRequestSlice = createSlice({
     changeGoodSent: (state, action) => {
       state.goodSendOrder = action.payload;
     },
+    changeCheckAuth: (state, action) => {
+      state.checkAuth = action.payload;
+    },
   },
 });
 
@@ -270,6 +273,7 @@ export const {
   changeError,
   changeLoading,
   changeGoodSent,
+  changeCheckAuth,
 } = postRequestSlice.actions;
 
 export default postRequestSlice.reducer;

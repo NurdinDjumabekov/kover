@@ -4,7 +4,10 @@ import styles from "./Login.module.scss";
 import InputMask from "react-input-mask";
 import { addSession, changeDataUser } from "../../store/reducers/accountSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { sendNumAuth } from "../../store/reducers/postRequestSlice";
+import {
+  changeCheckAuth,
+  sendNumAuth,
+} from "../../store/reducers/postRequestSlice";
 import ConfirmNum from "../../components/LoginPage/ConfirmNum/ConfirmNum";
 import { chnageAlertText } from "../../store/reducers/EditDataUser";
 
@@ -20,6 +23,7 @@ const Login = () => {
   React.useEffect(() => {
     const uniqueNumber = Math.floor(Math.random() * Date.now());
     dispatch(addSession(uniqueNumber));
+    dispatch(changeCheckAuth(0));
   }, []);
 
   const changeInput = (e) => {
@@ -46,7 +50,7 @@ const Login = () => {
     }
   };
 
-  // console.log(stateSendNum);
+  console.log(stateSendNum, "stateSendNum");
   // console.log(dataUser, 'dataUser');
 
   return (
@@ -83,6 +87,7 @@ const Login = () => {
               setTime={setTime}
               endTime={endTime}
               sendNum={sendNum}
+              setStateSendNum={setStateSendNum}
             />
           )}
         </div>

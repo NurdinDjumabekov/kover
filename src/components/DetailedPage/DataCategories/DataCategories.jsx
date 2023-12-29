@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './DataCategories.module.scss';
-import { NavLink } from 'react-router-dom';
-import foods from '../../../assets/images/noneData/foodsss.png';
-import star from '../../../assets/icons/star.svg';
-import clock from '../../../assets/icons/clock.svg';
-import kitchen from '../../../assets/icons/kitchen.svg';
-import transport from '../../../assets/icons/transport.svg';
-import check from '../../../assets/icons/check.svg';
+import React from "react";
+import styles from "./DataCategories.module.scss";
+import { NavLink } from "react-router-dom";
+import foods from "../../../assets/images/noneData/foodsss.png";
+import star from "../../../assets/icons/star.svg";
+import clock from "../../../assets/icons/clock.svg";
+import kitchen from "../../../assets/icons/kitchen.svg";
+import transport from "../../../assets/icons/transport.svg";
+import check from "../../../assets/icons/check.svg";
 
 const DataCategories = ({ allDataFood }) => {
-  console.log(allDataFood, 'allDataFood');
+  // console.log(allDataFood, 'allDataFood');
   return (
     <>
       <div className={styles.category}>
@@ -23,7 +23,7 @@ const DataCategories = ({ allDataFood }) => {
               className={styles.everyData}
             >
               <div className={styles.imgs}>
-                {food?.photo === 'null' ? (
+                {food?.photo === "null" ? (
                   <img src={foods} alt="food" />
                 ) : (
                   <img src={food.photo} alt="food" />
