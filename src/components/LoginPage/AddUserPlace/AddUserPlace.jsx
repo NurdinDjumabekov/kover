@@ -43,10 +43,6 @@ const AddUserPlace = () => {
     fetchData();
   };
 
-  // console.log(tokenNum, "tokenNum");
-  // console.log(tokenName, "tokenName");
-  // console.log(dataUser, "dataUser");
-
   return (
     <div className={styles.delivery}>
       <h4>Укажите адрес</h4>

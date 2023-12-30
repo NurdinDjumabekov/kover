@@ -35,8 +35,6 @@ const DetailedEveryData = (props) => {
     dispatch(changeSumDishes());
   };
 
-  // console.log(props?.dataEvery, 'dataEvery');
-  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   React.useEffect(() => {
     allFoodsOrders?.map((koll) => {

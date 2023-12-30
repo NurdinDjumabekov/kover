@@ -77,7 +77,6 @@ const ConfirmNum = ({
       navigate("/welcome");
       setStateSendNum(1);
     }
-    // console.log(checkAuth, 'checkAuth');
   }, [checkAuth]);
 
   const confirmNum = (e) => {
@@ -95,7 +94,6 @@ const ConfirmNum = ({
     }
   };
 
-  // console.log(endTime, "endTime");
 
   const sendNumAgain = (e) => {
     sendNum(e);

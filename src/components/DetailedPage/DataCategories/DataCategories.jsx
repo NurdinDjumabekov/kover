@@ -9,7 +9,6 @@ import transport from "../../../assets/icons/transport.svg";
 import check from "../../../assets/icons/check.svg";
 
 const DataCategories = ({ allDataFood }) => {
-  // console.log(allDataFood, 'allDataFood');
   return (
     <>
       <div className={styles.category}>

@@ -78,7 +78,6 @@ const OrderMenu = () => {
     }
   };
 
-  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   return (
     <div className={styles.accordinBlock}>

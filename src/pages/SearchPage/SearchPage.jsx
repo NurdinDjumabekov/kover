@@ -38,9 +38,6 @@ const SearchPage = () => {
     dispatch(mainSearch({ search, typeSearch }));
   };
 
-  // console.log(typeSearch, 'typeSearch');
-  // console.log(dataSearchMain, 'dataSearchMain');
-
   return (
     <div className={styles.sarchBlock}>
       <div className="container">

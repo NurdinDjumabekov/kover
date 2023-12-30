@@ -61,7 +61,6 @@ export const editNumUser = createAsyncThunk(
         }
       );
       if (response.status >= 200 || response.status < 300) {
-        // console.log(response?.data?.error);
         if (
           response?.data?.error === 'Введите новый номер!' ||
           response?.data?.error === 'Этот номер занят!'

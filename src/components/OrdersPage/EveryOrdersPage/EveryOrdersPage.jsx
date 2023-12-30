@@ -26,7 +26,6 @@ const EveryOrdersPage = ({ item }) => {
     dispatch(changeSumDishes());
   };
 
-  console.log(item, 'item');
 
   return (
     <div className={styles.order}>

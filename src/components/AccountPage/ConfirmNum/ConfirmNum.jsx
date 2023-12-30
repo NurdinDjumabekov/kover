@@ -99,11 +99,6 @@ const ConfirmNum = (props) => {
   // }, [errorEdit]);
   /// надо обязательно это сделать!!!
 
-  // console.log(code);
-  // console.log(time, "setTime");
-  // console.log(errorEdit, "errorEdit");
-  // console.log(props, "props");
-
   return (
     <Modals
       state={props.state}

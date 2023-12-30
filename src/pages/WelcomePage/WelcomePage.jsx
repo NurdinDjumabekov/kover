@@ -28,7 +28,6 @@ const WelcomePage = () => {
     }
   };
 
-  // console.log(dataUser);
   return (
     <div className={styles.welcome}>
       <div className="container">

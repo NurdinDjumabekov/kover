@@ -53,7 +53,6 @@ const DataSearch = () => {
     }, 800);
   };
 
-  console.log(dataSearchMain, "dataSearchMain");
 
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));

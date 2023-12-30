@@ -40,9 +40,6 @@ const ProductPage = () => {
     );
   }, []);
 
-  // console.log(everyData, 'everyData');
-  // console.log(pathCatalog, "pathCatalog");
-
   return (
     <div className={styles.producblock}>
       <div className={styles.producblock__path}>

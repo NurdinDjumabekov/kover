@@ -30,7 +30,6 @@ const Alerts = (props) => {
   };
 
   React.useEffect(() => {
-    console.log('Ты кто?');
     setTimeout(() => {
       dispatch(
         chnageAlertText({
