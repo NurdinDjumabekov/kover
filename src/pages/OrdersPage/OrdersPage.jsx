@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import styles from './OrdersPage.module.scss';
-import { useNavigate } from 'react-router-dom';
-import img from '../../assets/images/noneData/Image.png';
-import backBtn from '../../assets/icons/backBtn.svg';
-import EveryOrdersPage from '../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage';
-import TotalOrder from '../../components/OrdersPage/TotalOrder/TotalOrder';
-import { useSelector } from 'react-redux';
-import Preloader from '../../components/Preloader/Preloader';
+import React, { useState } from "react";
+import styles from "./OrdersPage.module.scss";
+import { useNavigate } from "react-router-dom";
+import img from "../../assets/images/noneData/Image.png";
+import backBtn from "../../assets/icons/backBtn.svg";
+import EveryOrdersPage from "../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage";
+import TotalOrder from "../../components/OrdersPage/TotalOrder/TotalOrder";
+import { useSelector } from "react-redux";
+import Preloader from "../../components/Preloader/Preloader";
+import NavSearch from "../../components/NavSearch/NavSearch";
 
 const OrdersPage = () => {
   const [totalOrder, setTotalOrder] = useState(false);
@@ -23,12 +24,14 @@ const OrdersPage = () => {
   }, []);
 
   const clickBtnOrder = () => {
-    allFoodsOrders.length === 0 ? navigate('/categories') : setTotalOrder(true);
+    allFoodsOrders.length === 0 ? navigate("/categories") : setTotalOrder(true);
   };
 
+  // console.log(allFoodsOrders);
   return (
     <>
       <div className={styles.orderBlock}>
+        {/* <NavSearch /> */}
         <div className="container">
           <div className={styles.orderBlock__inner}>
             <button onClick={() => navigate(-1)} className={styles.prevBacket}>

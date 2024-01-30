@@ -27,8 +27,8 @@ const EditNumber = (props) => {
     } else {
       dispatch(
         chnageAlertText({
-          text: "Некорректный номер",
-          backColor: "red",
+          text: "Некорректный номер!",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -45,7 +45,7 @@ const EditNumber = (props) => {
         <form>
           <InputMask
             mask="+999(999)99-99-99"
-            placeholder="+996(700)75-44-54"
+            placeholder="+996(___)__-__-__"
             value={inputNum}
             onChange={(e) => dispatch(changeInputNum(e.target.value))}
             required

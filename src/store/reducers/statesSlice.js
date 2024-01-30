@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  popular: 'Все',
-  pathCatalog: '',
+  popular: "Все",
+  pathCatalog: "",
   positionFoods: 0,
   sumOrdersFoods: 0,
   sumDishes: 0,
@@ -14,7 +14,7 @@ const initialState = {
   countDishes: 1,
 };
 const statesSlice = createSlice({
-  name: 'statesSlice',
+  name: "statesSlice",
   initialState: initialState,
   reducers: {
     changePopular: (state, action) => {
@@ -41,7 +41,7 @@ const statesSlice = createSlice({
       // state.sumDishes = allSum || 0;
       const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
         // const itemSum = +obj.count * +obj.posuda_price;
-        return sum + +obj.posuda_price;
+        return sum + +obj.posuda_price * obj?.count;
       }, 0);
       state.sumDishes = allSum || 0;
     },
@@ -105,7 +105,7 @@ const statesSlice = createSlice({
       state.sumDishes = 0;
       state.positionFoods = 0;
       state.sumOrdersFoods = 0;
-      state.countDishes = 1
+      state.countDishes = 1;
     },
     changeAllFoodsOrders: (state, action) => {
       state.allFoodsOrders = [...state.allFoodsOrders, action.payload];

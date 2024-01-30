@@ -61,6 +61,7 @@ export const editNumUser = createAsyncThunk(
         }
       );
       if (response.status >= 200 || response.status < 300) {
+        // console.log(response?.data?.error);
         if (
           response?.data?.error === 'Введите новый номер!' ||
           response?.data?.error === 'Этот номер занят!'
@@ -177,7 +178,7 @@ const EditDataUser = createSlice({
       state.loadingEdit = false;
       state.alertText = {
         text: 'Ваше ФИО успешно переименовано!',
-        backColor: 'yellow',
+        backColor: '#ffc12e',
         state: true,
       };
     });
@@ -185,7 +186,7 @@ const EditDataUser = createSlice({
       state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить ваше ФИО, попробуйте позже...',
-        backColor: 'red',
+        backColor: '#ffc12e',
         state: true,
       };
       state.loadingEdit = false;
@@ -206,7 +207,7 @@ const EditDataUser = createSlice({
       state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить номер, попробуйте еще раз...',
-        backColor: 'red',
+        backColor: '#ffc12e',
         state: true,
       };
       state.loadingEdit = false;
@@ -219,7 +220,7 @@ const EditDataUser = createSlice({
       state.loadingEdit = false;
       state.alertText = {
         text: 'Ваш номер успешно переименован!',
-        backColor: 'yellow',
+        backColor: '#ffc12e',
         state: true,
       };
     });
@@ -227,7 +228,7 @@ const EditDataUser = createSlice({
       state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить номер, попробуйте еще раз...',
-        backColor: 'red',
+        backColor: '#ffc12e',
         state: true,
       };
       state.loadingEdit = false;
@@ -240,7 +241,7 @@ const EditDataUser = createSlice({
       state.loadingEdit = false;
       state.alertText = {
         text: 'Ваш адрес успешно переименован!',
-        backColor: 'yellow',
+        backColor: '#ffc12e',
         state: true,
       };
     });
@@ -248,7 +249,7 @@ const EditDataUser = createSlice({
       state.errorEdit = action.payload;
       state.alertText = {
         text: 'Не удалось изменить ваш адрес, попробуйте еще раз...',
-        backColor: 'red',
+        backColor: '#ffc12e',
         state: true,
       };
       state.loadingEdit = false;

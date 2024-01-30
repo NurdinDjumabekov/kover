@@ -8,6 +8,7 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
   const dispatch = useDispatch();
   const { dataUser } = useSelector((state) => state.accountSlice);
   const { dataHistory } = useSelector((state) => state.requestFoodSlice);
+  // console.log(dataHistory);
 
   React.useEffect(() => {
     dispatch(historyOrders(dataUser?.idUser));

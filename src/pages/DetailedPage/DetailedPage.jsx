@@ -33,6 +33,8 @@ const DetailedPage = () => {
     /// для получения всех ресторанов дефолтное состояние ("Все")
   }, [paginationCount]);
 
+  // console.log(allDataFood, 'allDataFood');
+  // console.log(id);
 
   return (
     <div className={styles.detailedBlock}>

@@ -83,7 +83,7 @@ const OrderListPage = () => {
       dispatch(
         chnageAlertText({
           text: "Заполните все поля!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -95,6 +95,10 @@ const OrderListPage = () => {
     dispatch(changeListOrdersUser(newData));
   };
 
+  // console.log(listOrdersUser, 'listOrdersUser');
+  // console.log(counter);
+  // console.log(dataListOrders, 'dataListOrders');
+
   const sendData = (e) => {
     e.preventDefault();
     const phoneNumberPattern = /^\+\d{3}\(\d{3}\)\d{2}-\d{2}-\d{2}$/;
@@ -103,7 +107,7 @@ const OrderListPage = () => {
       dispatch(
         chnageAlertText({
           text: "Ваш список заказов пустой!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -121,7 +125,7 @@ const OrderListPage = () => {
         dispatch(
           chnageAlertText({
             text: "Введите правильный номер!",
-            backColor: "red",
+            backColor: "#ffc12e",
             state: true,
           })
         );

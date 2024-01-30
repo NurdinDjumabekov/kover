@@ -1,6 +1,6 @@
 import React from "react";
-import ordering from "../../../assets/images/Main/ordering.png";
-import delivery from "../../../assets/images/Main/delivery.png";
+import ordering from "../../../assets/images/Main/ordering.svg";
+import delivery from "../../../assets/images/Main/delivery.svg";
 import styles from "./MainContent.module.scss";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,7 @@ const MainContent = ({ arrImg }) => {
     dispatch(changeActiveType(0));
   };
 
+  // console.log(allCategory, "allCategory");
 
   return (
     <div className={styles.mainContent}>
@@ -29,8 +30,9 @@ const MainContent = ({ arrImg }) => {
             to={`/detailed/${"0"}/${"Рестораны"}`}
             className={styles.everyCategory}
             onClick={() => clickEstablishment("Рестораны")}
+            style={{ backgroundImage: `url(${arrImg[9]})` }}
           >
-            <img src={arrImg[9]} alt="Рестораны" />
+            {/* <img src={arrImg[9]} alt="Рестораны" /> */}
             <h4>Рестораны</h4>
           </NavLink>
           {allCategory?.length === 0 ? (
@@ -42,8 +44,9 @@ const MainContent = ({ arrImg }) => {
                 key={i.codeid}
                 className={styles.everyCategory}
                 onClick={() => clickEstablishment(i?.category_name)}
+                style={{ backgroundImage: `url(${arrImg[ind]})` }}
               >
-                <img src={arrImg[ind]} alt="категория" />
+                {/* <img src={arrImg[ind]} alt="категория" /> */}
                 <h4>{i.category_name}</h4>
               </NavLink>
             ))
@@ -53,7 +56,7 @@ const MainContent = ({ arrImg }) => {
             className={styles.everyCategory}
             onClick={() => clickEstablishment("Курьерская доставка")}
           >
-            <img src={delivery} alt="" />
+            <img src={delivery} alt="delivery" />
             <h4>Курьерская доставка</h4>
           </NavLink>
           <NavLink
@@ -61,7 +64,7 @@ const MainContent = ({ arrImg }) => {
             className={styles.everyCategory}
             onClick={() => clickEstablishment("Доставка с гипермаркетов")}
           >
-            <img src={ordering} alt="" />
+            <img src={ordering} alt="ordering" />
             <h4>Доставка с гипермаркетов</h4>
           </NavLink>
         </div>

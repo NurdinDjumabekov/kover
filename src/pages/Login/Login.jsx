@@ -43,13 +43,15 @@ const Login = () => {
       dispatch(
         chnageAlertText({
           text: "Введите правильно номер телефона!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
     }
   };
 
+  console.log(stateSendNum, "stateSendNum");
+  // console.log(dataUser, 'dataUser');
 
   return (
     <div className={styles.login}>
@@ -65,7 +67,7 @@ const Login = () => {
             <form className={styles.formSendNum} onSubmit={sendNum}>
               <InputMask
                 mask="+999(999)99-99-99"
-                placeholder="+996(700)75-44-54"
+                placeholder="+996(___)__-__-__"
                 name="numberPhone"
                 onChange={changeInput}
                 required

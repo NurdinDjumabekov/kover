@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import logo from "../../assets/images/Logo.png";
-import foods from "../../assets/images/Main/foods.png";
-import singInImg from "../../assets/images/Main/singInImg.png";
+import foods from "../../assets/images/Main/foods.svg";
+import foods2 from "../../assets/images/Main/foods2.svg";
+import singInImg from "../../assets/images/Main/singInImg.svg";
 import styles from "./MainInfo.module.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
@@ -68,7 +69,7 @@ const MainInfo = () => {
               <img src={foods} alt="foods" />
             </div>
             <div className={styles.mainInfo__foods}>
-              <img src={foods} alt="foods" />
+              <img src={foods2} alt="foods" />
             </div>
             <div className={styles.mainInfo__foods}>
               <img src={singInImg} alt="singInImg" />

@@ -25,6 +25,7 @@ const Account = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // console.log(idCounter, 'idCounter');
   return (
     <div className={styles.accountBlock}>
       <div className="container">

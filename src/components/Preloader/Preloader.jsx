@@ -1,12 +1,14 @@
-import React from 'react';
-import './Preloader.scss';
-import logo from '../../assets/images/Logo.png';
+import React from "react";
+import "./Preloader.scss";
+import logo from "../../assets/images/Logo.png";
 
 const Preloader = () => {
   return (
     <div className="preloader__container">
       <div>
-        <img src={logo} alt="Лого" />
+        <div className="logoPreloader">
+          <img src={logo} alt="Лого" />
+        </div>
         <div className="preloader">
           <svg
             width="60"

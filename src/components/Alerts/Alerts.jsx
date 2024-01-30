@@ -1,10 +1,10 @@
-import React from 'react';
-import './Alerts.scss';
-import { Box, Modal } from '@mui/material';
-import { chnageAlertText } from '../../store/reducers/EditDataUser';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import "./Alerts.scss";
+import { Box, Modal } from "@mui/material";
+import { chnageAlertText } from "../../store/reducers/EditDataUser";
+import { useDispatch, useSelector } from "react-redux";
 
-const Alerts = (props) => {
+const Alerts = () => {
   const dispatch = useDispatch();
   const { alertText } = useSelector((state) => state.EditDataUser);
   const handleOpen = () =>
@@ -13,32 +13,33 @@ const Alerts = (props) => {
     dispatch(chnageAlertText({ ...alertText, state: false }));
 
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "80%",
     zIndex: 999,
     height: 150,
     bgcolor: alertText.backColor,
     boxShadow: 24,
-    borderRadius: '8px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     p: 4,
   };
 
   React.useEffect(() => {
+    console.log("Ты кто?");
     setTimeout(() => {
       dispatch(
         chnageAlertText({
-          text: '',
-          backColor: '',
+          text: "",
+          backColor: "",
           state: false,
         })
       );
-    }, 3000);
+    }, 4000);
     // return () =>
     //   dispatch(
     //     chnageAlertText({
@@ -50,13 +51,13 @@ const Alerts = (props) => {
   }, [alertText?.state]);
 
   const styleText = {
-    color: '#222',
-    fontFamily: 'Gilroy',
-    fontSize: '18px',
-    fontStyle: 'normal',
+    color: "#222",
+    fontFamily: "Gilroy",
+    fontSize: "18px",
+    fontStyle: "normal",
     fontWeight: 600,
-    lineHeight: 'normal',
-    textAlign: 'center',
+    lineHeight: "normal",
+    textAlign: "center",
   };
 
   return (

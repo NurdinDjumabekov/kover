@@ -48,7 +48,7 @@ const LogOut = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <div>
+            <div className="modalLogOut">
               <p style={{ textAlign: "center", fontSize: "20px" }}>
                 Вы действительно хотите выйти?
               </p>
@@ -62,13 +62,27 @@ const LogOut = () => {
                 }}
               >
                 <button
-                  style={{ background: "transparent", fontSize: "20px" }}
+                  style={{
+                    fontSize: "20px",
+                    backgroundColor: "green",
+                    backgroundColor: "#ffc12e",
+                    padding: "5px 25px",
+                    borderRadius: "5px",
+                    color: "#fff",
+                  }}
                   onClick={logOutFn}
                 >
                   Да
                 </button>
                 <button
-                  style={{ background: "transparent", fontSize: "20px" }}
+                  style={{
+                    fontSize: "20px",
+                    backgroundColor: "transparent",
+                    border: "1px solid #ffc12e",
+                    padding: "5px 25px",
+                    borderRadius: "5px",
+                    color: "#ffc12e",
+                  }}
                   onClick={handleClose}
                 >
                   Нет

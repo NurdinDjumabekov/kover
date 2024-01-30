@@ -77,6 +77,7 @@ const ConfirmNum = ({
       navigate("/welcome");
       setStateSendNum(1);
     }
+    // console.log(checkAuth, 'checkAuth');
   }, [checkAuth]);
 
   const confirmNum = (e) => {
@@ -86,14 +87,15 @@ const ConfirmNum = ({
     } else {
       dispatch(
         chnageAlertText({
-          text: "Введите все четыре символа",
-          backColor: "red",
+          text: "Введите все четыре символа!",
+          backColor: "#ffc12e",
           state: true,
         })
       );
     }
   };
 
+  // console.log(endTime, "endTime");
 
   const sendNumAgain = (e) => {
     sendNum(e);

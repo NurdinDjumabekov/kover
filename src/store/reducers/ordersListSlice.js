@@ -28,7 +28,7 @@ export const sendOrderFoods = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: 'Ваш заказ был успешно создан!!',
-            backColor: 'yellow',
+            backColor: '#ffc12e',
             state: true,
           })
         );
@@ -36,7 +36,7 @@ export const sendOrderFoods = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: 'Упс! Что-то пошло не так... Повторите попытку позже!',
-            backColor: 'red',
+            backColor: '#ffc12e',
             state: true,
           })
         );
@@ -68,7 +68,7 @@ export const sendCourier = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: 'Ваша заяка была успешно отправлена!',
-            backColor: 'yellow',
+            backColor: '#ffc12e',
             state: true,
           })
         );
@@ -80,7 +80,7 @@ export const sendCourier = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: 'Упс! Что-то пошло не так... Повторите попытку позже!',
-            backColor: 'red',
+            backColor: '#ffc12e',
             state: true,
           })
         );
@@ -98,7 +98,7 @@ const initialState = {
     fio: '',
     client_adress: '',
     client_time_delivery: '',
-    oplata_type: 1,
+    oplata_type: 2,
     sdacha: '',
     comment_zakaz: '',
     product_list: [],
@@ -116,7 +116,7 @@ const initialState = {
     gab_gruz: 0,
     sdacha: '',
     comment_zakaz: '',
-    oplata_type: 1,
+    oplata_type: 2,
     dostavka_type: 1,
   },
   pathSite: false,

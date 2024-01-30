@@ -59,6 +59,7 @@ const EveryOrder = (props) => {
   const dispatch = useDispatch();
 
   const { detailedHistory } = useSelector((state) => state.requestFoodSlice);
+  // console.log(detailedHistory, 'detailedHistory');
 
   React.useEffect(() => {
     if (props.idCounter !== 0) {

@@ -37,8 +37,8 @@ const DataSearch = () => {
   const alertAddBucket = () => {
     dispatch(
       chnageAlertText({
-        text: 'Продук был добавлен в корзину',
-        backColor: 'yellow',
+        text: "Продук был добавлен в корзину",
+        backColor: "#ffc12e",
         state: true,
       })
     );
@@ -50,9 +50,10 @@ const DataSearch = () => {
           state: false,
         })
       );
-    }, 800);
+    }, 1500);
   };
 
+  // console.log(dataSearchMain, "dataSearchMain");
 
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
@@ -68,8 +69,13 @@ const DataSearch = () => {
     setDataEvery(data);
   };
 
+  console.log(typeSearch, "typeSearch");
   return (
-    <div className={styles.alldata}>
+    <div
+      className={
+        +typeSearch === 1 ? styles.alldataRestorans : styles.alldataFoods
+      }
+    >
       {dataSearchMain?.length !== 0 && (
         <>
           {typeSearch === 1
@@ -139,10 +145,38 @@ const DataSearch = () => {
                     className={styles.imgFood}
                     onClick={() => clickProduct(food)}
                   >
-                    {food?.prod_photo ? (
+                    {/* {food?.prod_photo ? (
                       <img src={food?.prod_photo} alt="временно" />
                     ) : (
                       <img src={foods} alt="временно" />
+                    )} */}
+                    {food?.prod_photo ? (
+                      // <img src={food?.prod_photo} alt="временно" />
+                      <div
+                        style={{
+                          backgroundImage: `url(${food?.prod_photo})`,
+                          width: "100%",
+                          height: "100%",
+                          backgroundPosition: "center",
+                          backgroundSize: "contain",
+                          backgroundRepeat: "no-repeat",
+                          backgroundColor: "#fff",
+                          borderRadius: "8px 8px 0 0",
+                        }}
+                      ></div>
+                    ) : (
+                      <div
+                        style={{
+                          backgroundImage: `url(${food?.prod_photo})`,
+                          width: "100%",
+                          height: "100%",
+                          backgroundPosition: "center",
+                          backgroundSize: "contain",
+                          backgroundRepeat: "no-repeat",
+                          backgroundColor: "#fff",
+                          borderRadius: "8px 8px 0 0",
+                        }}
+                      ></div>
                     )}
                   </div>
                   <h6 onClick={() => clickProduct(food)}>

@@ -66,6 +66,7 @@ const TypesDetailed = ({ id }) => {
     sliderRef.current.slickNext();
   };
 
+  // console.log(id, 'id');
 
   const handleClick = (codeId) => {
     localStorage.setItem("paginationMain", 1);
@@ -112,6 +113,9 @@ const TypesDetailed = ({ id }) => {
     focusOnSelect: true,
     initialSlide: +activeTypeEstab, /// в нем хранится id последнего активного слайра
   };
+
+  // console.log(activeTypeEstab, 'activeTypeEstab');
+  // console.log(establishmentCategory, "establishmentCategory");
 
   return (
     <>

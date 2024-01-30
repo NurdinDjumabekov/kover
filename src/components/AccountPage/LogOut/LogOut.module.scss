@@ -7,4 +7,16 @@
   line-height: normal;
   margin: 12px 0 24px;
   background: transparent;
+  .modalLogOut {
+    background: red !important;
+    button {
+      // background: "transparent",
+      // fontSize: "20px",
+      // backgroundColor: "green",
+      // padding: "5px 25px",
+      // borderRadius: "5px",
+      // color: "#fff",
+      background: red !important;
+    }
+  }
 }

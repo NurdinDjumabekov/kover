@@ -24,6 +24,7 @@ const SliderMain = () => {
   };
   const { discounts } = useSelector((state) => state.requestFoodSlice);
 
+  // console.log(discounts, 'discounts');
 
   return (
     <div className={styles.parentSlider}>

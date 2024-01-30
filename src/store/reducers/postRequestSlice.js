@@ -16,7 +16,7 @@ const initialState = {
     kvartira: "",
     hourDeliver: "",
     zakazDopInfo: "",
-    type_oplata: 1,
+    type_oplata: 2,
     sdacha: "",
     comment_zakaz: "",
     summ: 0,
@@ -55,7 +55,7 @@ export const sendNumAuth = createAsyncThunk(
       dispatch(
         chnageAlertText({
           text: "Нету соединения с интернетом!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -93,7 +93,7 @@ export const checkNum = createAsyncThunk(
           dispatch(
             chnageAlertText({
               text: "Неверный код",
-              backColor: "red",
+              backColor: "#ffc12e",
               state: true,
             })
           );
@@ -106,7 +106,7 @@ export const checkNum = createAsyncThunk(
       dispatch(
         chnageAlertText({
           text: "Произошла ошибка!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -160,7 +160,7 @@ export const authName = createAsyncThunk(
       dispatch(
         chnageAlertText({
           text: "Ошибка! Повторите попытку позже!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -190,7 +190,7 @@ export const sendOrderFoods = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: "Упс! Что-то пошло не так... Повторите попытку позже!",
-            backColor: "red",
+            backColor: "#ffc12e",
             state: true,
           })
         );
