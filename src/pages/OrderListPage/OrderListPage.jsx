@@ -56,12 +56,13 @@ const OrderListPage = () => {
   };
 
   const addOrder = () => {
-    if (quantity !== "" && inputProd !== "") {
+    if (inputProd !== "") {
       if (listOrdersUser?.length === 0) {
         dispatch(
           changeListOrdersUser([
             ...listOrdersUser,
             { prod: inputProd, quantity, ves: typeFood, id: 1 },
+            // { prod: inputProd, quantity, ves: typeFood, id: 1 },
           ])
         );
       } else {
@@ -90,12 +91,24 @@ const OrderListPage = () => {
     }
   };
 
+  const changeInputOrder = (e, id) => {
+    e.preventDefault();
+
+    dispatch(
+      changeListOrdersUser(
+        listOrdersUser.map((item) =>
+          item.id === id ? { ...item, prod: e.target.value } : item
+        )
+      )
+    );
+  };
+
   const del = (id) => {
     const newData = listOrdersUser?.filter((i) => i.id !== id);
     dispatch(changeListOrdersUser(newData));
   };
 
-  // console.log(listOrdersUser, 'listOrdersUser');
+  console.log(listOrdersUser, "listOrdersUser");
   // console.log(counter);
   // console.log(dataListOrders, 'dataListOrders');
 
@@ -114,13 +127,14 @@ const OrderListPage = () => {
     } else {
       if (phoneNumberPattern.test(dataListOrders?.phone)) {
         const newData = transformDataOrderList(listOrdersUser);
-        dispatch(
-          sendOrderFoods({
-            ...dataListOrders,
-            product_list: newData,
-            phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
-          })
-        );
+        console.log(newData, "newData");
+        // dispatch(
+        //   sendOrderFoods({
+        //     ...dataListOrders,
+        //     product_list: newData,
+        //     phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
+        //   })
+        // );
       } else {
         dispatch(
           chnageAlertText({
@@ -255,13 +269,24 @@ const OrderListPage = () => {
                 <p>Список пустой</p>
               ) : (
                 listOrdersUser?.map((prod) => (
-                  <div key={prod.id}>
-                    <b>{prod?.prod}</b>
+                  <div className={styles.blockInput} key={prod?.id}>
+                    <input
+                      type="text"
+                      key={prod?.id}
+                      value={prod?.prod}
+                      onChange={(e) => changeInputOrder(e, prod?.id)}
+                      // style={{ border: "2px solid #f4f4f4", background: "#fff" }}
+                    />
                     <div>
-                      <span>{`${prod?.quantity} ${prod?.ves}`}</span>
                       <img src={krest} alt="x" onClick={() => del(prod.id)} />
                     </div>
                   </div>
+                  // <div key={prod.id}>
+                  //   <b>{prod?.prod}</b>
+                  //   <div>
+                  //     <span>{`${prod?.quantity} ${prod?.ves}`}</span>
+                  //   </div>
+                  // </div>
                 ))
               )}
             </div>
@@ -269,12 +294,12 @@ const OrderListPage = () => {
             <div className={styles.listOrder}>
               <input
                 type="text"
-                placeholder="Товар"
+                placeholder="Товар и его количество"
                 className={styles.product}
                 onChange={(e) => setInputProd(e.target.value)}
                 value={inputProd}
               />
-              <label className={styles.koll}>
+              {/* <label className={styles.koll}>
                 <input
                   type="text"
                   placeholder="0"
@@ -285,7 +310,7 @@ const OrderListPage = () => {
                   <i>{typeFood}</i>
                   <img src={arrow} alt="<" />
                 </div>
-              </label>
+              </label> */}
               <div className={styles.btn} onClick={addOrder}>
                 +
               </div>

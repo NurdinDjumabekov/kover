@@ -41,7 +41,7 @@ const statesSlice = createSlice({
       // state.sumDishes = allSum || 0;
       const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
         // const itemSum = +obj.count * +obj.posuda_price;
-        return sum + +obj.posuda_price * obj?.count;
+        return +sum + +obj.posuda_price * +obj?.count;
       }, 0);
       state.sumDishes = allSum || 0;
     },

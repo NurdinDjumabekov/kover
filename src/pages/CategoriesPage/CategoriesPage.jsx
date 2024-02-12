@@ -20,6 +20,7 @@ import img6 from "../../assets/images/noneData/Rectangle3.svg";
 import img7 from "../../assets/images/noneData/Rectangle9.svg";
 import img8 from "../../assets/images/noneData/Rectangle10.svg";
 import img9 from "../../assets/images/noneData/alkogol.jpg";
+import img10 from "../../assets/images/noneData/drinkSpirt.png";
 import SliderMain from "../../components/SliderMain/SliderMain";
 import NavSearch from "../../components/NavSearch/NavSearch";
 
@@ -27,7 +28,7 @@ const CategoriesPage = () => {
   const dispatch = useDispatch();
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
 
-  const arrImg = [img2, img3, img2, img6, img7, img8, img9, img3, img5, img1];
+  const arrImg = [img2, img3, img2, img6, img7, img8, img10, img3, img5, img1];
   // удалить
 
   React.useEffect(() => {

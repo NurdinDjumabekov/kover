@@ -27,7 +27,7 @@ const OrdersPage = () => {
     allFoodsOrders.length === 0 ? navigate("/categories") : setTotalOrder(true);
   };
 
-  // console.log(allFoodsOrders);
+  console.log(allFoodsOrders, "allFoodsOrders");
   return (
     <>
       <div className={styles.orderBlock}>

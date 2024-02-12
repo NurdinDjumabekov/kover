@@ -74,7 +74,7 @@ const TotalOrder = (props) => {
   // };
 
   // console.log(orderUser, "orderUser");
-  // console.log(sumDishes, "sumDishes");
+  console.log(sumDishes, "sumDishes");
   // console.log(allFoodsOrders, "allFoodsOrders");
 
   return (
