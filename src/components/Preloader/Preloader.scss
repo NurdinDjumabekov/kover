@@ -29,15 +29,13 @@
 }
 
 .preloader {
-  //   border: 8px solid #f3f3f3;
-  //   border: 8px solid #3498db;
-  //   border-radius: 50%;
   width: 65px;
   height: 65px;
   animation: spin 1s linear infinite;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
 }
 
 @keyframes spin {

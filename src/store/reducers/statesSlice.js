@@ -34,16 +34,16 @@ const statesSlice = createSlice({
       state.sumOrdersFoods = allSum || 0;
     },
     changeSumDishes: (state, action) => {
-      // const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
-      //   const itemSum = +obj.count * +obj.posuda_price;
-      //   return sum + itemSum;
-      // }, 0);
-      // state.sumDishes = allSum || 0;
       const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
-        // const itemSum = +obj.count * +obj.posuda_price;
-        return +sum + +obj.posuda_price * +obj?.count;
+        const itemSum = +obj.count * +obj.posuda_price;
+        return sum + itemSum;
       }, 0);
       state.sumDishes = allSum || 0;
+      // const allSum = state.allFoodsOrders?.reduce((sum, obj) => {
+      //   const itemSum = +obj.count * +obj.posuda_price;
+      //   return +sum + +obj.posuda_price * +obj?.count;
+      // }, 0);
+      // state.sumDishes = allSum || 0;
     },
     addFoodsOrders: (state, action) => {
       const existingOrderIndex = state.allFoodsOrders.findIndex(

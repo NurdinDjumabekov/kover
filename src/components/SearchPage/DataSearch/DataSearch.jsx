@@ -53,7 +53,7 @@ const DataSearch = () => {
     }, 1500);
   };
 
-  // console.log(dataSearchMain, "dataSearchMain");
+  console.log(dataSearchMain, "dataSearchMain");
 
   const clickEstablishment = (name) => {
     dispatch(changePathCatalog(name));
@@ -69,7 +69,7 @@ const DataSearch = () => {
     setDataEvery(data);
   };
 
-  console.log(typeSearch, "typeSearch");
+  // console.log(typeSearch, "typeSearch");
   return (
     <div
       className={
@@ -82,9 +82,9 @@ const DataSearch = () => {
             ? dataSearchMain?.map((food) => (
                 <NavLink
                   key={food.codeid}
-                  to={`/product/${food?.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
+                  // to={`/product/${food?.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
                   className={styles.everyData}
-                  onClick={() => clickEstablishment("Рестораны")}
+                  // onClick={() => clickEstablishment("Рестораны")}
                 >
                   <div className={styles.imgs}>
                     {food?.photo ? (
@@ -104,25 +104,38 @@ const DataSearch = () => {
                     )}
                   </div>
                   <div className={styles.everyData__inner}>
-                    <h4>{food.establishment_name}</h4>
-                    <div>
-                      <img src={star} alt="*" />
-                      <span>{food.rating}</span>
-                      {/* <p>{food.quantity}</p> */}
-                    </div>
-                    <div className={styles.rating}>
-                      <img src={clock} alt="time" />
-                      <p>{`${food?.time?.[0]?.from_time_formatted} - ${food?.time?.[0]?.to_time_formatted}`}</p>
-                    </div>
-                    <div>
-                      <img src={kitchen} alt="kitchen" />
-                      <p>{food.category_name}</p>
+                    <div className={styles.everyData__inner__mainBlock}>
+                      <h4>{food.establishment_name}</h4>
+
+                      <NavLink
+                        to={`/product/${food?.codeid}/${food?.establishment_name}/${food?.code_establishment}/${food?.code_category}`}
+                        onClick={() => clickEstablishment("Рестораны")}
+                      >
+                        Перейти
+                      </NavLink>
                     </div>
                     <div className={styles.checkList}>
+                      <div>
+                        <img src={star} alt="*" />
+                        <span>{food.rating || "4.5"}</span>
+                        {/* <p>{food.quantity}</p> */}
+                      </div>
+                      <div className={styles.rating}>
+                        <img src={clock} alt="time" />
+                        <p>{`${food?.time?.[0]?.from_time_formatted} - ${food?.time?.[0]?.to_time_formatted}`}</p>
+                      </div>
+                    </div>
+                    <div className={styles.checkList}>
+                      <div>
+                        <img src={kitchen} alt="kitchen" />
+                        <p>{food.category_name}</p>
+                      </div>
                       <div>
                         <img src={transport} alt="transport" />
                         <p>{food.price_dostavka} сом</p>
                       </div>
+                    </div>
+                    <div className={styles.checkList}>
                       <div>
                         <img src={check} alt="check" />
                         <p>{food.percent_stavka} сом</p>
@@ -145,43 +158,45 @@ const DataSearch = () => {
                     className={styles.imgFood}
                     onClick={() => clickProduct(food)}
                   >
-                    {/* {food?.prod_photo ? (
+                    {food?.prod_photo ? (
                       <img src={food?.prod_photo} alt="временно" />
                     ) : (
                       <img src={foods} alt="временно" />
-                    )} */}
-                    {food?.prod_photo ? (
-                      // <img src={food?.prod_photo} alt="временно" />
-                      <div
-                        style={{
-                          backgroundImage: `url(${food?.prod_photo})`,
-                          width: "100%",
-                          height: "100%",
-                          backgroundPosition: "center",
-                          backgroundSize: "contain",
-                          backgroundRepeat: "no-repeat",
-                          backgroundColor: "#fff",
-                          borderRadius: "8px 8px 0 0",
-                        }}
-                      ></div>
-                    ) : (
-                      <div
-                        style={{
-                          backgroundImage: `url(${food?.prod_photo})`,
-                          width: "100%",
-                          height: "100%",
-                          backgroundPosition: "center",
-                          backgroundSize: "contain",
-                          backgroundRepeat: "no-repeat",
-                          backgroundColor: "#fff",
-                          borderRadius: "8px 8px 0 0",
-                        }}
-                      ></div>
                     )}
+                    {/* {food?.prod_photo ? (
+                      // <img src={food?.prod_photo} alt="временно" />
+                      // <div
+                      //   style={{
+                      //     backgroundImage: `url(${food?.prod_photo})`,
+                      //     width: "100%",
+                      //     height: "100%",
+                      //     backgroundPosition: "center",
+                      //     backgroundSize: "contain",
+                      //     backgroundRepeat: "no-repeat",
+                      //     backgroundColor: "#fff",
+                      //     borderRadius: "8px 8px 0 0",
+                      //   }}
+                      // ></div>
+                    ) : (
+                      // <div
+                      //   style={{
+                      //     backgroundImage: `url(${food?.prod_photo})`,
+                      //     width: "100%",
+                      //     height: "100%",
+                      //     backgroundPosition: "center",
+                      //     backgroundSize: "contain",
+                      //     backgroundRepeat: "no-repeat",
+                      //     backgroundColor: "#fff",
+                      //     borderRadius: "8px 8px 0 0",
+                      //   }}
+                      // ></div>
+                    )} */}
                   </div>
                   <h6 onClick={() => clickProduct(food)}>
                     {food.product_name}
                   </h6>
+                  <i>{food?.establishment_name}</i>
+                  {/* <div style={{ padding: "0 5px" }}></div> */}
                   <div onClick={() => clickProduct(food)}>
                     <p>{food.product_price} сом</p>
                     <span>

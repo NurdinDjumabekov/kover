@@ -13,6 +13,8 @@ import {
 import { sortOrders } from "../../../helpers/sortOrders";
 import { useNavigate } from "react-router-dom";
 import { changeCountDishes } from "../../../store/reducers/statesSlice";
+import { chnageAlertText } from "../../../store/reducers/EditDataUser";
+import { transformNumber } from "../../../helpers/transformNumber";
 
 const TotalOrder = (props) => {
   const dispatch = useDispatch();
@@ -32,7 +34,8 @@ const TotalOrder = (props) => {
         ...orderUser,
         summ: +allSum,
         product_list: sortOrders(allFoodsOrders),
-        phone: orderUser?.phone?.replace(/[-()]/g, "")?.slice(-9),
+        // phone: orderUser?.phone?.replace(/[-()]/g, "")?.slice(-9), transformNumber(info?.numberPhone)
+        phone: transformNumber(orderUser?.phone),
       })
     );
     props.changeState(false);
@@ -74,8 +77,20 @@ const TotalOrder = (props) => {
   // };
 
   // console.log(orderUser, "orderUser");
-  console.log(sumDishes, "sumDishes");
+  // console.log(sumDishes, "sumDishes");
   // console.log(allFoodsOrders, "allFoodsOrders");
+
+  React.useEffect(() => {
+    if (+orderUser.type_oplata === 1) {
+      dispatch(
+        chnageAlertText({
+          text: "С вами свяжется оператор для уточнения оплаты картой",
+          backColor: "#ffc12e",
+          state: true,
+        })
+      );
+    }
+  }, [orderUser.type_oplata]);
 
   return (
     <Modals state={props.state} title={"Итого"} changeState={props.changeState}>

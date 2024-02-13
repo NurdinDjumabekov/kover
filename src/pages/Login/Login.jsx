@@ -50,7 +50,7 @@ const Login = () => {
     }
   };
 
-  console.log(stateSendNum, "stateSendNum");
+  // console.log(stateSendNum, "stateSendNum");
   // console.log(dataUser, 'dataUser');
 
   return (

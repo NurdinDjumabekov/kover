@@ -7,6 +7,7 @@ import {
   changeTokenName,
   changeTokenNum,
 } from "./accountSlice";
+import { transformNumber } from "../../helpers/transformNumber";
 
 const initialState = {
   orderUser: {
@@ -37,7 +38,7 @@ export const sendNumAuth = createAsyncThunk(
       const response = await axios.post(
         "http://kover-site.333.kg/send_code/",
         {
-          phone_client: info?.numberPhone?.replace(/[-()]/g, "")?.slice(-9), // убираю лишние символы
+          phone_client: transformNumber(info?.numberPhone), // убираю лишние символы
           session: info?.session,
         },
         {
@@ -73,9 +74,7 @@ export const checkNum = createAsyncThunk(
       const response = await axios.post(
         "http://kover-site.333.kg/check_code/",
         {
-          phone_client: info?.dataUser?.numberPhone
-            .replace(/[-()]/g, "")
-            ?.slice(-9),
+          phone_client: transformNumber(info?.dataUser?.numberPhone),
           verification_number: info?.code?.join(""),
           codeid: info?.dataUser?.idUser,
         },
@@ -183,6 +182,34 @@ export const sendOrderFoods = createAsyncThunk(
             "Content-Type": "application/json",
           },
         }
+      );
+      if (response.status >= 200 || response.status < 300) {
+        dispatch(resetBusket());
+      } else {
+        dispatch(
+          chnageAlertText({
+            text: "Упс! Что-то пошло не так... Повторите попытку позже!",
+            backColor: "#ffc12e",
+            state: true,
+          })
+        );
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Повтор заказа
+// http://kover-site.333.kg/zakaz_repeat/
+export const sendOrderFoodsRepeat = createAsyncThunk(
+  "sendOrderFoodsRepeat",
+  async function (info, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios.post(
+        "http://kover-site.333.kg/zakaz_repeat/",
+        info
       );
       if (response.status >= 200 || response.status < 300) {
         dispatch(resetBusket());

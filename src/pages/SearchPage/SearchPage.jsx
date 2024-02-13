@@ -39,10 +39,13 @@ const SearchPage = () => {
   };
 
   // console.log(typeSearch, 'typeSearch');
-  // console.log(dataSearchMain, 'dataSearchMain');
+  // console.log(dataSearchMain, "dataSearchMain");
 
   return (
-    <div className={styles.sarchBlock}>
+    <div
+      className={styles.sarchBlock}
+      style={dataSearchMain?.length === 0 ? { height: "100vh" } : {}}
+    >
       <div className="container">
         <div className={styles.sarchBlock__inner}>
           <form onSubmit={searchDataFn}>

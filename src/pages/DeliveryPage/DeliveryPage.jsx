@@ -8,6 +8,7 @@ import {
 import InputMask from "react-input-mask";
 import { chnageAlertText } from "../../store/reducers/EditDataUser";
 import PathToFiles from "../../components/PathToFiles/PathToFiles";
+import { transformNumber } from "../../helpers/transformNumber";
 
 const DeliveryPage = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,8 @@ const DeliveryPage = () => {
       dispatch(
         sendCourier({
           ...deliveryOrders,
-          phone: deliveryOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
+          // phone: deliveryOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
+          phone: transformNumber(deliveryOrders?.phone),
         })
       );
     } else {

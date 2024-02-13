@@ -16,6 +16,7 @@ import { transformDataOrderList } from "../../helpers/transformDataOrderList";
 import InputMask from "react-input-mask";
 import { rearg } from "lodash";
 import PathToFiles from "../../components/PathToFiles/PathToFiles";
+import { transformNumber } from "../../helpers/transformNumber";
 
 const OrderListPage = () => {
   const dispatch = useDispatch();
@@ -127,14 +128,15 @@ const OrderListPage = () => {
     } else {
       if (phoneNumberPattern.test(dataListOrders?.phone)) {
         const newData = transformDataOrderList(listOrdersUser);
-        console.log(newData, "newData");
-        // dispatch(
-        //   sendOrderFoods({
-        //     ...dataListOrders,
-        //     product_list: newData,
-        //     phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
-        //   })
-        // );
+        // console.log(newData, "newData");
+        dispatch(
+          sendOrderFoods({
+            ...dataListOrders,
+            product_list: newData,
+            // phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),transformNumber
+            phone: transformNumber(dataListOrders?.phone),
+          })
+        );
       } else {
         dispatch(
           chnageAlertText({

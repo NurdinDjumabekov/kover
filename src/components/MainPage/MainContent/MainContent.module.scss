@@ -17,6 +17,9 @@
       border-radius: 8px;
       background-repeat: no-repeat;
       background-size: cover;
+      @media screen and (max-width: 395px) {
+        height: 180px;
+      }
       &::after{
         content: "";
         width: 100%;
@@ -56,6 +59,9 @@
         // background: red;
         color: #FFF;
         text-align: center;
+        @media screen and (max-width: 380px) {
+          font-size: 20px;
+        }
       }
     }
   }

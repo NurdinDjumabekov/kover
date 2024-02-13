@@ -1,14 +1,24 @@
-import React from 'react';
-import styles from './HistoryOrders.module.scss';
-import goods from '../../../assets/images/noneData/foodsss.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { historyOrders } from '../../../store/reducers/requestFoodSlice';
+import React from "react";
+import styles from "./HistoryOrders.module.scss";
+import goods from "../../../assets/images/noneData/foodsss.png";
+import { useDispatch, useSelector } from "react-redux";
+import { historyOrders } from "../../../store/reducers/requestFoodSlice";
+import {
+  changeError,
+  changeGoodSent,
+  changeLoading,
+  sendOrderFoodsRepeat,
+} from "../../../store/reducers/postRequestSlice";
+import { transformNumber } from "../../../helpers/transformNumber";
+import { useNavigate } from "react-router-dom";
 
 export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { dataUser } = useSelector((state) => state.accountSlice);
   const { dataHistory } = useSelector((state) => state.requestFoodSlice);
-  // console.log(dataHistory);
+  // console.log(dataHistory, "dataHistory");
+  // console.log(dataUser, "dataUser");
 
   React.useEffect(() => {
     dispatch(historyOrders(dataUser?.idUser));
@@ -19,6 +29,28 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
     const date = dateTime.toLocaleDateString(); // Форматирую дату
     const time = dateTime.toLocaleTimeString(); // Форматирую время
     return `${date} в ${time}`;
+  };
+
+  const repeatOrders = (id) => {
+    dispatch(
+      sendOrderFoodsRepeat({
+        client_phone: transformNumber(dataUser?.numberPhone),
+        client_fio: dataUser?.name,
+        client_address: [
+          dataUser?.contacts?.[0] || "",
+          dataUser?.contacts?.[1] || "",
+          dataUser?.contacts?.[2] || "",
+        ],
+        codeid: +id,
+      })
+    );
+
+    setTimeout(() => {
+      dispatch(changeError(false));
+      dispatch(changeLoading(false));
+      dispatch(changeGoodSent(false));
+      navigate("/main");
+    }, 4000);
   };
 
   return (
@@ -49,6 +81,9 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
                 }}
               >
                 Подробно
+              </button>
+              <button onClick={() => repeatOrders(food.codeid)}>
+                Повторить
               </button>
             </div>
           </li>

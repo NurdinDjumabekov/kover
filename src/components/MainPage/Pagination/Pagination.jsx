@@ -1,8 +1,8 @@
-import * as React from 'react';
-import styles from './Pagination.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { changePaginationCount } from '../../../store/reducers/dataAllSlice';
-import { Pagination, Stack, Typography } from '@mui/material';
+import * as React from "react";
+import styles from "./Pagination.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { changePaginationCount } from "../../../store/reducers/dataAllSlice";
+import { Pagination, Stack, Typography } from "@mui/material";
 
 export default function Paginations() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export default function Paginations() {
 
   const handleChange = (e, value) => {
     dispatch(changePaginationCount(value));
-    localStorage.setItem('paginationMain', value.toString());
+    localStorage.setItem("paginationMain", value.toString());
   };
 
   let countPage = Math.ceil(allDataFood?.length / 16);

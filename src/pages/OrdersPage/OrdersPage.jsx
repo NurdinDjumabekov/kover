@@ -27,7 +27,7 @@ const OrdersPage = () => {
     allFoodsOrders.length === 0 ? navigate("/categories") : setTotalOrder(true);
   };
 
-  console.log(allFoodsOrders, "allFoodsOrders");
+  // console.log(allFoodsOrders, "allFoodsOrders");
   return (
     <>
       <div className={styles.orderBlock}>
@@ -68,7 +68,7 @@ const OrdersPage = () => {
       {loadingOrder && <Preloader />}
       {goodSendOrder && (
         <div className={styles.goodSendOrder}>
-          <p>Ваша заказ принят, спасибо что выбрали нас!</p>
+          <p>Ваша заказ принят, с вами в скором времени свяжется оператор. Спасибо что выбрали нас!</p>
         </div>
       )}
     </>

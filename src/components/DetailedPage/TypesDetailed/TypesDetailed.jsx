@@ -150,7 +150,7 @@ const TypesDetailed = ({ id }) => {
           )}
         </li>
         <li className={styles.popular}>
-          <SelectsPopular />
+          {/* <SelectsPopular /> */}
         </li>
       </ul>
     </>
