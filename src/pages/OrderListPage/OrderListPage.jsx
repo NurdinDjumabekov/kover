@@ -109,7 +109,7 @@ const OrderListPage = () => {
     dispatch(changeListOrdersUser(newData));
   };
 
-  console.log(listOrdersUser, "listOrdersUser");
+  // console.log(listOrdersUser, "listOrdersUser");
   // console.log(counter);
   // console.log(dataListOrders, 'dataListOrders');
 
@@ -151,6 +151,16 @@ const OrderListPage = () => {
 
   const clickType = (num) => {
     dispatch(changeDataListOrders({ ...dataListOrders, oplata_type: num }));
+  };
+
+  const warnPay = () => {
+    dispatch(
+      chnageAlertText({
+        text: "С вами свяжется оператор для уточнения оплаты картой",
+        backColor: "#ffc12e",
+        state: true,
+      })
+    );
   };
 
   return (
@@ -219,7 +229,12 @@ const OrderListPage = () => {
 
             <label>Оплата</label>
             <div className={styles.inputBtn}>
-              <div onClick={() => clickType(1)}>
+              <div
+                onClick={() => {
+                  clickType(1);
+                  warnPay();
+                }}
+              >
                 <div
                   className={
                     dataListOrders?.oplata_type === 1 ? styles.activeBtn : ""

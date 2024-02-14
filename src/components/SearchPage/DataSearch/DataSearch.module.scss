@@ -221,6 +221,10 @@
       line-height: normal;
       text-align: left;
       padding: 0 5px;
+      height: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     div {

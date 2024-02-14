@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const initialStateAll = {
-  tokenNum: '',
-  tokenName: '',
+  tokenNum: "",
+  tokenName: "",
   dataUser: {
-    name: '',
-    numberPhone: '',
-    placeUser: '',
+    name: "",
+    numberPhone: "+996",
+    placeUser: "",
     session: 0,
     contacts: [], // {message:whatsApp,num:996700754454}
     idUser: 0,
@@ -14,7 +14,7 @@ export const initialStateAll = {
 };
 
 const accountSlice = createSlice({
-  name: 'accountSlice',
+  name: "accountSlice",
   initialState: initialStateAll,
   reducers: {
     changeDataUser: (state, action) => {

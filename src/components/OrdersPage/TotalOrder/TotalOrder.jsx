@@ -25,7 +25,6 @@ const TotalOrder = (props) => {
   const { sumOrdersFoods, sumDishes, allFoodsOrders, countDishes } =
     useSelector((state) => state.statesSlice);
   const allSum = +sumDishes + +sumOrdersFoods + 200;
-  // console.log(allSum, 'allSum');
 
   const sendData = (e) => {
     e.preventDefault();
@@ -76,21 +75,20 @@ const TotalOrder = (props) => {
   //   }
   // };
 
-  // console.log(orderUser, "orderUser");
+  const warnPay = () => {
+    dispatch(
+      chnageAlertText({
+        text: "С вами свяжется оператор для уточнения оплаты картой",
+        backColor: "#ffc12e",
+        state: true,
+      })
+    );
+  };
+
+  // console.log(allSum, "allSum");
   // console.log(sumDishes, "sumDishes");
   // console.log(allFoodsOrders, "allFoodsOrders");
-
-  React.useEffect(() => {
-    if (+orderUser.type_oplata === 1) {
-      dispatch(
-        chnageAlertText({
-          text: "С вами свяжется оператор для уточнения оплаты картой",
-          backColor: "#ffc12e",
-          state: true,
-        })
-      );
-    }
-  }, [orderUser.type_oplata]);
+  // console.log(orderUser, "orderUser");
 
   return (
     <Modals state={props.state} title={"Итого"} changeState={props.changeState}>
@@ -147,7 +145,12 @@ const TotalOrder = (props) => {
         <h5>Оплата</h5>
         {/* ////type_oplata */}
         <div className="inputBtn">
-          <div onClick={() => dispatch(changeTypeOrder(1))}>
+          <div
+            onClick={() => {
+              dispatch(changeTypeOrder(1));
+              warnPay();
+            }}
+          >
             <div
               className={orderUser.type_oplata === 1 ? "activeBtn" : ""}
             ></div>

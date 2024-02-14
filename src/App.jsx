@@ -93,10 +93,10 @@ const App = () => {
     }
   }, [location.pathname]);
 
-  // console.log(sumDishes, 'sumDishes');
+  console.log(sumDishes, "sumDishes");
   // console.log(sumOrdersFoods, 'sumOrdersFoods');
   // console.log(positionFoods, 'positionFoods');
-  // console.log(allFoodsOrders, 'allFoodsOrders');
+  // console.log(allFoodsOrders, "allFoodsOrders");
   // console.log(location.pathname, 'location');
   // console.log(loading, 'loading');
   // console.log(loadingList, 'loadingList');

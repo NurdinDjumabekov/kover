@@ -47,6 +47,8 @@ const DetailedEveryData = (props) => {
     return () => setCount(0);
   }, [allFoodsOrders, data]);
 
+  console.log(data, "data");
+
   return (
     <Modals
       state={props.state}
@@ -56,20 +58,20 @@ const DetailedEveryData = (props) => {
       <div className="everyProd">
         <div className="everyProd__img">
           {data?.prod_photo ? (
-            // <img src={data?.prod_photo} alt="еда" />
-            <div
-              style={{
-                backgroundImage: `url(${data?.prod_photo})`,
-                width: "100%",
-                height: "100%",
-                backgroundPosition: "center",
-                backgroundSize: "contain",
-                backgroundRepeat: "no-repeat",
-                backgroundColor: "#fff",
-                borderRadius: "8px",
-              }}
-            ></div>
+            <img src={data?.prod_photo} alt="еда" />
           ) : (
+            // <div
+            //   style={{
+            //     backgroundImage: `url(${data?.prod_photo})`,
+            //     width: "100%",
+            //     height: "100%",
+            //     backgroundPosition: "center",
+            //     backgroundSize: "contain",
+            //     backgroundRepeat: "no-repeat",
+            //     backgroundColor: "#fff",
+            //     borderRadius: "8px",
+            //   }}
+            // ></div>
             <img src={data?.photo} alt="еда" />
           )}
         </div>

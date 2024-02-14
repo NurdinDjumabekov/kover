@@ -79,6 +79,16 @@ const DeliveryPage = () => {
     }
   };
 
+  const warnPay = () => {
+    dispatch(
+      chnageAlertText({
+        text: "С вами свяжется оператор для уточнения оплаты картой",
+        backColor: "#ffc12e",
+        state: true,
+      })
+    );
+  };
+
   return (
     <div className={styles.deliveryMain}>
       <div className="container">
@@ -199,7 +209,10 @@ const DeliveryPage = () => {
             <label>Оплата</label>
             <div className={styles.inputBtn} style={{ display: "flex" }}>
               <div
-                onClick={() => clickPay(1)}
+                onClick={() => {
+                  clickPay(1);
+                  warnPay();
+                }}
                 className={styles.innerTypesClick}
               >
                 <div
