@@ -34,28 +34,31 @@ const TypesDetailed = ({ id }) => {
         )
         /// сюда добавить qery params
       );
-    } else if (+id === 15) {
-      dispatch(
-        getEstablishmentCategory(
-          "http://kover-site.333.kg/get_estab_category?number=2"
-        )
-        /// сюда добавить qery params
-      );
-    } else if (+id === 16) {
-      dispatch(
-        getEstablishmentCategory(
-          "http://kover-site.333.kg/get_estab_category?number=3"
-        )
-        /// сюда добавить qery params
-      );
-    } else if (+id === 17) {
-      dispatch(
-        getEstablishmentCategory(
-          "http://kover-site.333.kg/get_estab_category?number=4"
-        )
-        /// сюда добавить qery params
-      );
-    } else {
+    }
+    //  else if (+id === 15) {
+    //   dispatch(
+    //     getEstablishmentCategory(
+    //       "http://kover-site.333.kg/get_estab_category?number=2"
+    //     )
+    //     /// сюда добавить qery params
+    //   );
+    // } else if (+id === 16) {
+    //   dispatch(
+    //     getEstablishmentCategory(
+    //       "http://kover-site.333.kg/get_estab_category?number=3"
+    //     )
+    //     /// сюда добавить qery params
+    //   );
+    // }
+    //  else if (+id === 17) {
+    //   dispatch(
+    //     getEstablishmentCategory(
+    //       "http://kover-site.333.kg/get_estab_category?number=4"
+    //     )
+    //     /// сюда добавить qery params
+    //   );
+    // }
+    else {
       dispatch(changeEstablishmentCategory([]));
     }
 
@@ -149,9 +152,7 @@ const TypesDetailed = ({ id }) => {
             </>
           )}
         </li>
-        <li className={styles.popular}>
-          {/* <SelectsPopular /> */}
-        </li>
+        <li className={styles.popular}>{/* <SelectsPopular /> */}</li>
       </ul>
     </>
   );

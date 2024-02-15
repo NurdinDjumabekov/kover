@@ -17,9 +17,15 @@ import InputMask from "react-input-mask";
 import { rearg } from "lodash";
 import PathToFiles from "../../components/PathToFiles/PathToFiles";
 import { transformNumber } from "../../helpers/transformNumber";
+import { useNavigate } from "react-router-dom";
+import {
+  changeError,
+  changeGoodSent,
+} from "../../store/reducers/postRequestSlice";
 
 const OrderListPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [inputProd, setInputProd] = useState("");
   const [quantity, setquantity] = useState("");
   const [counter, setCounter] = useState(1);
@@ -111,7 +117,7 @@ const OrderListPage = () => {
 
   // console.log(listOrdersUser, "listOrdersUser");
   // console.log(counter);
-  // console.log(dataListOrders, 'dataListOrders');
+  // console.log(dataListOrders, "dataListOrders");
 
   const sendData = (e) => {
     e.preventDefault();
@@ -137,6 +143,11 @@ const OrderListPage = () => {
             phone: transformNumber(dataListOrders?.phone),
           })
         );
+        setTimeout(() => {
+          dispatch(changeError(false));
+          dispatch(changeGoodSent(false));
+          navigate("/main");
+        }, 4000);
       } else {
         dispatch(
           chnageAlertText({
@@ -195,7 +206,7 @@ const OrderListPage = () => {
             <label>Отправитель</label>
             <InputMask
               mask="+999(999)99-99-99"
-              placeholder="+996700754454"
+              placeholder="Номер телефона"
               name="phone"
               value={dataListOrders?.phone}
               onChange={changeInput}

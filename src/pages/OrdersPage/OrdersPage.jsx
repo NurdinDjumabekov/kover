@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./OrdersPage.module.scss";
 import { useNavigate } from "react-router-dom";
-import img from "../../assets/images/noneData/Image.png";
 import backBtn from "../../assets/icons/backBtn.svg";
 import EveryOrdersPage from "../../components/OrdersPage/EveryOrdersPage/EveryOrdersPage";
 import TotalOrder from "../../components/OrdersPage/TotalOrder/TotalOrder";
@@ -12,9 +11,6 @@ import NavSearch from "../../components/NavSearch/NavSearch";
 const OrdersPage = () => {
   const [totalOrder, setTotalOrder] = useState(false);
   const navigate = useNavigate();
-  const { errorOrderFood, loadingOrder, goodSendOrder } = useSelector(
-    (state) => state.postRequestSlice
-  );
   const { allFoodsOrders, positionFoods, sumOrdersFoods } = useSelector(
     (state) => state.statesSlice
   );
@@ -28,6 +24,7 @@ const OrdersPage = () => {
   };
 
   // console.log(allFoodsOrders, "allFoodsOrders");
+
   return (
     <>
       <div className={styles.orderBlock}>
@@ -60,17 +57,6 @@ const OrdersPage = () => {
           </div>
         </div>
       </div>
-      {errorOrderFood && (
-        <div className={styles.errorSendOrder}>
-          <p>Что-то пошло не так, повторите попытку еще раз ...</p>
-        </div>
-      )}
-      {loadingOrder && <Preloader />}
-      {goodSendOrder && (
-        <div className={styles.goodSendOrder}>
-          <p>Ваша заказ принят, с вами в скором времени свяжется оператор. Спасибо что выбрали нас!</p>
-        </div>
-      )}
     </>
   );
 };

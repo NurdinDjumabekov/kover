@@ -10,26 +10,31 @@ import {
   changeActiveType,
   changePathCatalog,
 } from "../../store/reducers/statesSlice";
-
-import img1 from "../../assets/images/noneData/everyFood.svg";
-import img2 from "../../assets/images/noneData/Rectangle8.svg";
-import img3 from "../../assets/images/noneData/Rectangle7.svg";
-import img4 from "../../assets/images/noneData/Rectangle8.svg";
-import img5 from "../../assets/images/noneData/Rectangle6.svg";
-import img6 from "../../assets/images/noneData/Rectangle3.svg";
-import img7 from "../../assets/images/noneData/Rectangle9.svg";
-import img8 from "../../assets/images/noneData/Rectangle10.svg";
-import img9 from "../../assets/images/noneData/alkogol.jpg";
-import img10 from "../../assets/images/noneData/drinkSpirt.png";
 import SliderMain from "../../components/SliderMain/SliderMain";
 import NavSearch from "../../components/NavSearch/NavSearch";
+// imgs
+import restorans from "../../assets/images/categories/everyFood.svg";
+import flowers from "../../assets/images/categories/Rectangle8.svg";
+import apteka from "../../assets/images/categories/Rectangle7.svg";
+import products from "../../assets/images/categories/Rectangle3.svg";
+import myloMoika from "../../assets/images/categories/Rectangle9.svg";
+import zootovar from "../../assets/images/categories/Rectangle10.svg";
+import drinkAlc from "../../assets/images/categories/drinkSpirt.png";
+///
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
 
-  const arrImg = [img2, img3, img2, img6, img7, img8, img10, img3, img5, img1];
-  // удалить
+  const arrImg = [
+    apteka,
+    flowers,
+    products,
+    myloMoika,
+    zootovar,
+    drinkAlc,
+    apteka,
+  ];
 
   React.useEffect(() => {
     dispatch(
@@ -61,12 +66,12 @@ const CategoriesPage = () => {
               onClick={() => clickEstablishment("Рестораны")}
             >
               <h4>Рестораны</h4>
-              <img src={arrImg[9]} alt="Рестораны" />
+              <img src={restorans} alt="Рестораны" />
             </NavLink>
             {allCategory?.length === 0 ? (
               <Preloader />
             ) : (
-              allCategory?.map((i, ind) => (
+              allCategory?.slice(1, 20)?.map((i, ind) => (
                 <NavLink
                   to={`/detailed/${i.codeid}/${i.category_name}`}
                   key={i.codeid}

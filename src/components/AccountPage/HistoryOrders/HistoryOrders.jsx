@@ -11,14 +11,18 @@ import {
 } from "../../../store/reducers/postRequestSlice";
 import { transformNumber } from "../../../helpers/transformNumber";
 import { useNavigate } from "react-router-dom";
+import { styleModal } from "../../../helpers/localData";
+import { Box, Modal } from "@mui/material";
 
 export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { dataUser } = useSelector((state) => state.accountSlice);
   const { dataHistory } = useSelector((state) => state.requestFoodSlice);
-  // console.log(dataHistory, "dataHistory");
-  // console.log(dataUser, "dataUser");
+  const [open, setOpen] = React.useState(false);
+  const [idRepeatOrder, setIdRepeatOrder] = React.useState(0);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     dispatch(historyOrders(dataUser?.idUser));
@@ -31,7 +35,7 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
     return `${date} в ${time}`;
   };
 
-  const repeatOrders = (id) => {
+  const repeatOrders = () => {
     dispatch(
       sendOrderFoodsRepeat({
         client_phone: transformNumber(dataUser?.numberPhone),
@@ -41,7 +45,7 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
           dataUser?.contacts?.[1] || "",
           dataUser?.contacts?.[2] || "",
         ],
-        codeid: +id,
+        codeid: +idRepeatOrder,
       })
     );
 
@@ -53,42 +57,105 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
     }, 4000);
   };
 
+  // console.log(dataHistory, "dataHistory");
+
   return (
-    <ul className={styles.history}>
-      <li>
-        <h5>История заказов</h5>
-      </li>
-      {dataHistory?.length === 0 ? (
-        <li className={styles.noneData}>Список пуст</li>
-      ) : (
-        dataHistory?.map((food, ind) => (
-          <li key={ind}>
-            <div className={styles.viewFood}>
-              <img src={goods} alt="временно" />
-              <div>
-                <span>{food.zakaz_status}</span>
-                <p>Заказ {formatDateTime(food.zakaz_date)}</p>
-                <b>{food.establishment_name}</b>
+    <>
+      <ul className={styles.history}>
+        <li style={{ background: "#f4f4f4", paddingLeft: "0px" }}>
+          <h5>История заказов</h5>
+        </li>
+        {dataHistory?.length === 0 ? (
+          <li className={styles.noneData} style={{ background: "#f4f4f4" }}>
+            Список пуст
+          </li>
+        ) : (
+          dataHistory?.map((food, ind) => (
+            <li key={ind}>
+              <div className={styles.viewFood}>
+                <img src={goods} alt="временно" />
+                <div>
+                  <span>{food.zakaz_status}</span>
+                  <p>Заказ {formatDateTime(food.zakaz_date)}</p>
+                  <b>{food.establishment_name}</b>
+                </div>
               </div>
-            </div>
-            <div className={styles.moreInfo}>
-              <p>{food.zakaz_summ} сом</p>
-              <button
-                className="standartBtn"
-                onClick={() => {
-                  setIdCounter(food.codeid);
-                  setStateModal(true);
+              <div className={styles.moreInfo}>
+                <p>{food.zakaz_summ} сом</p>
+                <div>
+                  <button
+                    className="standartBtn"
+                    onClick={() => {
+                      handleOpen();
+                      setIdRepeatOrder(food.codeid);
+                    }}
+                  >
+                    Повторить заказ
+                  </button>
+                  <button
+                    className="standartBtn"
+                    onClick={() => {
+                      setIdCounter(food.codeid);
+                      setStateModal(true);
+                    }}
+                  >
+                    Подробно
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))
+        )}
+      </ul>
+      <div className={styles.confirmRepearOrder}>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={styleModal}>
+            <div className="modalLogOut">
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  fontWeight: "700",
                 }}
               >
-                Подробно
-              </button>
-              <button onClick={() => repeatOrders(food.codeid)}>
-                Повторить
-              </button>
+                Вы хотите повторить заказ ?
+              </p>
+              <div>
+                <button
+                  onClick={() => repeatOrders()}
+                  style={{
+                    fontSize: "20px",
+                    backgroundColor: "#ffc12e",
+                    padding: "8px 35px",
+                    borderRadius: "5px",
+                    color: "#fff",
+                  }}
+                >
+                  Да
+                </button>
+                <button
+                  onClick={handleClose}
+                  style={{
+                    fontSize: "20px",
+                    backgroundColor: "transparent",
+                    border: "1px solid #ffc12e",
+                    padding: "8px 35px",
+                    borderRadius: "5px",
+                    color: "#ffc12e",
+                  }}
+                >
+                  Нет
+                </button>
+              </div>
             </div>
-          </li>
-        ))
-      )}
-    </ul>
+          </Box>
+        </Modal>
+      </div>
+    </>
   );
 };

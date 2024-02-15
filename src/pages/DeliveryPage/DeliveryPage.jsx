@@ -123,7 +123,7 @@ const DeliveryPage = () => {
             <InputMask
               mask="+999(999)99-99-99"
               required
-              placeholder="Телефон"
+              placeholder="Номер телефона"
               name="phone"
               onChange={changeInput}
               value={deliveryOrders?.phone}

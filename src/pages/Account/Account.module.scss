@@ -1,5 +1,8 @@
 .accountBlock {
   padding: 30px 0 100px;
+  background: #f4f4f4;
+  min-height: 100vh;
+
   &__inner {
     .profile {
       justify-content: space-between;

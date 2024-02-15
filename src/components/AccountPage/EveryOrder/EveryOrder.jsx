@@ -32,44 +32,56 @@ const EveryOrder = (props) => {
     const dateTime = new Date(dateTimeString);
     const date = dateTime.toLocaleDateString(); // Форматирую дату
     const time = dateTime.toLocaleTimeString(); // Форматирую время
-    return `${date} в ${time}`;
+    return `${date} в ${time}` || "дата не указана";
   };
 
   return (
     <Modals
       state={props.state}
-      title={"Заказ 08.09.2023 в 12:54"}
+      title={formatDateTime(detailedHistory?.[0]?.zakaz_date || "")}
       changeState={props.changeState}
     >
       <div className="historyModal">
-        <p>Заказ создан</p>
+        {detailedHistory?.length !== 0 && <p>Заказ создан</p>}
         <div>
-          <span>{detailedHistory?.[0]?.total_sum} сом</span>
-          <div>
-            <i>{detailedHistory?.length} позиции</i>
-          </div>
+          {detailedHistory?.length !== 0 && (
+            <>
+              <span>{detailedHistory?.[0]?.total_sum} сом</span>
+              <div>
+                <i>{detailedHistory?.length} позиции</i>
+              </div>
+            </>
+          )}
         </div>
         <ul>
-          {detailedHistory?.map((i, ind) => (
-            <li key={ind}>
-              <div className="food">
-                <img src={i.photo} alt="food" />
-              </div>
-              <div className="mainContent">
-                <p>{i.product_name}</p>
-                <span>{+i.price} сом</span>
-              </div>
-              <p>{i.price} сом</p>
-            </li>
-          ))}
+          {detailedHistory?.length === 0 ? (
+            <h6>Заказов нет</h6>
+          ) : (
+            <>
+              {detailedHistory?.map((i, ind) => (
+                <li key={ind}>
+                  <div className="food">
+                    <img src={i.photo} alt="food" />
+                  </div>
+                  <div className="mainContent">
+                    <p>{i.product_name}</p>
+                    <span>{+i.price} сом</span>
+                  </div>
+                  <p>{i.price} сом</p>
+                </li>
+              ))}
+            </>
+          )}
         </ul>
         {/* <div className="delivery">
           <h5>Доставка</h5>
         </div> */}
-        <div className="delivery">
-          <h5>Посуда</h5>
-        </div>
-        <button onClick={() => props.changeState(false)}>Закркыть</button>
+        {detailedHistory?.length !== 0 && (
+          <div className="delivery">
+            <h5>Посуда</h5>
+          </div>
+        )}
+        <button onClick={() => props.changeState(false)}>Закрыть</button>
       </div>
     </Modals>
   );

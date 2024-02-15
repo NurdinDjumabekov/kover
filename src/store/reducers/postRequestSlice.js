@@ -261,15 +261,27 @@ const postRequestSlice = createSlice({
     });
     //// checkNum
     builder.addCase(checkNum.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingOrder = false;
       state.checkAuth = action.payload;
     });
     builder.addCase(checkNum.rejected, (state, action) => {
       state.error = action.payload;
-      state.loading = false;
+      state.loadingOrder = false;
     });
     builder.addCase(checkNum.pending, (state, action) => {
-      state.loading = true;
+      state.loadingOrder = true;
+    });
+    //// sendOrderFoodsRepeat
+    builder.addCase(sendOrderFoodsRepeat.fulfilled, (state, action) => {
+      state.loadingOrder = false;
+      state.goodSendOrder = true;
+    });
+    builder.addCase(sendOrderFoodsRepeat.rejected, (state, action) => {
+      state.errorOrderFood = true;
+      state.loadingOrder = false;
+    });
+    builder.addCase(sendOrderFoodsRepeat.pending, (state, action) => {
+      state.loadingOrder = true;
     });
   },
   reducers: {

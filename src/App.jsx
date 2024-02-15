@@ -35,10 +35,10 @@ const App = () => {
   const { loading, allDataFood } = useSelector(
     (state) => state.requestFoodSlice
   );
-
   const { loadingList } = useSelector((state) => state.ordersListSlice);
   const { loadingEdit } = useSelector((state) => state.EditDataUser);
   const { pathSite } = useSelector((state) => state.ordersListSlice);
+  const { loadingOrder } = useSelector((state) => state.postRequestSlice);
   const {
     sumDishes,
     sumOrdersFoods,
@@ -93,7 +93,7 @@ const App = () => {
     }
   }, [location.pathname]);
 
-  console.log(sumDishes, "sumDishes");
+  // console.log(sumDishes, "sumDishes");
   // console.log(sumOrdersFoods, 'sumOrdersFoods');
   // console.log(positionFoods, 'positionFoods');
   // console.log(allFoodsOrders, "allFoodsOrders");
@@ -134,6 +134,7 @@ const App = () => {
       {loading && <Preloader />}
       {loadingList && <Preloader />}
       {loadingEdit && <Preloader />}
+      {loadingOrder && <Preloader />}
       <Alerts />
     </>
   );

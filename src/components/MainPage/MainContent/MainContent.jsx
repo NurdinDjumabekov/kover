@@ -10,7 +10,18 @@ import {
   changePathCatalog,
 } from "../../../store/reducers/statesSlice";
 
-const MainContent = ({ arrImg }) => {
+// imgs
+import products from "../../../assets/images/categories/Rectangle6.svg";
+import myloMoika from "../../../assets/images/categories/Rectangle9.svg";
+import zootovar from "../../../assets/images/categories/Rectangle10.svg";
+import drinkAlc from "../../../assets/images/categories/alkogol.jpg";
+import flowers from "../../../assets/images/categories/Rectangle11.svg";
+import apteka from "../../../assets/images/categories/Rectangle14.svg";
+import restorans from "../../../assets/images/categories/Rectangle15.svg";
+import eighteen from "../../../assets/images/categories/Rectangle7.svg";
+///
+
+const MainContent = () => {
   const { allCategory } = useSelector((state) => state.requestFoodSlice);
   const dispatch = useDispatch();
 
@@ -19,6 +30,16 @@ const MainContent = ({ arrImg }) => {
     localStorage.setItem("pathCatalog", name);
     dispatch(changeActiveType(0));
   };
+
+  const arrImg = [
+    apteka,
+    flowers,
+    products,
+    myloMoika,
+    zootovar,
+    drinkAlc,
+    eighteen,
+  ];
 
   // console.log(allCategory, "allCategory");
 
@@ -30,15 +51,14 @@ const MainContent = ({ arrImg }) => {
             to={`/detailed/${"0"}/${"Рестораны"}`}
             className={styles.everyCategory}
             onClick={() => clickEstablishment("Рестораны")}
-            style={{ backgroundImage: `url(${arrImg[9]})` }}
+            style={{ backgroundImage: `url(${restorans})` }}
           >
-            {/* <img src={arrImg[9]} alt="Рестораны" /> */}
             <h4>Рестораны</h4>
           </NavLink>
           {allCategory?.length === 0 ? (
             <Preloader />
           ) : (
-            allCategory?.map((i, ind) => (
+            allCategory?.slice(1, 20)?.map((i, ind) => (
               <NavLink
                 to={`/detailed/${i.codeid}/${i.category_name}`}
                 key={i.codeid}

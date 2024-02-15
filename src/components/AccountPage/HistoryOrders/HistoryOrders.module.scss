@@ -6,11 +6,15 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    background: #f4f4f4;
   }
 
   li {
     margin: 20px 0px;
-    //   background: green;
+    background: #fff;
+    padding: 18px 8px;
+    border-radius: 10px 8px;
+
     .viewFood {
       display: flex;
       align-items: center;
@@ -18,7 +22,7 @@
         width: 120px;
         height: 90px;
         display: block;
-        object-fit: contain;
+        // object-fit: contain;
       }
       > div {
         padding: 12px;
@@ -40,7 +44,7 @@
           font-style: normal;
           font-weight: 600;
           line-height: normal;
-          margin: 5px 0px;
+          margin: 5px 0px 0 0;
         }
         b {
           display: block;
@@ -66,9 +70,17 @@
         font-weight: 700;
         line-height: normal;
       }
-      > button {
-        padding: 8px 16px;
-        font-size: 16px;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        button {
+          padding: 8px 10px;
+          font-size: 12px;
+        }
+        button:nth-child(1) {
+          padding: 8px;
+        }
       }
     }
   }
@@ -83,3 +95,4 @@
     line-height: normal;
   }
 }
+
