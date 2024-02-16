@@ -212,7 +212,7 @@ export const sendOrderFoodsRepeat = createAsyncThunk(
         info
       );
       if (response.status >= 200 || response.status < 300) {
-        dispatch(resetBusket());
+        // dispatch(resetBusket());
       } else {
         dispatch(
           chnageAlertText({

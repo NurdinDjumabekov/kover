@@ -8,7 +8,7 @@ const Layout = () => {
     (state) => state.postRequestSlice
   );
 
-  console.log(goodSendOrder, "goodSendOrder");
+  // console.log(goodSendOrder, "goodSendOrder");
   return (
     <>
       <NavMenu />

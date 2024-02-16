@@ -47,7 +47,7 @@ const DetailedEveryData = (props) => {
     return () => setCount(0);
   }, [allFoodsOrders, data]);
 
-  console.log(data, "data");
+  // console.log(data, "data");
 
   return (
     <Modals

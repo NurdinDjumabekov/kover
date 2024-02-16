@@ -51,10 +51,10 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
 
     setTimeout(() => {
       dispatch(changeError(false));
-      dispatch(changeLoading(false));
       dispatch(changeGoodSent(false));
       navigate("/main");
     }, 4000);
+    handleClose();
   };
 
   // console.log(dataHistory, "dataHistory");
@@ -73,7 +73,8 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
           dataHistory?.map((food, ind) => (
             <li key={ind}>
               <div className={styles.viewFood}>
-                <img src={goods} alt="временно" />
+                {/* <img src={food?.foto || goods} alt="заведение" /> */}
+                <img src={goods} alt="заведение" />
                 <div>
                   <span>{food.zakaz_status}</span>
                   <p>Заказ {formatDateTime(food.zakaz_date)}</p>
@@ -125,7 +126,15 @@ export const HistoryOrders = ({ setStateModal, setIdCounter }) => {
               >
                 Вы хотите повторить заказ ?
               </p>
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "20px",
+                  padding: "40px 0 0 0",
+                }}
+              >
                 <button
                   onClick={() => repeatOrders()}
                   style={{

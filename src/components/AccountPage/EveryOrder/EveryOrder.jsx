@@ -9,7 +9,6 @@ const EveryOrder = (props) => {
   const dispatch = useDispatch();
 
   const { detailedHistory } = useSelector((state) => state.requestFoodSlice);
-  console.log(detailedHistory, "detailedHistory");
 
   React.useEffect(() => {
     if (props.idCounter !== 0) {
@@ -34,6 +33,8 @@ const EveryOrder = (props) => {
     const time = dateTime.toLocaleTimeString(); // Форматирую время
     return `${date} в ${time}` || "дата не указана";
   };
+
+  // console.log(detailedHistory, "detailedHistory");
 
   return (
     <Modals

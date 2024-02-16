@@ -45,8 +45,8 @@ const LogOut = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  gap: "50px",
-                  padding: "50px 0 15px 0",
+                  gap: "20px",
+                  padding: "40px 0 15px 0",
                 }}
               >
                 <button
