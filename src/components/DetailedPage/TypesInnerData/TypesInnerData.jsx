@@ -10,6 +10,8 @@ const TypesInnerData = ({ estab, activeType, setActiveType }) => {
   const dispatch = useDispatch();
   const { everyInnerTypes } = useSelector((state) => state.requestFoodSlice);
   const [activeText, setActiveText] = React.useState('Все');
+  // console.log(everyInnerTypes, 'everyInnerTypes');
+  // console.log(estab, 'estab');
 
   const handleClick = (category, name) => {
     setActiveText(name);

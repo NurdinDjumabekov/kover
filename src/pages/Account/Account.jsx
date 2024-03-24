@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './Account.module.scss';
-import { HistoryOrders } from '../../components/AccountPage/HistoryOrders/HistoryOrders';
-import edit from '../../assets/icons/edit.svg';
-import LogOut from '../../components/AccountPage/LogOut/LogOut';
-import EditUser from '../../components/AccountPage/EditUser/EditUser';
-import Contacts from '../../components/AccountPage/Contacts/Contacts';
-import EveryOrder from '../../components/AccountPage/EveryOrder/EveryOrder';
-import DeliveryAddress from '../../components/AccountPage/DeliveryAddress/DeliveryAddress';
-import EditNumber from '../../components/AccountPage/EditNumber/EditNumber';
-import ConfirmNum from '../../components/AccountPage/ConfirmNum/ConfirmNum';
-import { useSelector } from 'react-redux';
+import React from "react";
+import styles from "./Account.module.scss";
+import { HistoryOrders } from "../../components/AccountPage/HistoryOrders/HistoryOrders";
+import edit from "../../assets/icons/edit.svg";
+import LogOut from "../../components/AccountPage/LogOut/LogOut";
+import EditUser from "../../components/AccountPage/EditUser/EditUser";
+import Contacts from "../../components/AccountPage/Contacts/Contacts";
+import EveryOrder from "../../components/AccountPage/EveryOrder/EveryOrder";
+import DeliveryAddress from "../../components/AccountPage/DeliveryAddress/DeliveryAddress";
+import EditNumber from "../../components/AccountPage/EditNumber/EditNumber";
+import ConfirmNum from "../../components/AccountPage/ConfirmNum/ConfirmNum";
+import { useSelector } from "react-redux";
 
 const Account = () => {
   const [everyOrder, setEveryOrder] = React.useState(false);
@@ -25,6 +25,7 @@ const Account = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // console.log(idCounter, 'idCounter');
   return (
     <div className={styles.accountBlock}>
       <div className="container">
@@ -34,7 +35,7 @@ const Account = () => {
             <img src={edit} alt="edit" />
           </button>
           <h4>{dataUser?.name}</h4>
-          <p>{dataUser?.numberPhone?.replace('+996', '0')}</p>
+          <p>{dataUser?.numberPhone?.replace("+996", "0")}</p>
           <div className={styles.editLocation}>
             <span>{dataUser?.contacts?.[0]}</span>
             <button onClick={() => setLocation(true)}>Изменить</button>

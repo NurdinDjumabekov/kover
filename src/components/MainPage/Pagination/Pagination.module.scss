@@ -4,5 +4,8 @@
   text-align: center;
   ul {
     justify-content: center !important;
+    button {
+      min-width: 30px;
+    }
   }
 }

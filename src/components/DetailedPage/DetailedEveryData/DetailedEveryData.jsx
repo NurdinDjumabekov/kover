@@ -35,6 +35,8 @@ const DetailedEveryData = (props) => {
     dispatch(changeSumDishes());
   };
 
+  // console.log(props?.dataEvery, 'dataEvery');
+  // console.log(allFoodsOrders, 'allFoodsOrders');
 
   React.useEffect(() => {
     allFoodsOrders?.map((koll) => {
@@ -44,6 +46,8 @@ const DetailedEveryData = (props) => {
     });
     return () => setCount(0);
   }, [allFoodsOrders, data]);
+
+  // console.log(data, "data");
 
   return (
     <Modals
@@ -56,6 +60,18 @@ const DetailedEveryData = (props) => {
           {data?.prod_photo ? (
             <img src={data?.prod_photo} alt="еда" />
           ) : (
+            // <div
+            //   style={{
+            //     backgroundImage: `url(${data?.prod_photo})`,
+            //     width: "100%",
+            //     height: "100%",
+            //     backgroundPosition: "center",
+            //     backgroundSize: "contain",
+            //     backgroundRepeat: "no-repeat",
+            //     backgroundColor: "#fff",
+            //     borderRadius: "8px",
+            //   }}
+            // ></div>
             <img src={data?.photo} alt="еда" />
           )}
         </div>

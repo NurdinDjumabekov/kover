@@ -84,8 +84,8 @@ const ConfirmNum = (props) => {
     } else {
       dispatch(
         chnageAlertText({
-          text: "Введите все четыре символа",
-          backColor: "red",
+          text: "Введите все четыре символа!",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -98,6 +98,11 @@ const ConfirmNum = (props) => {
   //   }
   // }, [errorEdit]);
   /// надо обязательно это сделать!!!
+
+  // console.log(code);
+  // console.log(time, "setTime");
+  // console.log(errorEdit, "errorEdit");
+  // console.log(props, "props");
 
   return (
     <Modals

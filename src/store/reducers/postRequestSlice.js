@@ -7,6 +7,7 @@ import {
   changeTokenName,
   changeTokenNum,
 } from "./accountSlice";
+import { transformNumber } from "../../helpers/transformNumber";
 
 const initialState = {
   orderUser: {
@@ -16,7 +17,7 @@ const initialState = {
     kvartira: "",
     hourDeliver: "",
     zakazDopInfo: "",
-    type_oplata: 1,
+    type_oplata: 2,
     sdacha: "",
     comment_zakaz: "",
     summ: 0,
@@ -37,7 +38,7 @@ export const sendNumAuth = createAsyncThunk(
       const response = await axios.post(
         "http://kover-site.333.kg/send_code/",
         {
-          phone_client: info?.numberPhone?.replace(/[-()]/g, "")?.slice(-9), // убираю лишние символы
+          phone_client: transformNumber(info?.numberPhone), // убираю лишние символы
           session: info?.session,
         },
         {
@@ -55,7 +56,7 @@ export const sendNumAuth = createAsyncThunk(
       dispatch(
         chnageAlertText({
           text: "Нету соединения с интернетом!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -73,9 +74,7 @@ export const checkNum = createAsyncThunk(
       const response = await axios.post(
         "http://kover-site.333.kg/check_code/",
         {
-          phone_client: info?.dataUser?.numberPhone
-            .replace(/[-()]/g, "")
-            ?.slice(-9),
+          phone_client: transformNumber(info?.dataUser?.numberPhone),
           verification_number: info?.code?.join(""),
           codeid: info?.dataUser?.idUser,
         },
@@ -93,7 +92,7 @@ export const checkNum = createAsyncThunk(
           dispatch(
             chnageAlertText({
               text: "Неверный код",
-              backColor: "red",
+              backColor: "#ffc12e",
               state: true,
             })
           );
@@ -106,7 +105,7 @@ export const checkNum = createAsyncThunk(
       dispatch(
         chnageAlertText({
           text: "Произошла ошибка!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -160,7 +159,7 @@ export const authName = createAsyncThunk(
       dispatch(
         chnageAlertText({
           text: "Ошибка! Повторите попытку позже!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
@@ -190,7 +189,35 @@ export const sendOrderFoods = createAsyncThunk(
         dispatch(
           chnageAlertText({
             text: "Упс! Что-то пошло не так... Повторите попытку позже!",
-            backColor: "red",
+            backColor: "#ffc12e",
+            state: true,
+          })
+        );
+        throw Error(`Error: ${response.status}`);
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Повтор заказа
+// http://kover-site.333.kg/zakaz_repeat/
+export const sendOrderFoodsRepeat = createAsyncThunk(
+  "sendOrderFoodsRepeat",
+  async function (info, { dispatch, rejectWithValue }) {
+    try {
+      const response = await axios.post(
+        "http://kover-site.333.kg/zakaz_repeat/",
+        info
+      );
+      if (response.status >= 200 || response.status < 300) {
+        // dispatch(resetBusket());
+      } else {
+        dispatch(
+          chnageAlertText({
+            text: "Упс! Что-то пошло не так... Повторите попытку позже!",
+            backColor: "#ffc12e",
             state: true,
           })
         );
@@ -234,15 +261,27 @@ const postRequestSlice = createSlice({
     });
     //// checkNum
     builder.addCase(checkNum.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingOrder = false;
       state.checkAuth = action.payload;
     });
     builder.addCase(checkNum.rejected, (state, action) => {
       state.error = action.payload;
-      state.loading = false;
+      state.loadingOrder = false;
     });
     builder.addCase(checkNum.pending, (state, action) => {
-      state.loading = true;
+      state.loadingOrder = true;
+    });
+    //// sendOrderFoodsRepeat
+    builder.addCase(sendOrderFoodsRepeat.fulfilled, (state, action) => {
+      state.loadingOrder = false;
+      state.goodSendOrder = true;
+    });
+    builder.addCase(sendOrderFoodsRepeat.rejected, (state, action) => {
+      state.errorOrderFood = true;
+      state.loadingOrder = false;
+    });
+    builder.addCase(sendOrderFoodsRepeat.pending, (state, action) => {
+      state.loadingOrder = true;
     });
   },
   reducers: {

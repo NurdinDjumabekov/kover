@@ -16,9 +16,16 @@ import { transformDataOrderList } from "../../helpers/transformDataOrderList";
 import InputMask from "react-input-mask";
 import { rearg } from "lodash";
 import PathToFiles from "../../components/PathToFiles/PathToFiles";
+import { transformNumber } from "../../helpers/transformNumber";
+import { useNavigate } from "react-router-dom";
+import {
+  changeError,
+  changeGoodSent,
+} from "../../store/reducers/postRequestSlice";
 
 const OrderListPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [inputProd, setInputProd] = useState("");
   const [quantity, setquantity] = useState("");
   const [counter, setCounter] = useState(1);
@@ -56,12 +63,13 @@ const OrderListPage = () => {
   };
 
   const addOrder = () => {
-    if (quantity !== "" && inputProd !== "") {
+    if (inputProd !== "") {
       if (listOrdersUser?.length === 0) {
         dispatch(
           changeListOrdersUser([
             ...listOrdersUser,
             { prod: inputProd, quantity, ves: typeFood, id: 1 },
+            // { prod: inputProd, quantity, ves: typeFood, id: 1 },
           ])
         );
       } else {
@@ -83,17 +91,33 @@ const OrderListPage = () => {
       dispatch(
         chnageAlertText({
           text: "Заполните все поля!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
     }
   };
 
+  const changeInputOrder = (e, id) => {
+    e.preventDefault();
+
+    dispatch(
+      changeListOrdersUser(
+        listOrdersUser.map((item) =>
+          item.id === id ? { ...item, prod: e.target.value } : item
+        )
+      )
+    );
+  };
+
   const del = (id) => {
     const newData = listOrdersUser?.filter((i) => i.id !== id);
     dispatch(changeListOrdersUser(newData));
   };
+
+  // console.log(listOrdersUser, "listOrdersUser");
+  // console.log(counter);
+  // console.log(dataListOrders, "dataListOrders");
 
   const sendData = (e) => {
     e.preventDefault();
@@ -103,25 +127,32 @@ const OrderListPage = () => {
       dispatch(
         chnageAlertText({
           text: "Ваш список заказов пустой!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
     } else {
       if (phoneNumberPattern.test(dataListOrders?.phone)) {
         const newData = transformDataOrderList(listOrdersUser);
+        // console.log(newData, "newData");
         dispatch(
           sendOrderFoods({
             ...dataListOrders,
             product_list: newData,
-            phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
+            // phone: dataListOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),transformNumber
+            phone: transformNumber(dataListOrders?.phone),
           })
         );
+        setTimeout(() => {
+          dispatch(changeError(false));
+          dispatch(changeGoodSent(false));
+          navigate("/main");
+        }, 4000);
       } else {
         dispatch(
           chnageAlertText({
             text: "Введите правильный номер!",
-            backColor: "red",
+            backColor: "#ffc12e",
             state: true,
           })
         );
@@ -131,6 +162,16 @@ const OrderListPage = () => {
 
   const clickType = (num) => {
     dispatch(changeDataListOrders({ ...dataListOrders, oplata_type: num }));
+  };
+
+  const warnPay = () => {
+    dispatch(
+      chnageAlertText({
+        text: "С вами свяжется оператор для уточнения оплаты картой",
+        backColor: "#ffc12e",
+        state: true,
+      })
+    );
   };
 
   return (
@@ -165,7 +206,7 @@ const OrderListPage = () => {
             <label>Отправитель</label>
             <InputMask
               mask="+999(999)99-99-99"
-              placeholder="+996700754454"
+              placeholder="Номер телефона"
               name="phone"
               value={dataListOrders?.phone}
               onChange={changeInput}
@@ -199,7 +240,12 @@ const OrderListPage = () => {
 
             <label>Оплата</label>
             <div className={styles.inputBtn}>
-              <div onClick={() => clickType(1)}>
+              <div
+                onClick={() => {
+                  clickType(1);
+                  warnPay();
+                }}
+              >
                 <div
                   className={
                     dataListOrders?.oplata_type === 1 ? styles.activeBtn : ""
@@ -251,13 +297,24 @@ const OrderListPage = () => {
                 <p>Список пустой</p>
               ) : (
                 listOrdersUser?.map((prod) => (
-                  <div key={prod.id}>
-                    <b>{prod?.prod}</b>
+                  <div className={styles.blockInput} key={prod?.id}>
+                    <input
+                      type="text"
+                      key={prod?.id}
+                      value={prod?.prod}
+                      onChange={(e) => changeInputOrder(e, prod?.id)}
+                      // style={{ border: "2px solid #f4f4f4", background: "#fff" }}
+                    />
                     <div>
-                      <span>{`${prod?.quantity} ${prod?.ves}`}</span>
                       <img src={krest} alt="x" onClick={() => del(prod.id)} />
                     </div>
                   </div>
+                  // <div key={prod.id}>
+                  //   <b>{prod?.prod}</b>
+                  //   <div>
+                  //     <span>{`${prod?.quantity} ${prod?.ves}`}</span>
+                  //   </div>
+                  // </div>
                 ))
               )}
             </div>
@@ -265,12 +322,12 @@ const OrderListPage = () => {
             <div className={styles.listOrder}>
               <input
                 type="text"
-                placeholder="Товар"
+                placeholder="Товар и его количество"
                 className={styles.product}
                 onChange={(e) => setInputProd(e.target.value)}
                 value={inputProd}
               />
-              <label className={styles.koll}>
+              {/* <label className={styles.koll}>
                 <input
                   type="text"
                   placeholder="0"
@@ -281,7 +338,7 @@ const OrderListPage = () => {
                   <i>{typeFood}</i>
                   <img src={arrow} alt="<" />
                 </div>
-              </label>
+              </label> */}
               <div className={styles.btn} onClick={addOrder}>
                 +
               </div>

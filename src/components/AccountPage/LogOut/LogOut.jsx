@@ -7,6 +7,7 @@ import {
   changeTokenNum,
 } from "../../../store/reducers/accountSlice";
 import { useDispatch } from "react-redux";
+import { styleModal } from "../../../helpers/localData";
 
 const LogOut = () => {
   const [open, setOpen] = React.useState(false);
@@ -14,19 +15,6 @@ const LogOut = () => {
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "90%",
-    height: "180px",
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: "8px",
-  };
 
   const logOutFn = () => {
     dispatch(changeTokenNum(""));
@@ -47,9 +35,15 @@ const LogOut = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-            <div>
-              <p style={{ textAlign: "center", fontSize: "20px" }}>
+          <Box sx={styleModal}>
+            <div className="modalLogOut">
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "20px",
+                  paddingTop: "10px",
+                }}
+              >
                 Вы действительно хотите выйти?
               </p>
               <div
@@ -57,18 +51,31 @@ const LogOut = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  gap: "60px",
-                  padding: "50px 0 15px 0",
+                  gap: "20px",
+                  padding: "25px 0 15px 0",
                 }}
               >
                 <button
-                  style={{ background: "transparent", fontSize: "20px" }}
+                  style={{
+                    fontSize: "20px",
+                    backgroundColor: "#ffc12e",
+                    padding: "8px 35px",
+                    borderRadius: "5px",
+                    color: "#fff",
+                  }}
                   onClick={logOutFn}
                 >
                   Да
                 </button>
                 <button
-                  style={{ background: "transparent", fontSize: "20px" }}
+                  style={{
+                    fontSize: "20px",
+                    backgroundColor: "transparent",
+                    border: "1px solid #ffc12e",
+                    padding: "8px 35px",
+                    borderRadius: "5px",
+                    color: "#ffc12e",
+                  }}
                   onClick={handleClose}
                 >
                   Нет

@@ -8,6 +8,7 @@ import {
 import InputMask from "react-input-mask";
 import { chnageAlertText } from "../../store/reducers/EditDataUser";
 import PathToFiles from "../../components/PathToFiles/PathToFiles";
+import { transformNumber } from "../../helpers/transformNumber";
 
 const DeliveryPage = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const DeliveryPage = () => {
     }
   };
 
+  // console.log(deliveryOrders);
   const sendData = (e) => {
     e.preventDefault();
     const phoneNumberPattern = /^\+\d{3}\(\d{3}\)\d{2}-\d{2}-\d{2}$/;
@@ -62,18 +64,29 @@ const DeliveryPage = () => {
       dispatch(
         sendCourier({
           ...deliveryOrders,
-          phone: deliveryOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
+          // phone: deliveryOrders?.phone?.replace(/[-()]/g, "")?.slice(-9),
+          phone: transformNumber(deliveryOrders?.phone),
         })
       );
     } else {
       dispatch(
         chnageAlertText({
           text: "Введите правильный номер!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
     }
+  };
+
+  const warnPay = () => {
+    dispatch(
+      chnageAlertText({
+        text: "С вами свяжется оператор для уточнения оплаты картой",
+        backColor: "#ffc12e",
+        state: true,
+      })
+    );
   };
 
   return (
@@ -110,7 +123,7 @@ const DeliveryPage = () => {
             <InputMask
               mask="+999(999)99-99-99"
               required
-              placeholder="Телефон"
+              placeholder="Номер телефона"
               name="phone"
               onChange={changeInput}
               value={deliveryOrders?.phone}
@@ -196,7 +209,10 @@ const DeliveryPage = () => {
             <label>Оплата</label>
             <div className={styles.inputBtn} style={{ display: "flex" }}>
               <div
-                onClick={() => clickPay(1)}
+                onClick={() => {
+                  clickPay(1);
+                  warnPay();
+                }}
                 className={styles.innerTypesClick}
               >
                 <div

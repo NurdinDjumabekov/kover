@@ -171,6 +171,7 @@ export const searchInnerFood = createAsyncThunk(
       const response = await axios(
         `http://kover-site.333.kg/products?search=${data?.text}&code_establishment=${data?.estab}&code_category=0`
       );
+      // console.log(response, "response");
       if (response.status >= 200 || response.status < 300) {
         return response?.data?.product;
       } else {
@@ -230,6 +231,7 @@ export const takeDetailedHistory = createAsyncThunk(
         `http://kover-site.333.kg/detail_zakaz?codeid=${id}`
       );
       if (response.status >= 200 || response.status < 300) {
+        // console.log(response);
         return response?.data?.result;
       } else {
         throw Error(`Error: ${response.status}`);

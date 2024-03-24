@@ -1,12 +1,12 @@
-import React from 'react';
-import styles from './DetailedPage.module.scss';
-import TypesDetailed from '../../components/DetailedPage/TypesDetailed/TypesDetailed';
-import DataCategories from '../../components/DetailedPage/DataCategories/DataCategories';
-import PathToFiles from '../../components/PathToFiles/PathToFiles';
-import { useDispatch, useSelector } from 'react-redux';
-import Paginations from '../../components/MainPage/Pagination/Pagination';
-import { useParams } from 'react-router-dom';
-import { getAllDataFood } from '../../store/reducers/requestFoodSlice';
+import React from "react";
+import styles from "./DetailedPage.module.scss";
+import TypesDetailed from "../../components/DetailedPage/TypesDetailed/TypesDetailed";
+import DataCategories from "../../components/DetailedPage/DataCategories/DataCategories";
+import PathToFiles from "../../components/PathToFiles/PathToFiles";
+import { useDispatch, useSelector } from "react-redux";
+import Paginations from "../../components/MainPage/Pagination/Pagination";
+import { useParams } from "react-router-dom";
+import { getAllDataFood } from "../../store/reducers/requestFoodSlice";
 
 const DetailedPage = () => {
   const dispatch = useDispatch();
@@ -33,6 +33,8 @@ const DetailedPage = () => {
     /// для получения всех ресторанов дефолтное состояние ("Все")
   }, [paginationCount]);
 
+  // console.log(allDataFood, 'allDataFood');
+  // console.log(id);
 
   return (
     <div className={styles.detailedBlock}>

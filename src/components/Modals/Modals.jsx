@@ -33,8 +33,8 @@ const Modals = (props) => {
         PaperProps={{
           sx: {
             borderRadius: "20px 20px 0px 0px",
-            padding: "20px 0 0 0",
-            borderTop: "10px solid transparent",
+            padding: "0px 0 0 0",
+            borderTop: "5px solid transparent",
           },
         }}
         anchor="bottom"
@@ -54,6 +54,9 @@ const Modals = (props) => {
                   <button onClick={close}>
                     <img src={krest} alt="x" />
                   </button>
+                  {/* <div className={styles.line} onClick={close}>
+                    <div></div>
+                  </div> */}
                 </div>
                 {props.children}
               </div>

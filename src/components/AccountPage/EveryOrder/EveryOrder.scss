@@ -42,6 +42,15 @@
       }
     }
   }
+  h6 {
+    color: var(--Black, #222);
+    font-family: Gilroy;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding: 0 0 15px 0;
+  }
   ul {
     overflow-y: scroll;
     max-height: 540px;
@@ -61,6 +70,7 @@
         height: 60px;
         > img {
           border-radius: 8px;
+          object-fit: contain;
         }
       }
       .mainContent {
@@ -115,6 +125,7 @@
     display: none;
   }
   .delivery {
+    margin: 10px 0 0 0;
     h5 {
       color: var(--Black, #222);
       font-family: Gilroy;
@@ -122,8 +133,9 @@
       font-style: normal;
       font-weight: 700;
       line-height: normal;
-      padding: 0 0 20px 0;
+      padding: 0 0 15px 0;
     }
+
   }
   > button {
     width: 100%;
@@ -139,3 +151,12 @@
     text-transform: uppercase;
   }
 }
+
+
+// color: var(--Black, #222);
+//     font-family: Gilroy;
+//     font-size: 18px;
+//     font-style: normal;
+//     font-weight: 700;
+//     line-height: normal;
+//     padding: 0 0 15px 0;

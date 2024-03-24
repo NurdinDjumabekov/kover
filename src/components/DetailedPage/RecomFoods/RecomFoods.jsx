@@ -39,7 +39,7 @@ const RecomFoods = ({ estab, categ }) => {
     dispatch(
       chnageAlertText({
         text: "Продук был добавлен в корзину",
-        backColor: "yellow",
+        backColor: "#ffc12e",
         state: true,
       })
     );
@@ -96,6 +96,7 @@ const RecomFoods = ({ estab, categ }) => {
     setDataEvery(data);
   };
 
+  // console.log(innerData, "innerData");
   return (
     <div className={styles.recomBLock}>
       <div className="container">
@@ -143,9 +144,23 @@ const RecomFoods = ({ estab, categ }) => {
                       <div className={styles.imgMain}>
                         <img
                           src={food?.photo}
-                          alt="временно"
+                          alt="Еда"
                           onClick={() => clickProduct(food)}
                         />
+                        {/* <div
+                          style={{
+                            backgroundImage: `url(${food?.photo})`,
+                            width: "100%",
+                            height: "100%",
+                            backgroundPosition: "center",
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat",
+                            backgroundColor: "#fff",
+                            borderRadius: "8px 8px 0 0",
+                            padding: "0px",
+                          }}
+                          onClick={() => clickProduct(food)}
+                        ></div> */}
                       </div>
                       <h6 onClick={() => clickProduct(food)}>
                         {food.product_name}

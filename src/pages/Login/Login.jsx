@@ -14,7 +14,7 @@ import { chnageAlertText } from "../../store/reducers/EditDataUser";
 const Login = () => {
   const [stateSendNum, setStateSendNum] = React.useState(1); // уровни логинизации
   const [endTime, setEndTime] = React.useState(true);
-  const [time, setTime] = React.useState("03:00");
+  const [time, setTime] = React.useState("01:00");
 
   const dispatch = useDispatch();
 
@@ -38,18 +38,20 @@ const Login = () => {
     if (phoneNumberPattern.test(dataUser?.numberPhone)) {
       dispatch(sendNumAuth(dataUser));
       setStateSendNum(2);
-      setTime("03:00");
+      setTime("01:00");
     } else {
       dispatch(
         chnageAlertText({
           text: "Введите правильно номер телефона!",
-          backColor: "red",
+          backColor: "#ffc12e",
           state: true,
         })
       );
     }
   };
 
+  // console.log(stateSendNum, "stateSendNum");
+  // console.log(dataUser, 'dataUser');
 
   return (
     <div className={styles.login}>
@@ -65,7 +67,7 @@ const Login = () => {
             <form className={styles.formSendNum} onSubmit={sendNum}>
               <InputMask
                 mask="+999(999)99-99-99"
-                placeholder="+996(700)75-44-54"
+                placeholder="+996(___)__-__-__"
                 name="numberPhone"
                 onChange={changeInput}
                 required

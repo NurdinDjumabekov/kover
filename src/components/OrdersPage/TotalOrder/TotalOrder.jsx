@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import './TotalOrder.scss';
-import Modals from '../../Modals/Modals';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import "./TotalOrder.scss";
+import Modals from "../../Modals/Modals";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeError,
   changeGoodSent,
@@ -9,10 +9,12 @@ import {
   changeOrderUser,
   changeTypeOrder,
   sendOrderFoods,
-} from '../../../store/reducers/postRequestSlice';
-import { sortOrders } from '../../../helpers/sortOrders';
-import { useNavigate } from 'react-router-dom';
-import { changeCountDishes } from '../../../store/reducers/statesSlice';
+} from "../../../store/reducers/postRequestSlice";
+import { sortOrders } from "../../../helpers/sortOrders";
+import { useNavigate } from "react-router-dom";
+import { changeCountDishes } from "../../../store/reducers/statesSlice";
+import { chnageAlertText } from "../../../store/reducers/EditDataUser";
+import { transformNumber } from "../../../helpers/transformNumber";
 
 const TotalOrder = (props) => {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const TotalOrder = (props) => {
 
   const { sumOrdersFoods, sumDishes, allFoodsOrders, countDishes } =
     useSelector((state) => state.statesSlice);
-  const allSum = +sumDishes * countDishes + +sumOrdersFoods + 200;
+  const allSum = +sumDishes + +sumOrdersFoods + 200;
 
   const sendData = (e) => {
     e.preventDefault();
@@ -31,18 +33,22 @@ const TotalOrder = (props) => {
         ...orderUser,
         summ: +allSum,
         product_list: sortOrders(allFoodsOrders),
+        // phone: orderUser?.phone?.replace(/[-()]/g, "")?.slice(-9), transformNumber(info?.numberPhone)
+        phone: transformNumber(orderUser?.phone),
       })
     );
     props.changeState(false);
+    // console.log(orderUser, 'orderUser');
 
     setTimeout(() => {
       dispatch(changeError(false));
       dispatch(changeLoading(false));
       dispatch(changeGoodSent(false));
-      navigate('/main');
+      navigate("/main");
     }, 4000);
   };
 
+  // console.log(orderUser);
 
   const changeInput = (e) => {
     e.preventDefault();
@@ -61,16 +67,26 @@ const TotalOrder = (props) => {
     );
   }, []);
 
-  const counterDishes = (type) => {
-    if (type === '+') {
-      dispatch(changeCountDishes(countDishes + 1));
-    } else if (type === '-') {
-      countDishes > 1 ? dispatch(changeCountDishes(countDishes - 1)) : '';
-    }
+  // const counterDishes = (type) => {
+  //   if (type === "+") {
+  //     dispatch(changeCountDishes(countDishes + 1));
+  //   } else if (type === "-") {
+  //     countDishes > 1 ? dispatch(changeCountDishes(countDishes - 1)) : "";
+  //   }
+  // };
+
+  const warnPay = () => {
+    dispatch(
+      chnageAlertText({
+        text: "С вами свяжется оператор для уточнения оплаты картой",
+        backColor: "#ffc12e",
+        state: true,
+      })
+    );
   };
 
   return (
-    <Modals state={props.state} title={'Итого'} changeState={props.changeState}>
+    <Modals state={props.state} title={"Итого"} changeState={props.changeState}>
       <form className="totalOrder" onSubmit={sendData}>
         <h5>Покупатель</h5>
         <input
@@ -124,15 +140,20 @@ const TotalOrder = (props) => {
         <h5>Оплата</h5>
         {/* ////type_oplata */}
         <div className="inputBtn">
-          <div onClick={() => dispatch(changeTypeOrder(1))}>
+          <div
+            onClick={() => {
+              dispatch(changeTypeOrder(1));
+              warnPay();
+            }}
+          >
             <div
-              className={orderUser.type_oplata === 1 ? 'activeBtn' : ''}
+              className={orderUser.type_oplata === 1 ? "activeBtn" : ""}
             ></div>
             <p>Картой</p>
           </div>
           <div onClick={() => dispatch(changeTypeOrder(2))}>
             <div
-              className={orderUser.type_oplata === 2 ? 'activeBtn' : ''}
+              className={orderUser.type_oplata === 2 ? "activeBtn" : ""}
             ></div>
             <p>Наличные</p>
           </div>
@@ -147,23 +168,21 @@ const TotalOrder = (props) => {
             value={orderUser?.sdacha}
           />
         ) : (
-          ''
+          ""
         )}
-
         <h5>Дополнительно</h5>
-        <div className="dishes">
+        {/* <div className="dishes">
           <h6>Посуда</h6>
           <div className="counter">
-            <p onClick={() => counterDishes('-')}>-</p>
+            <p onClick={() => counterDishes("-")}>-</p>
             <p>{countDishes}</p>
-            <p onClick={() => counterDishes('+')}>+</p>
+            <p onClick={() => counterDishes("+")}>+</p>
           </div>
-        </div>
+        </div> */}
         <input
           onChange={changeInput}
           type="text"
           name="comment_zakaz"
-          required
           placeholder="Комментарий к заказу"
           value={orderUser?.comment_zakaz}
         />
@@ -174,10 +193,10 @@ const TotalOrder = (props) => {
         </div>
         <div className="itog">
           <h6>Посуда</h6>
-          <p>{sumDishes * countDishes} сом</p>
+          <p>{sumDishes} сом</p>
         </div>
         <div className="itog">
-          <h6>Доставка</h6>
+          <h6>Доставка от</h6>
           <p>200 сом</p>
         </div>
         <div className="allItog">

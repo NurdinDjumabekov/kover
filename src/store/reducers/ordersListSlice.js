@@ -1,20 +1,20 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { changeListOrdersUser } from './statesSlice';
-import { chnageAlertText } from './EditDataUser';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { changeListOrdersUser } from "./statesSlice";
+import { chnageAlertText } from "./EditDataUser";
 
 // Отправка заказа по списку
 // http://kover-site.333.kg/create_zakaz_list/
 export const sendOrderFoods = createAsyncThunk(
-  'sendOrderFoods',
+  "sendOrderFoods",
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        'http://kover-site.333.kg/create_zakaz_list/',
+        "http://kover-site.333.kg/create_zakaz_list/",
         data,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -25,21 +25,21 @@ export const sendOrderFoods = createAsyncThunk(
         setTimeout(() => {
           dispatch(changePathSite(false));
         }, 1000);
-        dispatch(
-          chnageAlertText({
-            text: 'Ваш заказ был успешно создан!!',
-            backColor: 'yellow',
-            state: true,
-          })
-        );
+        // dispatch(
+        //   chnageAlertText({
+        //     text: "Ваш заказ был успешно создан! С вами в скором времени свяжется оператор. Спасибо что выбрали нас!",
+        //     backColor: "#ffc12e",
+        //     state: true,
+        //   })
+        // );
       } else {
-        dispatch(
-          chnageAlertText({
-            text: 'Упс! Что-то пошло не так... Повторите попытку позже!',
-            backColor: 'red',
-            state: true,
-          })
-        );
+        // dispatch(
+        //   chnageAlertText({
+        //     text: "Упс! Что-то пошло не так... Повторите попытку позже!",
+        //     backColor: "#ffc12e",
+        //     state: true,
+        //   })
+        // );
         throw Error(`Error: ${response.status}`);
       }
     } catch (error) {
@@ -51,15 +51,15 @@ export const sendOrderFoods = createAsyncThunk(
 // Услуги курьера
 // http://kover-site.333.kg/client_time_delivery/
 export const sendCourier = createAsyncThunk(
-  'sendCourier',
+  "sendCourier",
   async function (data, { dispatch, rejectWithValue }) {
     try {
       const response = await axios.post(
-        'http://kover-site.333.kg/create_zakaz_courier/',
+        "http://kover-site.333.kg/create_zakaz_courier/",
         data,
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -67,8 +67,8 @@ export const sendCourier = createAsyncThunk(
         dispatch(clearDeliveryOrders());
         dispatch(
           chnageAlertText({
-            text: 'Ваша заяка была успешно отправлена!',
-            backColor: 'yellow',
+            text: "Ваша заяка была успешно отправлена! С вами в скором времени свяжется оператор. Спасибо что выбрали нас!",
+            backColor: "#ffc12e",
             state: true,
           })
         );
@@ -79,8 +79,8 @@ export const sendCourier = createAsyncThunk(
       } else {
         dispatch(
           chnageAlertText({
-            text: 'Упс! Что-то пошло не так... Повторите попытку позже!',
-            backColor: 'red',
+            text: "Упс! Что-то пошло не так... Повторите попытку позже!",
+            backColor: "#ffc12e",
             state: true,
           })
         );
@@ -94,29 +94,29 @@ export const sendCourier = createAsyncThunk(
 
 const initialState = {
   dataListOrders: {
-    phone: '',
-    fio: '',
-    client_adress: '',
-    client_time_delivery: '',
-    oplata_type: 1,
-    sdacha: '',
-    comment_zakaz: '',
+    phone: "",
+    fio: "",
+    client_adress: "",
+    client_time_delivery: "",
+    oplata_type: 2,
+    sdacha: "",
+    comment_zakaz: "",
     product_list: [],
   },
   deliveryOrders: {
-    phone: '',
-    fio: '',
-    adress_from: '',
-    apartment_address_from: '',
-    time_from: '',
-    adress_to: '',
-    apartment_address_to: '',
-    time_to: '',
-    descr_delivery: '',
+    phone: "",
+    fio: "",
+    adress_from: "",
+    apartment_address_from: "",
+    time_from: "",
+    adress_to: "",
+    apartment_address_to: "",
+    time_to: "",
+    descr_delivery: "",
     gab_gruz: 0,
-    sdacha: '',
-    comment_zakaz: '',
-    oplata_type: 1,
+    sdacha: "",
+    comment_zakaz: "",
+    oplata_type: 2,
     dostavka_type: 1,
   },
   pathSite: false,
@@ -125,7 +125,7 @@ const initialState = {
 };
 
 const ordersListSlice = createSlice({
-  name: 'ordersListSlice',
+  name: "ordersListSlice",
   initialState,
   extraReducers: (builder) => {
     //// sendOrderFoods
@@ -137,6 +137,17 @@ const ordersListSlice = createSlice({
       state.loadingList = false;
     });
     builder.addCase(sendOrderFoods.pending, (state, action) => {
+      state.loadingList = true;
+    });
+    //// sendCourier
+    builder.addCase(sendCourier.fulfilled, (state, action) => {
+      state.loadingList = false;
+    });
+    builder.addCase(sendCourier.rejected, (state, action) => {
+      state.errorList = action.payload;
+      state.loadingList = false;
+    });
+    builder.addCase(sendCourier.pending, (state, action) => {
       state.loadingList = true;
     });
   },
@@ -156,31 +167,31 @@ const ordersListSlice = createSlice({
     },
     clearDataListOrders: (state, action) => {
       state.dataListOrders = {
-        phone: '',
-        fio: '',
-        client_adress: '',
-        client_time_delivery: '',
-        oplata_type: 1,
-        sdacha: '',
-        comment_zakaz: '',
+        phone: "",
+        fio: "",
+        client_adress: "",
+        client_time_delivery: "",
+        oplata_type: 2,
+        sdacha: "",
+        comment_zakaz: "",
         product_list: [],
       };
     },
     clearDeliveryOrders: (state, action) => {
       state.deliveryOrders = {
-        phone: '',
-        fio: '',
-        adress_from: '',
-        apartment_address_from: '',
-        time_from: '',
-        adress_to: '',
-        apartment_address_to: '',
-        time_to: '',
-        descr_delivery: '',
+        phone: "",
+        fio: "",
+        adress_from: "",
+        apartment_address_from: "",
+        time_from: "",
+        adress_to: "",
+        apartment_address_to: "",
+        time_to: "",
+        descr_delivery: "",
         gab_gruz: 0,
-        sdacha: '',
-        comment_zakaz: '',
-        oplata_type: 1,
+        sdacha: "",
+        comment_zakaz: "",
+        oplata_type: 2,
         dostavka_type: 1,
       };
     },

@@ -1,6 +1,4 @@
 import React from "react";
-import foods from "../../assets/images/noneData/orderingFood.png";
-import { NavLink } from "react-router-dom";
 import styles from "./SliderMain.module.scss";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -24,6 +22,7 @@ const SliderMain = () => {
   };
   const { discounts } = useSelector((state) => state.requestFoodSlice);
 
+  // console.log(discounts, 'discounts');
 
   return (
     <div className={styles.parentSlider}>

@@ -1,6 +1,8 @@
 .order {
   &__inner {
-    padding: 40px 0 0 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #e4e4e4;
+
   }
   &__mainData {
     display: flex;
@@ -8,10 +10,15 @@
     gap: 15px;
     margin: 0 0 15px 0px;
     width: 100%;
+    height: 120px;
     img {
       display: block;
       width: 120px;
-      height: 90px;
+      // height: 90px;
+      border-radius: 12px;
+      // background: red;
+      object-fit: contain;
+      max-height: 100%;
     }
     h4 {
       color: var(--Black, #222);
@@ -48,7 +55,7 @@
     justify-content: space-between;
     align-items: center;
     > div {
-      padding: 16px 12px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
