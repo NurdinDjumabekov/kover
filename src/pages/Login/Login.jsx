@@ -50,9 +50,6 @@ const Login = () => {
     }
   };
 
-  // console.log(stateSendNum, "stateSendNum");
-  // console.log(dataUser, 'dataUser');
-
   return (
     <div className={styles.login}>
       <div className="container">

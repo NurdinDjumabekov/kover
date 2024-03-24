@@ -18,6 +18,7 @@ import OrderListPage from "./pages/OrderListPage/OrderListPage";
 import { getDiscounts } from "./store/reducers/requestFoodSlice";
 import Preloader from "./components/Preloader/Preloader";
 import Alerts from "./components/Alerts/Alerts";
+import { useSwipeable } from "react-swipeable";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -93,49 +94,58 @@ const App = () => {
     }
   }, [location.pathname]);
 
-  // console.log(sumDishes, "sumDishes");
-  // console.log(sumOrdersFoods, 'sumOrdersFoods');
-  // console.log(positionFoods, 'positionFoods');
-  // console.log(allFoodsOrders, "allFoodsOrders");
-  // console.log(location.pathname, 'location');
-  // console.log(loading, 'loading');
-  // console.log(loadingList, 'loadingList');
-  // console.log(allDataFood, 'allDataFood');
-  // console.log(pathCatalog,"pathCatalog");
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => navigate(-1),
+    delta: 100, // Порог свайпа (в пикселях)
+    trackMouse: true, // Отслеживать свайп мышью
+  });
+
+  // setup ref for your usage
+  const myRef = React.useRef();
+
+  const refPassthrough = (el) => {
+    // call useSwipeable ref prop with el
+    swipeHandlers.ref(el);
+
+    // set myRef el so you can access it yourself
+    myRef.current = el;
+  };
 
   return (
     <>
-      <Routes>
-        <>
-          {!!tokenNum && !!tokenName ? (
-            <Route path="/" element={<Layout />}>
-              <Route path="/main" element={<MainPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/categories" element={<CategoriesPage />} />
-              <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/detailed/:id/:estab" element={<DetailedPage />} />
-              <Route
-                path="/product/:id/:name/:estab/:categ"
-                element={<ProductPage />}
-              />
-              <Route path="/account" element={<Account />} />
-              <Route path="/delivery" element={<DeliveryPage />} />
-              <Route path="/listorder" element={<OrderListPage />} />
-            </Route>
-          ) : (
-            <>
-              <Route path="/" element={<MainInfo />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/welcome" element={<WelcomePage />} />
-            </>
-          )}
-        </>
-      </Routes>
-      {loading && <Preloader />}
-      {loadingList && <Preloader />}
-      {loadingEdit && <Preloader />}
-      {loadingOrder && <Preloader />}
-      <Alerts />
+      <div {...swipeHandlers} ref={refPassthrough}>
+        <Routes>
+          <>
+            {!!tokenNum && !!tokenName ? (
+              <Route path="/" element={<Layout />}>
+                <Route path="/main" element={<MainPage />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/categories" element={<CategoriesPage />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/detailed/:id/:estab" element={<DetailedPage />} />
+                <Route
+                  path="/product/:id/:name/:estab/:categ"
+                  element={<ProductPage />}
+                />
+                <Route path="/account" element={<Account />} />
+                <Route path="/delivery" element={<DeliveryPage />} />
+                <Route path="/listorder" element={<OrderListPage />} />
+              </Route>
+            ) : (
+              <>
+                <Route path="/" element={<MainInfo />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/welcome" element={<WelcomePage />} />
+              </>
+            )}
+          </>
+        </Routes>
+        {loading && <Preloader />}
+        {loadingList && <Preloader />}
+        {loadingEdit && <Preloader />}
+        {loadingOrder && <Preloader />}
+        <Alerts />
+      </div>
     </>
   );
 };

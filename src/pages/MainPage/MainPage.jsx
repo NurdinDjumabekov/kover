@@ -5,9 +5,12 @@ import MainContent from "../../components/MainPage/MainContent/MainContent";
 import { useDispatch } from "react-redux";
 import { getCategory } from "../../store/reducers/requestFoodSlice";
 import NavSearch from "../../components/NavSearch/NavSearch";
+import { useSwipeable } from "react-swipeable";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     dispatch(
