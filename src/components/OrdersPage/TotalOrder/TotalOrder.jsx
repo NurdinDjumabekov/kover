@@ -85,6 +85,11 @@ const TotalOrder = (props) => {
     );
   };
 
+  // console.log(allSum, "allSum");
+  // console.log(sumDishes, "sumDishes");
+  // console.log(allFoodsOrders, "allFoodsOrders");
+  // console.log(orderUser, "orderUser");
+
   return (
     <Modals state={props.state} title={"Итого"} changeState={props.changeState}>
       <form className="totalOrder" onSubmit={sendData}>

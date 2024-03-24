@@ -21,9 +21,12 @@ const OrdersPage = () => {
     allFoodsOrders.length === 0 ? navigate("/categories") : setTotalOrder(true);
   };
 
+  // console.log(allFoodsOrders, "allFoodsOrders");
+
   return (
     <>
       <div className={styles.orderBlock}>
+        {/* <NavSearch /> */}
         <div className="container">
           <div className={styles.orderBlock__inner}>
             <button onClick={() => navigate(-1)} className={styles.prevBacket}>
